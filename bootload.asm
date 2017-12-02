@@ -30,7 +30,7 @@ bootloader_start:
 	mov ds, ax
 	mov	si,hello
 	call	os_print_string
-;	jmp	$
+	jmp	$
 load_sectors:
 	mov	dx,0	; Clear DX
 	mov	ah,0x02	; read sectors into memory
