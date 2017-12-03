@@ -26,9 +26,11 @@ os_read_char:
 	ret
 os_clear_screen:
 	pusha
+	pusha
 	mov bh,0
 	mov	dl,0
 	call	os_set_cursor
+	popa
 	mov	al,0
 	mov	bh,7
 	mov	cx,0

@@ -1,5 +1,4 @@
-[bits	16]
-[org	0]
+ORG	0
 start:
 mov	si,msg
 call	os_print_string
