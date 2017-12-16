@@ -1,5 +1,5 @@
 include vars.mak
-
+all:	os.img
 os.img:
 	$(MAKE) -C lib
 	$(MAKE)	-C boot

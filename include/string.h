@@ -1,3 +1,4 @@
+#include <memory.h>
 #ifndef	__STRING_H_
 #define	__STRING_H_
 #ifdef	__cplusplus
