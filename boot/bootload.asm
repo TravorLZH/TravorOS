@@ -17,11 +17,11 @@ KERNEL_OFFSET	equ	0x1000	; This is the memory offset to which we will load our k
 	jmp	$
 
 ; Include our useful, hard-earned routines
-%INCLUDE	"../common/io.asm"
-%INCLUDE	"../common/screen.asm"
-%INCLUDE	"../common/disk.asm"
-%INCLUDE	"../common32/gdt.asm"
-%INCLUDE	"../common32/protectedmode.asm"
+%INCLUDE	"io.asm"
+%INCLUDE	"screen.asm"
+%INCLUDE	"disk.asm"
+%INCLUDE	"32bit/gdt.asm"
+%INCLUDE	"32bit/protectedmode.asm"
 
 [bits	16]
 

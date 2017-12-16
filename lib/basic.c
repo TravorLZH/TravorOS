@@ -14,8 +14,7 @@ int putchar(char c){
 }
 int puts(const char* s){
 	int i=0;
-	if(strlen(s)==0)return 1;
-	for(;i<strlen(s);i++){
+	for(;*(s+i);i++){
 		putchar(*(s+i));
 	}
 	return 0;
