@@ -25,3 +25,7 @@ The sources are separated into 4 folders.
 - `lib`: It contains my own implementation of standard C functions. At last, they are archived with a name `libbc.a`. It's the core library of this Operating System. You need it to build the kernel.
 
 - `include`: It contains C headers of the libraries. I organized string operations into [string.h](https://github.com/TravorLZH/TravorOS/blob/master/include/string.h), and the rest in [basic.h](https://github.com/TravorLZH/TravorOS/blob/master/include/basic.h). System calls are declared in [api.h](https://github.com/TravorLZH/TravorOS/blob/master/include/api.h).
+
+Except for `include`, every folder contains a `Makefile`. This made me need to learn to organize my codes.
+
+
