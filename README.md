@@ -14,7 +14,7 @@ It's written in C. It simply calls other C standard functions that I implemented
 
 ### Building System
 
-I believe that most [GitHub](https://github.com) users have tried to install software from source build. But how many of them had ever understood how the building systems of those projects are like? So this project will show you the greatest ability of [GNU Make](https://www.gnu.org/software/make "GNU Make Homepage"), the way it builds an Operating System.
+I believe that most [GitHub](https://github.com) users have tried to install software from source build. But how many of them had ever understood how the building systems of those projects are like? So this project will show you the greatest utility of [GNU Make](https://www.gnu.org/software/make "GNU Make Homepage") in the way it builds an Operating System.
 
 The sources are separated into 4 folders.
 
@@ -22,7 +22,7 @@ The sources are separated into 4 folders.
 
 - `kernel`: This folder contains the most important part of the Operating System -- the code of KERNEL which is written in C.
 
-- `lib`: It contains my own implementation of standard C functions. At last, they are archived with a name `libbc.a`. It's the core library of this Operating System. You need it to build the kernel.
+- `lib`: It contains my own implementation of standard C functions. At last, they are archived with a name `libbc.a`. It's the fundamental library of this Operating System. You need it to build the kernel.
 
 - `include`: It contains C headers of the libraries. I organized string operations into [string.h](https://github.com/TravorLZH/TravorOS/blob/master/include/string.h), and the rest in [basic.h](https://github.com/TravorLZH/TravorOS/blob/master/include/basic.h). System calls are declared in [api.h](https://github.com/TravorLZH/TravorOS/blob/master/include/api.h).
 

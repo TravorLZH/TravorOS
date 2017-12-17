@@ -4,6 +4,7 @@
 #ifdef	__cplusplus
 extern "C"{
 #endif
+extern void *strcpy(char* dest,const char* src);
 extern int strlen(const char*);
 #ifdef	__cplusplus
 }

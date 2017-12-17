@@ -7,6 +7,9 @@ int strlen(const char* str){
 	for(s=str;*s;++s);
 	return (s-str);
 }
+void* strcpy(char* dest,const char* src){
+	return memcpy(dest,src,strlen(src));
+}
 int putchar(char c){
 	int ret=_api_putchar(video_mem,c,0x0F);
 	video_mem+=2;
