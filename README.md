@@ -22,8 +22,8 @@ The sources are separated into 4 folders.
 
 - `kernel`: This folder contains the most important part of the Operating System -- the code of KERNEL which is written in C.
 
-- `lib`: It contains my own implementation of standard C functions. At last, they are archived with a name `libbc.a`. It's the fundamental library of this Operating System. You need it to build the kernel.
+- `drivers`: It contains a lot of important components of the kernel, the code inside will be statically linked with the `kernel`.
 
-- `include`: It contains C headers of the libraries. I organized string operations into [string.h](https://github.com/TravorLZH/TravorOS/blob/master/include/string.h), and the rest in [basic.h](https://github.com/TravorLZH/TravorOS/blob/master/include/basic.h). System calls are declared in [api.h](https://github.com/TravorLZH/TravorOS/blob/master/include/api.h).
+- `include`: It contains C headers of the drivers and remainder of `libbc`. I organized string operations into [string.h](https://github.com/TravorLZH/TravorOS/blob/master/include/string.h), and the rest in [basic.h](https://github.com/TravorLZH/TravorOS/blob/master/include/basic.h). System calls are declared in [api.h](https://github.com/TravorLZH/TravorOS/blob/master/include/api.h).
 
 This is project contains only one `Makefile`. It really makes up challenge to my ability of organizing code. At first, I used multiple `Makefile` in each folder, but now I get rid of that. I can simplify this project more!
