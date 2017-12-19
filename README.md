@@ -26,6 +26,4 @@ The sources are separated into 4 folders.
 
 - `include`: It contains C headers of the libraries. I organized string operations into [string.h](https://github.com/TravorLZH/TravorOS/blob/master/include/string.h), and the rest in [basic.h](https://github.com/TravorLZH/TravorOS/blob/master/include/basic.h). System calls are declared in [api.h](https://github.com/TravorLZH/TravorOS/blob/master/include/api.h).
 
-Except for `include`, every folder contains a `Makefile`. This made me need to learn to organize my codes.
-
-
+This is project contains only one `Makefile`. It really makes up challenge to my ability of organizing code. At first, I used multiple `Makefile` in each folder, but now I get rid of that. I can simplify this project more!

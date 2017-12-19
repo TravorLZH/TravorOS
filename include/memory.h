@@ -1,3 +1,4 @@
+#include <types.h>
 #ifndef	__MEMORY_H_
 #define	__MEMORY_H_
 #ifdef	__cplusplus
