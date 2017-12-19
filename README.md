@@ -1,4 +1,4 @@
-# TravorOS - Developing and Simplifying
+# TravorOS - Developing with Simplification
 
 This is the first [Operating System](https://en.wikipedia.org/wiki/Operating_System "Operating System Definition") I created. It's written in two languages: C language and Assembly.
 
