@@ -1,5 +1,44 @@
-#include <screen/screen.h>
 
+#include <screen.h>
+#include <basic_io.h>
+
+// Implementations for screen operations
+
+int get_cursor(){
+	// The device uses its control register as an index
+	// to select its internal registers, of which we are
+	// interested in:
+	// 	reg 14: which is the high byte of the cursor's offset
+	// 	reg 15: which is the low byte of the cursor's offset
+	// Once the internal register had been selected, we may read or
+	// write a byte on the data register.
+	port_byte_out(REG_SCREEN_CTRL,14);
+	int offset=port_byte_in(REG_SCREEN_DATA) << 8;
+	port_byte_out(REG_SCREEN_CTRL,15);
+	offset+=port_byte_in(REG_SCREEN_DATA);
+	return offset*2;
+}
+
+void set_cursor(int offset){
+	offset /=2;
+	port_byte_out(REG_SCREEN_CTRL,14);
+	port_byte_out(REG_SCREEN_DATA,(offset >> 8));
+	port_byte_out(REG_SCREEN_CTRL,15);
+	port_byte_out(REG_SCREEN_DATA,(offset & 0xFF));
+}
+int handle_scrolling(int offset){return offset;}
+int get_screen_offset(int col,int row){
+	return (row*MAX_COLS+col)*2;
+}
+void print_at(const char* str,int col,int row,char attr){
+	int i=0;
+	if(col>=0 && row>=0){
+		set_cursor(get_screen_offset(col,row));
+	}
+	for(;*(str+i)!=0;i++){
+		print_char(*(str+i),col++,row,attr);
+	}
+}
 /* Print a char on the screen at col, row, or at cursor position */
 void print_char(char character,int col,int row,char attribute_byte){
 	/* Create a byte (char) pointer to the start of video memory */
@@ -37,7 +76,7 @@ void print_char(char character,int col,int row,char attribute_byte){
 	// two bytes ahead of the current cell.
 	offset+=2;
 	// Make scrolling adjustment, for when we reach the top of the screen.
-	offset=handle_scrolling(offset);
+	//offset=handle_scrolling(offset);
 	// Update the cursor position on the screen device.
 	set_cursor(offset);
 }

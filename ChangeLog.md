@@ -6,11 +6,13 @@ All major changes will be added in this file
 
 ### 0.2-r0 2017-12-18
 
+This revision would be a tag in this repo.
+
 #### Added
 
 - `drivers`: An improved substitution for the obsolete libraries. You may tell many similarity of the code from the document in [LearnOS][1]
 
-- `drivers/screen.c`, `drivers/screen.h`: They are new replacement for `libbc`, and they will be directly linked into kernel instead of individual libraries.
+- `drivers/screen.c`, `drivers/screen.h`: Features about screen (text, cursor, etc.).
 
 #### Modified
 
@@ -18,7 +20,7 @@ All major changes will be added in this file
 
 #### Removed
 
-- `lib`: I decided to use `drivers` to substitute this part because I haven't got chance to build a C interface for `TravorOS` applications.
+- `lib`: Inadequate part of my OS. It currently contains one library `io` which has some lower functions written with inline assembly
 
 #### Purpose
 
