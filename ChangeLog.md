@@ -1,6 +1,6 @@
 # ChangeLog
 
-All major changes will be added in this file
+All major changes will be added in this file.
 
 ## Debugging (Pre-release)
 
