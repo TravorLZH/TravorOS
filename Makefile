@@ -1,5 +1,6 @@
 C_SOURCES=$(wildcard drivers/*.c kernel/*.c)
 INCLUDE_DIR=-Iinclude
+include vars.mak
 LIBS=lib/libio.a
 OBJ=${C_SOURCES:.c=.o}
 all:	os.img libs
@@ -14,9 +15,9 @@ libs:
 %.o:	%.c
 	gcc $(INCLUDE_DIR) -m32 -ffreestanding -c $< -o $@
 %.o:	%.asm
-	nasm $< -f elf -o $@
+	$(AS) $< -f elf -o $@
 boot/bootload.bin:
-	make -C boot
+	$(MAKE) -C boot
 clean:
 	rm -fr *.bin *.o *.img
 	rm -fr kernel/*.o boot/*.bin drivers/*.o
