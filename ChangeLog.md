@@ -61,4 +61,4 @@ As you can see in the [LearnOS][1] repo, this single `Makefile` policy is to syn
 
 #### Added
 
-- Migrated all files from [kerneltest32](https://github.com/TravorLZH/OSLEARN/tree/master/kerneltest32)
+- Migrated all files from [kerneltest32](https://github.com/TravorLZH/LearnOS/tree/master/kerneltest32)
