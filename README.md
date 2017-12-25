@@ -16,7 +16,7 @@ It's written in C. It simply calls other C standard functions that I implemented
 
 I believe that most [GitHub](https://github.com) users have tried to install software from source build. But how many of them had ever understood how the building systems of those projects are like? So this project will show you the greatest utility of [GNU Make](https://www.gnu.org/software/make "GNU Make Homepage") in the way it builds an Operating System.
 
-The sources are separated into ５ folders.
+The sources are separated into 5 folders.
 
 - `boot`: This folder contains the code of bootloader especially the conversion from `16-bit real mode` to `32-bit protected mode`.
 
