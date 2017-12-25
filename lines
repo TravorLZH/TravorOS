@@ -1,6 +1,8 @@
 #!/bin/sh
 C_LINES=`(find . -name '*.c' -print0 | xargs -0 cat ) | wc -l`
 ASM_LINES=`(find . -name '*.asm' -print0 | xargs -0 cat) | wc -l`
+MK_LINES=`(find . -name '*Makefile' -print0 | xargs -0 cat) | wc -l`
 echo "$C_LINES lines of C code"
 echo "$ASM_LINES of Assembly code"
-echo "Total $(($C_LINES+$ASM_LINES))"
+echo "$MK_LINES of Makefile code"
+echo "Total $(($C_LINES+$ASM_LINES+$MK_LINES))"
