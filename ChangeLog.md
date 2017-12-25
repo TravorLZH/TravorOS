@@ -3,6 +3,15 @@
 All major changes will be added in this file.
 
 ## Debugging (Pre-release)
+### 0.2-r1 2017-12-25
+
+This revision added a lot of features on library.
+
+### Added
+
+- `demos`: Some little bootloaders or C programs I created for testing my basic knowledge. <strong>They are not promised to run properly</strong>
+
+- `lib`, `lib/libbc/`, `libbc/string.c`, `include/misc.h`: They are the new functions I created for C library. `libbc` stands for `Basic C library`. Now it contains some generic string operations. Later I will add `printf` family.
 
 ### 0.2-r0 2017-12-18
 
@@ -12,7 +21,7 @@ This revision would be a tag in this repo.
 
 - `drivers`: An improved substitution for the obsolete libraries. You may tell many similarity of the code from the document in [LearnOS][1]
 
-- `drivers/screen.c`, `drivers/screen.h`: Features about screen (text, cursor, etc.).
+- `drivers/screen.c`, `drivers/screen.h`: Features about screen (text, cursor, etc.). They will play a big role on this OS.
 
 #### Modified
 
