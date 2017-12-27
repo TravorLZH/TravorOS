@@ -67,9 +67,11 @@ int isupper(int c){
 }
 
 void* memcpy(void* dest,const void* src,size_t n){
+	char* d=(char*)dest;
+	char* s=(char*)src;
 	int i=0;
 	for(;i<n;i++){
-		*((char*)dest+i)=*((char*)src+i);
+		*(d+i)=*(s+i);
 	}
 	return dest;
 }

@@ -8,8 +8,8 @@ KERNEL_OFFSET	equ	0x1000	; This is the memory offset to which we will load our k
 	mov	bp,0x9000		; Set-up the stack.
 	mov	sp,bp
 	call	clear_screen
-	mov	bx,MSG_REAL_MODE	; Announce that we are starting
-	call	print_string	; booting from 16-bit real mode
+;	mov	bx,MSG_REAL_MODE	; Announce that we are starting
+;	call	print_string	; booting from 16-bit real mode
 	call	load_kernel		; Load our kernel
 	call	switch_to_pm	; Switch to protected mode, from which
 							; we will not return
@@ -26,8 +26,8 @@ KERNEL_OFFSET	equ	0x1000	; This is the memory offset to which we will load our k
 [bits	16]
 
 load_kernel:
-	mov	bx,MSG_LOAD_KERNEL	; Print a message to say we are loading the kernel
-	call	print_string
+;	mov	bx,MSG_LOAD_KERNEL	; Print a message to say we are loading the kernel
+;	call	print_string
 	
 	mov	bx,KERNEL_OFFSET	; Set-up parameters for our disk_load routine, so
 	mov	dh,15				; that we load the first 15 sectors (excluding

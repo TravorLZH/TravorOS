@@ -26,7 +26,29 @@ void set_cursor(int offset){
 	port_byte_out(REG_SCREEN_CTRL,15);
 	port_byte_out(REG_SCREEN_DATA,(offset & 0xFF));
 }
-int handle_scrolling(int offset){return offset;}
+int handle_scrolling(int offset){
+	// If the cursor is within the screen return it unmodified
+	if(offset<MAX_ROWS*MAX_COLS*2){
+		return offset;
+	}
+	/* Shuffle the rows back one. */
+	int i;
+	for(i=1;i<MAX_ROWS;i++){
+		memcpy(get_screen_offset(0,i-1)+VIDEO_ADDRESS,get_screen_offset(0,i)+VIDEO_ADDRESS,MAX_COLS*2);
+	}
+	/* Blank the last line by setting all bytes to 0 */
+	char* last_line=(char*)(get_screen_offset(0,MAX_ROWS-1)+VIDEO_ADDRESS);
+	for(i=0;i<MAX_COLS*2;i++){
+		last_line[i]=0;
+	}
+	
+	// Move the offset back one row, such that it is now on
+	// row, rather than off the edge of the screen.
+	offset-=2*MAX_COLS;
+	
+	// Return the updated cursor position.
+	return offset;
+}
 int get_screen_offset(int col,int row){
 	return (row*MAX_COLS+col)*2;
 }
@@ -76,7 +98,7 @@ void print_char(char character,int col,int row,char attribute_byte){
 	// two bytes ahead of the current cell.
 	offset+=2;
 	// Make scrolling adjustment, for when we reach the top of the screen.
-	//offset=handle_scrolling(offset);
+	offset=handle_scrolling(offset);
 	// Update the cursor position on the screen device.
 	set_cursor(offset);
 }

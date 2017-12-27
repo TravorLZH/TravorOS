@@ -1,4 +1,6 @@
 C_SOURCES=$(wildcard drivers/*.c kernel/*.c)
+BOOT_SRC=$(wildcard boot/*.asm)
+LIB_SRC=$(wildcard lib/*.c)
 INCLUDE_DIR=-Iinclude
 include vars.mak
 LIBS=lib/libio.a lib/libbc.a
@@ -11,7 +13,7 @@ os.img:	boot/bootload.bin kernel/kernel.bin libs
 	cat boot/bootload.bin kernel/kernel.bin > os.img
 kernel/kernel.bin:	kernel/kernel_entry.o $(OBJ) $(LIBS)
 	ld -melf_i386 -o $@ -Ttext 0x1000 $^ --oformat binary
-libs:
+libs:	$(LIB_SRC)
 	make -C lib
 %.a:
 	make -C lib `basename $@`
@@ -19,7 +21,7 @@ libs:
 	gcc $(INCLUDE_DIR) -m32 -ffreestanding -c $< -o $@
 %.o:	%.asm
 	$(AS) $< -f elf -o $@
-boot/bootload.bin:
+boot/bootload.bin:	$(BOOT_SRC)
 	$(MAKE) -C boot
 clean:
 	rm -fr *.bin *.o *.img

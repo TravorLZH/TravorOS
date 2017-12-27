@@ -3,6 +3,16 @@
 All major changes will be added in this file.
 
 ## Debugging (Pre-release)
+### 0.2-r2 2017-12-27
+
+This revision accomplishes the devlopment of screen driver
+
+### Modified
+
+`kernel.c`: Debugs functions
+
+`drivers/screen.c`: Completes the part of `handle_scrolling()`
+
 ### 0.2-r1 2017-12-25
 
 This revision added a lot of features on library.
