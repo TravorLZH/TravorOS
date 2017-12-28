@@ -1,0 +1,2 @@
+It's very impossible to make an Operating System without outside help, so I'd like to list most place where my code refers:
+	https://cnblogs.com/bluestorm/p/3168719.html - itoa()'s and atoi()'s implementation in C
