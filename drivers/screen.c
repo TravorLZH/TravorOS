@@ -1,8 +1,34 @@
-
+/* 
+* TravorOS: A simple OS running on Intel x86 Architecture
+* Copyright (C) 2017  Travor Liu
+*
+* This program is free software: you can redistribute it and/or modify
+* it under the terms of the GNU General Public License as published by
+* the Free Software Foundation, either version 3 of the License, or
+* any later version.
+*
+* This program is distributed in the hope that it will be useful,
+* but WITHOUT ANY WARRANTY; without even the implied warranty of
+* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+* GNU General Public License for more details.
+*
+* You should have received a copy of the GNU General Public License
+* along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
 #include <screen.h>
 #include <basic_io.h>
 
 // Implementations for screen operations
+
+void clear_screen(){
+	int row=0;
+	int col=0;
+	for(;row<MAX_ROWS;row++){
+		for(;col<MAX_COLS;col++){
+			print_char(' ',row,col,WHITE_ON_BLACK);
+		}
+	}
+}
 
 int get_cursor(){
 	// The device uses its control register as an index
@@ -80,16 +106,33 @@ void print_char(char character,int col,int row,char attribute_byte){
 	}else{
 		offset=get_cursor();
 	}
-	
-	// If we see a newline character, set offset to the end of
-	// current row, so it will be advanced to the first col
-	// of the next row.
-	if(character=='\n'){
-		int rows=offset/(2*MAX_COLS);
+	// Detecting special characters
+	int rows;
+	switch(character){
+		// If we see a Backspace, remove the current character and attribute
+		// then decrement the offset.
+		case '\b':
+		vidmem[offset-2]=0;
+		offset-=2;
+		set_cursor(offset);
+		return;
+		break;
+		// If we see a CR (Carriage Return), set the offset to the start of line.
+		case '\r':
+		rows=offset/(2*MAX_COLS);
+		set_cursor_pos(0,rows);
+		return;
+		break;
+		// If we see a newline character, set offset to the end of
+		// current row, so it will be advanced to the first col
+		// of the next row.
+		case '\n':
+		rows=offset/(2*MAX_COLS);
 		offset=get_screen_offset(79,rows);
-	// Otherwise, write the character and its attribute byte to
-	// video memory at our calculated offset.
-	}else{
+		break;
+		// Otherwise, write the character and its attribute byte to
+		// video memory at our calculated offset.
+		default:
 		vidmem[offset]=character;
 		vidmem[offset+1]=attribute_byte;
 	}

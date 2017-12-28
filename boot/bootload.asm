@@ -1,4 +1,20 @@
-; A boot sector that boots a C kernel in 32-bit protected mode
+; TravorOS: A simple OS running on Intel x86 Architecture
+; Copyright (C) 2017  Travor Liu
+;
+; This program is free software: you can redistribute it and/or modify
+; it under the terms of the GNU General Public License as published by
+; the Free Software Foundation, either version 3 of the License, or
+; any later version.
+;
+; This program is distributed in the hope that it will be useful,
+; but WITHOUT ANY WARRANTY; without even the implied warranty of
+; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+; GNU General Public License for more details.
+;
+; You should have received a copy of the GNU General Public License
+; along with this program.  If not, see <https://www.gnu.org/licenses/>.
+;
+; bootload.asm: A boot sector that boots a C kernel in 32-bit protected mode
 [org	0x7c00]
 KERNEL_OFFSET	equ	0x1000	; This is the memory offset to which we will load our kernel
 
@@ -30,7 +46,7 @@ load_kernel:
 ;	call	print_string
 	
 	mov	bx,KERNEL_OFFSET	; Set-up parameters for our disk_load routine, so
-	mov	dh,15				; that we load the first 15 sectors (excluding
+	mov	dh,20				; that we load the first 20 sectors (excluding
 	mov	dl,[BOOT_DRIVE]		; the boot sector) from the boot disk (i.e. our
 	call	disk_load		; kernel code) to address KERNEL_OFFSET
 	

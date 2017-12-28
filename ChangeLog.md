@@ -3,6 +3,11 @@
 All major changes will be added in this file.
 
 ## Debugging (Pre-release)
+
+### 0.2-r3 2017-12-28
+
+This revision extends the screen driver
+
 ### 0.2-r2 2017-12-27
 
 This revision accomplishes the devlopment of screen driver
