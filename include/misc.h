@@ -55,6 +55,7 @@ extern long atol(const char *nptr);
 extern long long atoll(const char *nptr);
 /* Integer -> String */
 extern void itoa(int n,char *s);
+extern void itoh(size_t n,char *s); // Byte to hex string
 
 // Memory function
 extern void* memcpy(void* dest,const void* src,size_t n);

@@ -17,6 +17,7 @@
 */
 /* kernel.c: The core part of the OS kernel (i.e. The heart of the OS) */
 #include <misc.h>
+#include <kbd.h>
 #include <screen.h>
 
 #define	puts(a)	print_at(a,-1,-1,0x07)
@@ -30,14 +31,8 @@ void _sleep(long long sec){
 }
 
 int main(void){
-	set_cursor_pos(0,0);
-	print_at("TravorOS v0.2-r3",-1,-1,COLOR);
-	int remainder=MAX_COLS-COLS(get_cursor());
-	while(remainder--)print_char(' ',-1,-1,COLOR);
-	set_cursor_pos(MAX_COLS/2-3,MAX_ROWS/2);
-	char hi[100];
-	int a=233333;
-	itoa(a,hi);
-	puts(hi);
+	while(1){
+		putchar(_getchar());
+	}
 	return 0;
 }
