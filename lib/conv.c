@@ -85,3 +85,4 @@ void itoa(int n,char *s){
 	}
 	s=strrev(s);
 }
+
