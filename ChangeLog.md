@@ -6,7 +6,13 @@ All major changes will be added in this file.
 
 ### 0.3-Typewriter
 
+#### Added
 
+New keyboard driver.
+
+#### Modified
+
+`kernel/kernel.c`: Adjusted itself into a typewriter
 
 ## Debugging Pre-release
 
