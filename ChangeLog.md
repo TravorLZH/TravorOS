@@ -2,17 +2,31 @@
 
 All major changes will be added in this file.
 
-## Debugging (Pre-release)
+## Pre-release
+
+### 0.3-Typewriter
+
+
+
+## Debugging Pre-release
 
 ### 0.2-r3 2017-12-28
 
 This revision extends the screen driver
 
+#### Added
+
+`drivers/kbd.c`: A minimum implementation of a PS/2 keyboard driver
+
+#### Modified
+
+`kernel/kernel.c`: Adjusted its style to typewriter
+
 ### 0.2-r2 2017-12-27
 
 This revision accomplishes the devlopment of screen driver
 
-### Modified
+#### Modified
 
 `kernel.c`: Debugs functions
 
@@ -22,13 +36,13 @@ This revision accomplishes the devlopment of screen driver
 
 This revision added a lot of features on library.
 
-### Added
+#### Added
 
 - `demos`: Some little bootloaders or C programs I created for testing my basic knowledge. <strong>They are not promised to run properly</strong>
 
 - `lib`, `lib/libbc/`, `libbc/string.c`, `include/misc.h`: They are the new functions I created for C library. `libbc` stands for `Basic C library`. Now it contains some generic string operations. Later I will add `printf` family.
 
-### Modified
+#### Modified
 
 - `Makefile`s: I changed the assembler from `NASM` to `YASM`, this allows users to build and emulate this OS on phone using [Termux](https://termux.com/) and [Limbo PC Emulator](https://play.google.com/store/apps/details?id=fr.energycube.android.app.com.limbo.emu.main.armv7).
 
