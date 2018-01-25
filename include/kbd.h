@@ -32,7 +32,7 @@
 extern	"C"{
 #endif
 extern const char press_char[];
-extern char _getchar();
+extern char _getchar(void);
 extern char code2char(unsigned char code);
 extern char getScancode();
 #ifdef	__cplusplus

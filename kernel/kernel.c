@@ -18,7 +18,7 @@
 /* kernel.c: The core part of the OS kernel (i.e. The heart of the OS) */
 #include <misc.h>
 #include <kbd.h>
-#include <screen.h>
+#include <io.h>
 #define	COLOR	0x70
 
 void _sleep(long long sec){
@@ -27,8 +27,8 @@ void _sleep(long long sec){
 }
 
 int main(void){
-	while(1){
-		getchar();
-	}
+	puts("> ");
+	gets();
+	puts("Stuff");
 	return 0;
 }
