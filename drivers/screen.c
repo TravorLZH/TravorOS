@@ -16,7 +16,7 @@
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include <screen.h>
-#include <basic_io.h>
+#include <io.h>
 
 // Implementations for screen operations
 
@@ -47,6 +47,10 @@ int get_cursor(){
 
 void set_cursor(int offset){
 	offset /=2;
+	if(offset<0){
+		set_cursor(0);
+		return;
+	}
 	port_byte_out(REG_SCREEN_CTRL,14);
 	port_byte_out(REG_SCREEN_DATA,(offset >> 8));
 	port_byte_out(REG_SCREEN_CTRL,15);

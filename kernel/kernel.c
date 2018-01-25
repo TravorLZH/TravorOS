@@ -19,10 +19,6 @@
 #include <misc.h>
 #include <kbd.h>
 #include <screen.h>
-
-#define	puts(a)	print_at(a,-1,-1,0x07)
-#define	putchar(c)	print_char(c,-1,-1,0x07)
-
 #define	COLOR	0x70
 
 void _sleep(long long sec){
@@ -32,7 +28,7 @@ void _sleep(long long sec){
 
 int main(void){
 	while(1){
-		putchar(_getchar());
+		getchar();
 	}
 	return 0;
 }
