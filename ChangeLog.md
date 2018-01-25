@@ -4,7 +4,7 @@ All major changes will be added in this file.
 
 ## Pre-release
 
-### 0.3-Typewriter
+### 0.3-Typewriter 2018-1-25
 
 #### Added
 
