@@ -59,6 +59,7 @@ extern void itoh(size_t n,char *s); // Byte to hex string
 
 // Memory function
 extern void* memcpy(void* dest,const void* src,size_t n);
+extern void* memset(void* dest,int ch,size_t n);
 
 #ifdef	__cplusplus
 }

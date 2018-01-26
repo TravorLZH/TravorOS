@@ -48,7 +48,7 @@ char* strrev(char* str){
 	char* end=str;
 	char temp=0;
 	while(*(end++));
-	end--;	// Compensate t++
+	end--;	// Compensate end++
 	end--;	// Ignore the \0
 	while(start<end){
 		temp=*start;
@@ -67,3 +67,14 @@ void* memcpy(void* dest,const void* src,size_t n){
 	}
 	return dest;
 }
+
+void* memset(void* dest,int ch,size_t count){
+	char* ptr=dest+count;
+	char c=(char)ch;
+	while(count--){
+		*ptr=c;
+		ptr--;
+	}
+	return dest;
+}
+

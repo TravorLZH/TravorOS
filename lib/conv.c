@@ -22,18 +22,22 @@
 // I partially refer the 1st link in BIBLIOGRAPHY
 /* String -> Integer */
 int atoi(const char* nptr){
-	char* s=(char*)nptr;
-	size_t i;
-	int n=0;
-	char sign;
-	for(i=0;isspace(s[i]);i++){
-		sign=(s[i] == '-') ? -1 : 1;
-		if(sign=='-' || sign=='+')i++;
+	char* x=(char*)nptr;
+	int res=0;
+	int sign=1;
+	int i=0;
+	if(x[0]=='-'){
+		sign=-1;
+		x++;
+	}else if(x[0]=='+'){
+		x++;
 	}
-	for(;isdigit(s[i]);i++){
-		n=10*n+(s[i]-'0');
+	char* s=x+strlen(x);
+	while(x<s){
+		res=res*10+*x-'0';
+		x++;
 	}
-	return n*sign;
+	return sign*res;
 }
 
 long atol(const char* nptr){

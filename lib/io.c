@@ -16,6 +16,7 @@
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 /* misc.h: It contains some fundamental standard and not standard C functions which are implemented by myself. */
+#include <random.h>
 #include <screen.h>
 #include <io.h>
 
