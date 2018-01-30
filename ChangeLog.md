@@ -1,6 +1,6 @@
 # ChangeLog
 
-All major changes will be added in this file.
+All major changes before v0.4 will be declared in this file. After v0.4, you can see them [here](https://github.com/TravorLZH/OS/releases/)
 
 ## Proper Release
 
