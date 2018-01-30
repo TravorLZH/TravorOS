@@ -17,6 +17,7 @@
 */
 /* kernel.c: The core part of the OS kernel (i.e. The heart of the OS) */
 #include <misc.h>
+#include <random.h>
 #include <kbd.h>
 #include <io.h>
 #define	COLOR	0x70
@@ -27,8 +28,25 @@ void _sleep(long long sec){
 }
 
 int main(void){
-	puts("> ");
-	gets();
-	puts("Stuff");
+	char cmdline[3];
+	int num;
+	unsigned long number;
+	char result;
+	while(1){
+		number=rand()%100;
+		puts("\nI'm thinking of a number between 0 and 100, try to guess what it is: ");
+		while(1){
+			memset(cmdline,0,3);
+			gets(cmdline);
+			num=atoi(cmdline);
+			result=_cmp(num,number);
+			if(result==2){puts("Too large! ");continue;}
+			if(result==0){puts("Too small! ");continue;}
+			if(result==1){break;}
+			puts("Oh fuck!");
+		}
+		puts("Oh! you guess it right!\n");
+	}
+	puts("Oh fuck!");
 	return 0;
 }

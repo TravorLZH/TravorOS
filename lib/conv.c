@@ -33,60 +33,30 @@ int atoi(const char* nptr){
 		x++;
 	}
 	char* s=x+strlen(x);
-	while(x<s){
+	while(x<=s){
 		res=res*10+*x-'0';
 		x++;
 	}
 	return sign*res;
 }
 
-long atol(const char* nptr){
-	char* s=(char*)nptr;
-	size_t i;
-	long n=0L;
-	char sign;
-	for(i=0;isspace(s[i]);i++){
-		sign=(s[i] == '-') ? -1 : 1;
-		if(sign=='-' || sign=='+')i++;
-	}
-	for(;isdigit(s[i]);i++){
-		n=10*n+(s[i]-'0');
-	}
-	return n*sign;
-}
-
-long long atoll(const char* nptr){
-	char* s=(char*)nptr;
-	size_t i;
-	long long n=0LL;
-	char sign;
-	for(i=0;isspace(s[i]);i++){
-		sign=(s[i] == '-') ? -1 : 1;
-		if(sign=='-' || sign=='+')i++;
-	}
-	for(;isdigit(s[i]);i++){
-		n=10*n+(s[i]-'0');
-	}
-	return n*sign;
-}
-
 // Integer -> String
 void itoa(int n,char *s){
-	size_t i;
-	int j;
-	char sign;	// 1: negative, 0: positive
-	// TODO: Record the sign of the integer
+	char neg=0;
+	char *x=s;
 	if(n<0){
+		neg=1;
 		n=-n;
-		sign=1;
 	}
-	i=0;
 	do{
-		s[i++]=n%10+'0';
-	}while((n/=10)>0);
-	if(s[i]=='0'&&i>0){	// If there is zero before the number,
-		s[i]='\0';		// change it to the end of string
+		*x=n%10+'0';
+		x++;
+	}while(n/=10);
+	if(neg){
+		*x='-';
+		x++;
 	}
-	s=strrev(s);
+	*x='\0';
+	strrev(s);
 }
 

@@ -4,6 +4,12 @@ All major changes will be added in this file.
 
 ## Pre-release
 
+### 0.4-NumberGame 2018-1-30
+
+#### Added
+
+More stable functions: `itoa` and `atoi`
+
 ### 0.3-Typewriter 2018-1-25
 
 #### Added
