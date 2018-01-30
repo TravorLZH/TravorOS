@@ -6,9 +6,15 @@ All major changes will be added in this file.
 
 ### 0.4-NumberGame 2018-1-30
 
-#### Added
+#### Modified
 
 More stable functions: `itoa` and `atoi`
+
+`kernel/kernel.c`: Adjusted itself into a number game
+
+#### Summary
+
+After booting the machine, you will see the computer wants you to guess a random number that it generates. The computer will tell you whether the number is too large or too small. If you guess it right, the computer will generate another number and so on.
 
 ### 0.3-Typewriter 2018-1-25
 
