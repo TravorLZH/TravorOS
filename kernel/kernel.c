@@ -17,6 +17,8 @@
 */
 /* kernel.c: The core part of the OS kernel (i.e. The heart of the OS) */
 #include <misc.h>
+#include <def.h>
+#include <string.h>
 #include <random.h>
 #include <kbd.h>
 #include <io.h>

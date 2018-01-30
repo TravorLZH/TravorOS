@@ -15,52 +15,19 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-/* misc.h: It contains some fundamental standard and not standard C functions which are implemented by myself. */
+/* misc.h: Some functions that I cannot put them into proper headers */
 #include <types.h>
 #ifndef	__MISC_H_
 #define	__MISC_H_
-// Basic constants
-#define	NULL	0
-#define	EOF		-1
-#define	TRUE	1
-#define	FALSE	0
 #ifdef	__cplusplus
-extern "C"{
+extern	"C"{
 #endif
-// These should be in ctypes.h
-extern int isalpha(int c);
-extern int isdigit(int c);
-extern int isgraph(int c);
-extern int isprint(int c);
-extern int ispunct(int c);
-extern int isspace(int c);
-
-extern int islower(int c);
-extern int isupper(int c);
-
-extern int tolower(int c);
-extern int toupper(int c);
-
-// String functions
-extern char* strchr(const char*,int c);
-extern char* strcpy(char* dest,char* src);
-extern unsigned int strlen(const char*);
-/* Not standard string function(s) */
-extern char* strrev(char *str);
-
 // Conversion functions
 /* String -> Integer */
 extern int atoi(const char *nptr);
-extern long atol(const char *nptr);
-extern long long atoll(const char *nptr);
 /* Integer -> String */
 extern void itoa(int n,char *s);
-extern void itoh(size_t n,char *s); // Byte to hex string
-
-// Memory function
-extern void* memcpy(void* dest,const void* src,size_t n);
-extern void* memset(void* dest,int ch,size_t n);
-
+extern void itoh(size_t n,char *s); // Integer to hex string
 #ifdef	__cplusplus
 }
 #endif

@@ -15,15 +15,20 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-/* fibonacci.h: Algorithms of getting Fibonacci number */
-#include <types.h>
-#ifndef	__FIBONACCI_H_
-#define	__FIBONACCI_H_
+/* string.h: String and Memory Functions */
+#ifndef	__STRING_H_
+#define	__STRING_H_
 #ifdef	__cplusplus
 extern	"C"{
 #endif
-extern int get_fibonacci(size_t index);
+// String functions
+extern char* strchr(const char*,int c);
+extern char* strcpy(char* dest,char* src);
+extern unsigned int strlen(const char*);
+/* Not standard string function(s) */
+extern char* strrev(char *str);
 #ifdef	__cplusplus
 }
 #endif
 #endif
+

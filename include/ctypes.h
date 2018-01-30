@@ -15,15 +15,26 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-/* fibonacci.h: Algorithms of getting Fibonacci number */
-#include <types.h>
-#ifndef	__FIBONACCI_H_
-#define	__FIBONACCI_H_
+/* ctypes.h: Basic functions that determine the category of character(s) */
+#ifndef	__CTYPES_H_
+#define	__CTYPES_H_
 #ifdef	__cplusplus
 extern	"C"{
-#endif
-extern int get_fibonacci(size_t index);
+// Basic categories of characters
+extern int isalpha(int c);
+extern int isdigit(int c);
+extern int isgraph(int c);
+extern int isprint(int c);
+extern int ispunct(int c);
+extern int isspace(int c);
+// Character cases
+extern int islower(int c);
+extern int isupper(int c);
+// Conversion of character cases
+extern int tolower(int c);
+extern int toupper(int c);
 #ifdef	__cplusplus
 }
 #endif
 #endif
+

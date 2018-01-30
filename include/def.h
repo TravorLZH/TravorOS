@@ -15,15 +15,14 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-/* fibonacci.h: Algorithms of getting Fibonacci number */
-#include <types.h>
-#ifndef	__FIBONACCI_H_
-#define	__FIBONACCI_H_
-#ifdef	__cplusplus
-extern	"C"{
-#endif
-extern int get_fibonacci(size_t index);
-#ifdef	__cplusplus
-}
-#endif
+/* def.h: Basic constants definitions */
+#ifndef	__DEF_H_
+#define	__DEF_H_
+// Basic constants
+#define	NULL	0
+#define	EOF		-1
+#define	TRUE	1
+#define	FALSE	0
+#define	true	TRUE
+#define	false	FALSE
 #endif
