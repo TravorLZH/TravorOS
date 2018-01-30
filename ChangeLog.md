@@ -2,7 +2,7 @@
 
 All major changes will be added in this file.
 
-## Pre-release
+## Proper Release
 
 ### 0.4-NumberGame 2018-1-30
 
