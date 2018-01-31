@@ -20,6 +20,7 @@
 #define	__CTYPES_H_
 #ifdef	__cplusplus
 extern	"C"{
+#endif
 // Basic categories of characters
 extern int isalpha(int c);
 extern int isdigit(int c);

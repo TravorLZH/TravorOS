@@ -21,7 +21,7 @@
 #include <string.h>
 #include <random.h>
 #include <kbd.h>
-#include <io.h>
+#include <stdio.h>
 #define	COLOR	0x70
 
 void _sleep(long long sec){
@@ -36,19 +36,19 @@ int main(void){
 	char result;
 	while(1){
 		number=rand()%100;
-		puts("\nI'm thinking of a number between 0 and 100, try to guess what it is: ");
+		printf("\nI'm thinking of a number between 0 and 100, try to guess what it is: ");
 		while(1){
 			memset(cmdline,0,3);
 			gets(cmdline);
 			num=atoi(cmdline);
 			result=_cmp(num,number);
-			if(result==2){puts("Too large! ");continue;}
-			if(result==0){puts("Too small! ");continue;}
+			if(result==2){printf("%d is Too large! ",num);continue;}
+			if(result==0){printf("%d is Too small! ",num);continue;}
 			if(result==1){break;}
-			puts("Oh fuck!");
+			printf("Oh fuck!\n");
 		}
-		puts("Oh! you guess it right!\n");
+		printf("Oh! you guess it right! It's %d\n",num);
 	}
-	puts("Oh fuck!");
+	printf("Oh fuck! How do you get here?\n");
 	return 0;
 }

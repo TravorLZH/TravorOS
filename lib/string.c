@@ -15,7 +15,7 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#include <misc.h>
+#include <string.h>
 
 char* strcat(char* s1,char* s2){
 	char* s1_end=s1+strlen(s1);
@@ -40,7 +40,7 @@ char* strcpy(char* dest,char* src){
 size_t strlen(const char* str){
 	size_t i=0;
 	for(;str[i];i++);
-	return i-1;
+	return i;
 }
 
 char* strrev(char* str){

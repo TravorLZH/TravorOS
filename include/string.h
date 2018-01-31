@@ -16,6 +16,7 @@
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 /* string.h: String and Memory Functions */
+#include <def.h>
 #ifndef	__STRING_H_
 #define	__STRING_H_
 #ifdef	__cplusplus
@@ -27,6 +28,8 @@ extern char* strcpy(char* dest,char* src);
 extern unsigned int strlen(const char*);
 /* Not standard string function(s) */
 extern char* strrev(char *str);
+
+extern void* memcpy(void* dest,const void* src,size_t len);
 #ifdef	__cplusplus
 }
 #endif

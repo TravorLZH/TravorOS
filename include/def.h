@@ -16,11 +16,13 @@
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 /* def.h: Basic constants definitions */
+#include <types.h>
 #ifndef	__DEF_H_
 #define	__DEF_H_
 // Basic constants
 #define	NULL	0
-#define	EOF		-1
+#define	EOF	-1
+#define	BUFSIZ	512
 #define	TRUE	1
 #define	FALSE	0
 #define	true	TRUE

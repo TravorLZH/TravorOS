@@ -16,8 +16,8 @@
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 /* ctypes.c: Implementations of functions about character categories */
-#include <types.h>
-#include <misc.h>
+#include <def.h>
+#include <ctypes.h>
 
 char* alpha="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 char* digit="0123456789";
