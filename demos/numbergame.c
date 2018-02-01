@@ -1,4 +1,4 @@
-/* numbergame.c: The number game of TravorOS v0.4-r1's kernel */.
+/* numbergame.c: The number game of TravorOS v0.4-r1's kernel */
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
