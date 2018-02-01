@@ -5,3 +5,5 @@
 *.dsasm
 *~
 *.swp
+demos/*.o
+demos/license
