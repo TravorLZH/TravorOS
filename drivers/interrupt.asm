@@ -28,6 +28,13 @@ isr_common_stub:
 	iret	; pops 5 things at once: CS, EIP, EFLAGS, SS, and ESP
 
 global	int10h
+global	int50h
+
+int50h:
+	cli
+	push	byte	0
+	push	byte	0x50
+	jmp	isr_common_stub
 
 int10h:
 	cli

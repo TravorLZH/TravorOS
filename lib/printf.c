@@ -30,6 +30,7 @@ int vsprintf(char* buffer,const char *format,va_list vlist){
 	char ch;
 	size_t offset=0;
 
+	int len=0;
 	while(ch=*(format++)){
 		if('%'==ch){
 			switch(ch=*format++){
@@ -53,7 +54,15 @@ int vsprintf(char* buffer,const char *format,va_list vlist){
 				case 'd':
 				int_temp=va_arg(vlist,int);
 				itoa(int_temp,buf_temp);
-				int len=strlen(buf_temp);
+				len=strlen(buf_temp);
+				memcpy(buffer+offset,buf_temp,len);
+				offset+=len;
+				break;
+				// Print hex values
+				case 'x':
+				int_temp=va_arg(vlist,int);
+				itoh(int_temp,buf_temp);
+				len=strlen(buf_temp);
 				memcpy(buffer+offset,buf_temp,len);
 				offset+=len;
 				break;

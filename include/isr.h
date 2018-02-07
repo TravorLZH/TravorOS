@@ -30,6 +30,7 @@ typedef struct {
 #ifdef	__cplusplus
 extern	"C"{
 #endif
+extern void int50h();
 extern void int10h();
 extern void isr_handler(registers_t r);
 #ifdef	__cplusplus

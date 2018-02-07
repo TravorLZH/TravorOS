@@ -23,6 +23,7 @@ int main(void){
 	isr_install();
 	printf("Testing interrupts:\n");
 	__asm__("int $16");
+	__asm__("int $0x50");
 	return 0;
 }
 
