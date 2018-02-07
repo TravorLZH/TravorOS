@@ -2,3 +2,4 @@ It's very impossible to make an Operating System without outside help, so I'd li
 	https://cnblogs.com/bluestorm/p/3168719.html - itoa()'s and atoi()'s implementation in C
 	http://blog.csdn.net/turingo/article/details/8124432 - strrev()'s implementation
 	https://stackoverflow.com/questions/16647278/minimal-implementation-of-sprintf-or-printf - Implementation of vsprintf()
+	https://github.com/cfenollosa/os-tutorial - Operating System Tutorial I found after `os-dev.pdf'

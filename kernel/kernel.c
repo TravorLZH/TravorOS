@@ -16,19 +16,13 @@
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 /* kernel.c: The core part of the OS kernel (i.e. The heart of the OS) */
-#include <misc.h>
-#include <def.h>
-#include <string.h>
-#include <random.h>
-#include <kbd.h>
 #include <stdio.h>
-#define	COLOR	0x70
-
-void _sleep(long long sec){
-	sec*=10000;
-	while(sec--);
-}
+#include <isr.h>
 
 int main(void){
-	printf("Hello world!\n");
+	isr_install();
+	printf("Testing interrupts:\n");
+	__asm__("int $16");
+	return 0;
 }
+
