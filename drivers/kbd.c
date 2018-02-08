@@ -16,6 +16,8 @@
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include <kbd.h>
+#include <stdio.h>
+#include <isr.h>
 /* kbd.c: A simple keyboard driver */
 
 // Table for scan code character mappings
@@ -46,5 +48,16 @@ char getScancode(){
 		flag=port_byte_in(0x64);
 	}
 	return port_byte_in(0x60);
+}
+
+void keyboard_handler(registers_t r){
+	int x=port_byte_in(0x60);
+	if(x<0x80){
+		putchar(code2char(x));
+	}
+}
+
+void init_keyboard(){
+	register_interrupt_handler(0x21,keyboard_handler);
 }
 

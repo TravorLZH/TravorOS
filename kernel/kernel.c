@@ -21,6 +21,7 @@
 
 int main(void){
 	isr_install();
+	init_keyboard();
 	__asm__("sti");
 	printf("Type anything you want (You can also erase this line): ");
 	return 0;

@@ -2,6 +2,8 @@
 #include <isr.h>
 #include <stdio.h>
 
+isr_t handlers[256];
+
 void isr_install(){
 	set_idt_gate(0, (uint32_t)isr0);
 	set_idt_gate(1, (uint32_t)isr1);
@@ -88,15 +90,17 @@ void isr_handler(registers_t r){
 	}
 }
 
+void register_interrupt_handler(uint8_t n,isr_t h){
+	handlers[n]=h;
+}
+
 void irq_handler(registers_t r){
+	if(handlers[r.int_no]!=0){
+		isr_t h=handlers[r.int_no];
+		h(r);
+	}
 	/* After every interrupt we need to send an EOI to the PICs
 	 * or they will not send another interrupt again */
-	if(r.int_no == 0x21){
-		int x=port_byte_in(0x60);
-		if(x<0x80){
-			printf("%c",code2char(x));
-		}
-	}
 	if(r.int_no >= 40) port_byte_out(0xA0,0x20); /* slave */
 	port_byte_out(0x20,0x20); /* master */
 }
