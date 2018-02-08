@@ -21,9 +21,8 @@
 
 int main(void){
 	isr_install();
-	printf("Testing interrupts:\n");
-	__asm__("int $16");
-	__asm__("int $0x50");
+	__asm__("sti");
+	printf("Type anything you want (You can also erase this line): ");
 	return 0;
 }
 

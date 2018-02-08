@@ -40,3 +40,9 @@ unsigned short port_word_in(unsigned short port){
 void port_word_out(unsigned short port,unsigned short data){
 	__asm__("out %%ax,%%dx" : : "a" (data), "d" (port));
 }
+
+void io_wait(void){
+	__asm__("jmp 1f\n\t"
+		"1: jmp 2f\n\t"
+		"2:");
+}
