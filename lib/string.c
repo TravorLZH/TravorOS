@@ -58,6 +58,18 @@ char* strrev(char* str){
 	return str;
 }
 
+int strcmp(const char* s1,const char* s2){
+	int i=0;
+	for(;;i++){
+		if(s1[i]!=s2[i]){
+			return s1[i] < s2[i] ? -1 : 1;
+		}
+		if(s1[i]=='\0'){
+			return 0;
+		}
+	}
+}
+
 void* memcpy(void* dest,const void* src,size_t n){
 	char* d=(char*)dest;
 	char* s=(char*)src;
