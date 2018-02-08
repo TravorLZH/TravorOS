@@ -5,6 +5,7 @@
 *.dsasm
 *~
 *.swp
+*.elf
 demos/*.o
 demos/license
 demos/numbergame

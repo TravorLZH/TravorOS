@@ -7,14 +7,16 @@ INCLUDE_DIR=-Iinclude
 include vars.mak
 kernel_LIBS=lib/libio.a lib/libbc.a
 OBJ=${C_SOURCES:.c=.o drivers/interrupt.o}
-.PHONY:	clean all run
-all:	os.img
+.PHONY:	clean all run debug
+all:	os.img kernel.elf
 run:
 	qemu-system-i386 -fda os.img
 os.img:	boot/bootload.bin kernel/kernel.bin $(kernel_LIBS)
 	cat boot/bootload.bin kernel/kernel.bin > os.img
 kernel/kernel.bin:	kernel/kernel_entry.o $(OBJ) $(kernel_LIBS)
 	ld -melf_i386 -o $@ -Ttext 0x1000 $^ --oformat binary
+kernel.elf:	kernel/kernel_entry.o $(OBJ) $(kernel_LIBS)
+	ld -melf_i386 -o $@ -Ttext 0x1000 $^
 drivers/interrupt.o:	drivers/interrupt.asm
 $(kernel_LIBS):	$(LIB_OBJ)
 	$(MAKE) -C lib
