@@ -6,7 +6,7 @@ This project has been activated since [December 15, 2017](https://github.com/Tra
 
 ### Bootloader
 
-This OS uses a bootloader that switches from `16-bit real mode` to `32-bit protected mode`. It loads kernel code into memory before it entered 32-bit protected mode.
+This OS uses a bootloader that switches from **16-bit real mode** to **32-bit protected mode**. It loads kernel code into memory before it entered 32-bit protected mode.
 
 ### Kernel
 
@@ -18,9 +18,9 @@ I believe that most [GitHub](https://github.com) users have tried to install sof
 
 The sources are separated into 5 folders.
 
-- `boot`: This folder contains the code of bootloader especially the conversion from `16-bit real mode` to `32-bit protected mode`.
+- **boot**: This folder contains the code of bootloader especially the conversion from **16-bit real mode** to **32-bit protected mode**.
 
-- `kernel`: This folder contains the most important part of the Operating System -- the code of KERNEL which is written in C.
+- **kernel**: This folder contains the most important part of the Operating System -- the code of KERNEL which is written in C.
 
 - `drivers`: It contains a lot of important components of the kernel, the code inside will be statically linked with the `kernel`.
 
@@ -28,4 +28,4 @@ The sources are separated into 5 folders.
 
 - `include`: It contains C headers of the drivers and `libbc`. I organized the functions into [misc.h](https://github.com/TravorLZH/TravorOS/blob/master/include/misc.h).
 
-This is project contains only several `Makefile`s. It really makes up challenge to my ability of organizing code.
+This is project contains only several **Makefiles**. It really makes up challenge to my ability of organizing code.
