@@ -22,10 +22,10 @@ The sources are separated into 5 folders.
 
 - **kernel**: This folder contains the most important part of the Operating System -- the code of KERNEL which is written in C.
 
-- `drivers`: It contains a lot of important components of the kernel, the code inside will be statically linked with the `kernel`.
+- **drivers**: It contains a lot of important components of the kernel, the code inside will be statically linked with the **kernel**.
 
-- `lib`: It contains some basic functions used by kernel, but it's still a little bit.
+- **lib**: It contains some basic functions used by kernel, but it's still a little bit.
 
-- `include`: It contains C headers of the drivers and `libbc`. I organized the functions into [misc.h](https://github.com/TravorLZH/TravorOS/blob/master/include/misc.h).
+- **include**: It contains C headers of the drivers and **libbc**. I organized the functions into [misc.h](https://github.com/TravorLZH/TravorOS/blob/master/include/misc.h).
 
 This is project contains only several **Makefiles**. It really makes up challenge to my ability of organizing code.
