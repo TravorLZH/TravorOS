@@ -10,21 +10,27 @@ OBJ=${C_SOURCES:.c=.o drivers/interrupt.o}
 .PHONY:	clean all run debug
 all:	os.img kernel.elf
 run:
-	qemu-system-i386 -fda os.img
+	@qemu-system-i386 -fda os.img
 debug:
-	exec gdb -x debug.gdb
+	@exec gdb -x debug.gdb
 os.img:	boot/bootload.bin kernel/kernel.bin $(kernel_LIBS)
-	cat boot/bootload.bin kernel/kernel.bin > os.img
+	@echo "Creating OS Image"
+	@cat boot/bootload.bin kernel/kernel.bin > os.img
 kernel/kernel.bin:	kernel/kernel_entry.o $(OBJ) $(kernel_LIBS)
-	ld -melf_i386 -o $@ -Ttext 0x1000 $^ --oformat binary
+	@echo "Linking kernel.bin"
+	@ld -melf_i386 -o $@ -Ttext 0x1000 $^ --oformat binary
 kernel.elf:	kernel/kernel_entry.o $(OBJ) $(kernel_LIBS)
-	ld -melf_i386 -o $@ -Ttext 0x1000 $^
+	@echo "Linking kernel symbol file"
+	@ld -melf_i386 -o $@ -Ttext 0x1000 $^
 drivers/interrupt.o:	drivers/interrupt.asm
 $(kernel_LIBS):	$(LIB_OBJ)
-	$(MAKE) -C lib
+	@echo "Building libraries"
+	@$(MAKE) -C lib
 boot/bootload.bin:	$(BOOT_SRC)
-	$(MAKE) -C boot
+	@echo "Building bootloader"
+	@$(MAKE) -C boot
 clean:
-	rm -fr *.bin *.o *.img
-	rm -fr kernel/*.o boot/*.bin drivers/*.o
-	make -C lib clean
+	@echo "Cleaning"
+	@rm -fr *.bin *.o *.img
+	@rm -fr kernel/*.o boot/*.bin drivers/*.o
+	@make -C lib clean

@@ -7,8 +7,11 @@ libbc_OBJ=${libbc_SOURCES:.c=.o}
 include ../vars.mak
 all:	libio.a libbc.a
 libio.a:	$(libio_OBJ)
-	ar rc $@ $^
+	@echo "Linking $<"
+	@ar rc $@ $^
 libbc.a:	$(libbc_OBJ)	
+	@echo "Linking $<"
 	ar rc $@ $^
 clean:
-	rm -f *.a *.o
+	@echo Cleaning
+	@rm -f *.a *.o
