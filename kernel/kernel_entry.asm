@@ -1,7 +1,11 @@
+%ifdef MINGW
+%define main _main
+%endif
 ; Ensures that we jump straight into the kernel's entry function.
 [bits	32]
 [extern	main]	; Declare that we will be referencing the external symbol 'kernel_main'
 [global _cmp]
+[global __cmp]
 call	main
 jmp	$
 
@@ -9,6 +13,7 @@ jmp	$
 ; if a is greater than b, returns 1
 ; if a is less than b, returns -1
 ; if a is equal to b, returns 0
+__cmp:
 _cmp:
 	push	ebp
 	mov	ebp,esp
