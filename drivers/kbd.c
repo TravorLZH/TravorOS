@@ -17,9 +17,14 @@
 */
 #include <kbd.h>
 #include <stdio.h>
+#include <ctypes.h>
 #include <isr.h>
 /* kbd.c: A simple keyboard driver */
 
+// Flags for key pressed
+char shift=0;
+char alt=0;
+char ctrl=0;
 // Table for scan code character mappings
 const char press_char[]={
 	VK_ESCAPE,'1','2','3','4','5','6','7','8','9','0','-','=',VK_BACK,
@@ -28,8 +33,19 @@ const char press_char[]={
 	'\\','z','x','c','v','b','n','m',',','.','/',VK_SHIFT,'*',VK_MENU,
 	VK_SPACE,VK_CAPITAL,VK_F1,VK_F2,VK_F3,VK_F4,VK_F5,VK_F6,VK_F7,VK_F8,VK_F9,VK_F10
 };
+const char shift_char[]={
+	VK_ESCAPE,'!','@','#','$','%','^','&','*','(',')','_','+',VK_BACK,
+	VK_TAB,'Q','W','E','R','T','Y','U','I','O','P','{','}',VK_RETURN,
+	VK_CONTROL,'A','S','D','F','G','H','J','K','L',':','"','~',VK_SHIFT,
+	'|','Z','X','C','V','B','N','M','<','>','?',VK_SHIFT,'*',VK_MENU,
+	VK_SPACE,VK_CAPITAL,VK_F1,VK_F2,VK_F3,VK_F4,VK_F5,VK_F6,VK_F7,VK_F8,VK_F9,VK_F10
+};
 char code2char(unsigned char code){
-	return press_char[code-1];
+	if(shift==1){
+		return shift_char[code-1];
+	}else{
+		return press_char[code-1];
+	}
 }
 char _getchar(){
 	unsigned char code=0;
@@ -52,8 +68,20 @@ char getScancode(){
 
 void keyboard_handler(registers_t r){
 	int x=port_byte_in(0x60);
-	if(x<0x80){
-		putchar(code2char(x));
+	char code;
+	if(x & 0x80){
+		// TODO: Handler when key is released.
+		code=code2char(x-0x80);
+		if(code==VK_SHIFT){
+			shift=0;
+		}
+	}else{
+		code=code2char(x);
+		if(code==VK_SHIFT){
+			shift=1;
+			return;
+		}
+		putchar(code);
 	}
 }
 
