@@ -9,10 +9,10 @@ kernel_LIBS=lib/libio.a lib/libbc.a
 OBJ=${C_SOURCES:.c=.o drivers/interrupt.o}
 .PHONY:	clean all run debug
 all:	os.img kernel.elf
-run:
+run:	os.img
 	@qemu-system-i386 -fda os.img
-debug:
-	@exec gdb -x debug.gdb
+debug:	os.img kernel.elf
+	@exec gdb -tui -x debug.gdb
 os.img:	boot/bootload.bin kernel/kernel.bin $(kernel_LIBS)
 	@echo "Creating OS Image"
 	@cat boot/bootload.bin kernel/kernel.bin > os.img
@@ -31,6 +31,6 @@ boot/bootload.bin:	$(BOOT_SRC)
 	@$(MAKE) -C boot
 clean:
 	@echo "Cleaning"
-	@rm -fr *.bin *.o *.img
+	@rm -fr *.bin *.o *.img *.elf
 	@rm -fr kernel/*.o boot/*.bin drivers/*.o
 	@make -C lib clean
