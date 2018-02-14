@@ -11,6 +11,8 @@ OBJ=${C_SOURCES:.c=.o drivers/interrupt.o}
 all:	os.img kernel.elf
 run:
 	qemu-system-i386 -fda os.img
+debug:
+	exec gdb -x debug.gdb
 os.img:	boot/bootload.bin kernel/kernel.bin $(kernel_LIBS)
 	cat boot/bootload.bin kernel/kernel.bin > os.img
 kernel/kernel.bin:	kernel/kernel_entry.o $(OBJ) $(kernel_LIBS)
