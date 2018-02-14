@@ -23,8 +23,7 @@
 
 // Flags for key pressed
 char shift=0;
-char alt=0;
-char ctrl=0;
+char capital=0;
 // Table for scan code character mappings
 const char press_char[]={
 	VK_ESCAPE,'1','2','3','4','5','6','7','8','9','0','-','=',VK_BACK,
@@ -41,11 +40,19 @@ const char shift_char[]={
 	VK_SPACE,VK_CAPITAL,VK_F1,VK_F2,VK_F3,VK_F4,VK_F5,VK_F6,VK_F7,VK_F8,VK_F9,VK_F10
 };
 char code2char(unsigned char code){
+	char r;
 	if(shift==1){
-		return shift_char[code-1];
+		r=shift_char[code-1];
+		if(capital==1 && (r>='A' && r<='Z')){
+			r=r-'A'+'a';
+		}
 	}else{
-		return press_char[code-1];
+		r=press_char[code-1];
+		if(capital==1 && (r>='a' && r<='z')){
+			r=r-'a'+'A';
+		}
 	}
+	return r;
 }
 char _getchar(){
 	unsigned char code=0;
@@ -79,6 +86,10 @@ void keyboard_handler(registers_t r){
 		code=code2char(x);
 		if(code==VK_SHIFT){
 			shift=1;
+			return;
+		}
+		if(code==VK_CAPITAL){
+			capital=capital==1 ? 0 : 1;
 			return;
 		}
 		putchar(code);
