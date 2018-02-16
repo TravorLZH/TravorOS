@@ -16,7 +16,7 @@
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 /* io.h: Basic screen I/O functions */
-#include <screen.h>
+#include <drivers/screen.h>
 #ifndef __IO_H_
 #define	__IO_H_
 #define	puts(a)	print_at((const char*)(a),-1,-1,0x07)
