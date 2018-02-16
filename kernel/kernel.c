@@ -17,13 +17,17 @@
 */
 /* kernel.c: The core part of the OS kernel (i.e. The heart of the OS) */
 #include <stdio.h>
-#include <isr.h>
+#include <drivers/isr.h>
+#include <asm/interrupt.h>
 
 int main(void){
 	isr_install();
 	init_keyboard();
-	__asm__("sti");
+	set_interrupt();
 	printf("Type anything you want (You can also erase this line): ");
+	char buf[512];
+	gets(buf);
+	printf("You entered %s\n",buf);
 	return 0;
 }
 

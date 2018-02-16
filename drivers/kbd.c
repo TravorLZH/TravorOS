@@ -15,15 +15,17 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#include <kbd.h>
+#include <drivers/kbd.h>
+#include <asm/ioports.h>
 #include <stdio.h>
 #include <ctypes.h>
-#include <isr.h>
+#include <drivers/isr.h>
 /* kbd.c: A simple keyboard driver */
 
 // Flags for key pressed
 char shift=0;
 char capital=0;
+char kb_interrupt=0;
 // Table for scan code character mappings
 const char press_char[]={
 	VK_ESCAPE,'1','2','3','4','5','6','7','8','9','0','-','=',VK_BACK,
@@ -58,7 +60,7 @@ char _getchar(){
 	unsigned char code=0;
 	while(1){
 		code=getScancode();
-		if(code>=sizeof(press_char)-1){
+		if(code>=0x80){
 			continue;
 		}
 		break;
@@ -66,16 +68,19 @@ char _getchar(){
 	return code2char(code);
 }
 char getScancode(){
-	char flag=port_byte_in(0x64);
+	/*char flag=port_byte_in(0x64);
 	while(!(flag & 1)){
 		flag=port_byte_in(0x64);
-	}
+	}*/
+	while(!kb_interrupt);
+	kb_interrupt=0;
 	return port_byte_in(0x60);
 }
 
 void keyboard_handler(registers_t r){
 	int x=port_byte_in(0x60);
 	char code;
+	kb_interrupt=1;
 	if(x & 0x80){
 		// TODO: Handler when key is released.
 		code=code2char(x-0x80);
@@ -92,7 +97,7 @@ void keyboard_handler(registers_t r){
 			capital=capital==1 ? 0 : 1;
 			return;
 		}
-		putchar(code);
+		//putchar(code);
 	}
 }
 
