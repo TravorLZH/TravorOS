@@ -23,9 +23,10 @@
 /* kbd.c: A simple keyboard driver */
 
 // Flags for key pressed
-char shift=0;
-char capital=0;
-char kb_interrupt=0;
+static char shift=0;
+static char capital=0;
+static char kb_interrupt=0;
+static char special=0;
 // Table for scan code character mappings
 const char press_char[]={
 	VK_ESCAPE,'1','2','3','4','5','6','7','8','9','0','-','=',VK_BACK,
@@ -72,7 +73,7 @@ char getScancode(){
 	while(!(flag & 1)){
 		flag=port_byte_in(0x64);
 	}*/
-	while(!kb_interrupt);
+	while(!kb_interrupt || special);
 	kb_interrupt=0;
 	return port_byte_in(0x60);
 }
@@ -81,19 +82,23 @@ void keyboard_handler(registers_t r){
 	int x=port_byte_in(0x60);
 	char code;
 	kb_interrupt=1;
+	special=0;
 	if(x & 0x80){
 		// TODO: Handler when key is released.
 		code=code2char(x-0x80);
 		if(code==VK_SHIFT){
+			special=1;
 			shift=0;
 		}
 	}else{
 		code=code2char(x);
 		if(code==VK_SHIFT){
+			special=1;
 			shift=1;
 			return;
 		}
 		if(code==VK_CAPITAL){
+			special=1;
 			capital=capital==1 ? 0 : 1;
 			return;
 		}
