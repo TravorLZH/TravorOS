@@ -17,17 +17,20 @@
 */
 /* kernel.c: The core part of the OS kernel (i.e. The heart of the OS) */
 #include <stdio.h>
+#include <kernel/mem.h>
 #include <drivers/isr.h>
 #include <asm/interrupt.h>
 
 int main(void){
 	isr_install();
 	init_keyboard();
+	kmem_init(0xC0000);	// Dynamic Memory started from 0xC0000
 	set_interrupt();
 	printf("Type anything you want (You can also erase this line): ");
-	char buf[512];
+	char* buf=kmalloc(BUFSIZ);
 	gets(buf);
 	printf("You entered %s\n",buf);
+	kfree(buf);
 	return 0;
 }
 
