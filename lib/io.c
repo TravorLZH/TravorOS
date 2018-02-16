@@ -17,7 +17,7 @@
 */
 /* misc.h: It contains some fundamental standard and not standard C functions which are implemented by myself. */
 #include <random.h>
-#include <screen.h>
+#include <drivers/screen.h>
 #include <io.h>
 
 char getchar(void){
