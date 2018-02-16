@@ -22,68 +22,69 @@ This is project contains only one **Makefile**. It really makes up challenge to 
 
 ```
 TravorOS
-| AUTHORS
-| BIBLIOGRAPHY
-| bochsrc
-|-boot
-| |-32bit
-| | | gdt.asm
-| | | print.asm
-| | | protectedmode.asm
-| | bootload.asm
-| | disk.asm
-| | io.asm
-| | screen.asm
-| BUILDING.md
-| ChangeLog.md
-| debug.gdb
-|-demos
-| | iodemo.asm
-| | license
-| | numbergame
-| | numbergame.c
-| | video.c
-|-drivers
-| | idt.c
-| | interrupt.asm
-| | isr.c
-| | kbd.c
-| | Makefile
-| | screen.c
-|-include
-| |-asm
-| | | interrupt.h
-| | | ioports.h
-| | ctypes.h
-| | def.h
-| |-drivers
-| | idt.h
-| | isr.h
-| | kbd.h
-| | screen.h
-| | fibonacci.h
-| | io.h
-| | misc.h
-| | random.h
-| | stdio.h
-| | string.h
-| | types.h
-|-kernel
-| | kernel.c
-| | kernel_entry.asm
-| | Makefile
-|-lib
-| | conv.c
-| | ctypes.c
-| | fibonacci.c
-| | hex.c
-| | io.c
-| | lowlevel.asm
-| | printf.c
-| | random.c
-| | string.c
-| LICENSE
-| Makefile
-| README.md
-| vars.mak
+|-- AUTHORS
+|-- BIBLIOGRAPHY
+|-- bochsrc
+|-- boot
+|   |-- 32bit
+|   |   |-- gdt.asm
+|   |   |-- print.asm
+|   |   `-- protectedmode.asm
+|   |-- bootload.asm
+|   |-- disk.asm
+|   |-- io.asm
+|   |-- Makefile
+|   `-- screen.asm
+|-- BUILDING.md
+|-- ChangeLog.md
+|-- debug.gdb
+|-- demos
+|   |-- iodemo.asm
+|   |-- license
+|   |-- numbergame
+|   |-- numbergame.c
+|   `-- video.c
+|-- drivers
+|   |-- idt.c
+|   |-- interrupt.asm
+|   |-- isr.c
+|   |-- kbd.c
+|   |-- Makefile
+|   `-- screen.c
+|-- include
+|   |-- asm
+|   |   |-- interrupt.h
+|   |   `-- ioports.h
+|   |-- ctypes.h
+|   |-- def.h
+|   |-- drivers
+|   |   |-- idt.h
+|   |   |-- isr.h
+|   |   |-- kbd.h
+|   |   `-- screen.h
+|   |-- fibonacci.h
+|   |-- io.h
+|   |-- misc.h
+|   |-- random.h
+|   |-- stdio.h
+|   |-- string.h
+|   `-- types.h
+|-- kernel
+|   |-- kernel.c
+|   |-- kernel_entry.asm
+|   `-- Makefile
+|-- lib
+|   |-- conv.c
+|   |-- ctypes.c
+|   |-- fibonacci.c
+|   |-- hex.c
+|   |-- io.c
+|   |-- lowlevel.asm
+|   |-- printf.c
+|   |-- random.c
+|   `-- string.c
+|-- LICENSE
+|-- Makefile
+|-- README.md
+`-- vars.mak
 ```
