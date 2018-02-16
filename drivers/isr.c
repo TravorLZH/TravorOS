@@ -1,6 +1,7 @@
-#include <idt.h>
-#include <isr.h>
+#include <drivers/idt.h>
+#include <drivers/isr.h>
 #include <stdio.h>
+#include <asm/ioports.h>
 
 isr_t handlers[256];
 
