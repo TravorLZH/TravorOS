@@ -26,6 +26,6 @@ LD=i386-elf-ld
 
 At last type `make`.
 
-> This method has not been successful because its linker pops up error. See also #1
+> This method has not been successful because its linker pops up error. See also Issue #1 .
 
 [crosscompiler]: https://github.com/nativeos/i386-elf-toolchain/releases
