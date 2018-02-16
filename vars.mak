@@ -1,6 +1,6 @@
-AS=yasm -DMINGW
+AS=yasm
 CC=gcc
-LD=i386-elf-ld
+LD=ld
 %.o:	%.c
 	@echo "Compiling $^"
 	@${CC} -g -ffreestanding -nostdlib -m32 -c $< -o $@ $(INCLUDE_DIR)
