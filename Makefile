@@ -1,6 +1,6 @@
 C_SOURCES=$(wildcard drivers/*.c kernel/*.c)
 ASM_SOURCES=$(wildcard drivers/*.asm)
-BOOT_SRC=$(wildcard boot/*.asm)
+BOOT_SRC=$(wildcard boot/*.asm boot/32bit/*.asm)
 INCLUDE_DIR=-Iinclude
 include vars.mak
 kernel_LIBS=lib/libc.a
@@ -25,11 +25,11 @@ kernel.elf:	kernel/kernel_entry.o $(OBJ) $(kernel_LIBS)
 drivers/interrupt.o:	drivers/interrupt.asm
 boot/bootload.bin:	$(BOOT_SRC)
 	@echo "Building bootloader"
-	@$(MAKE) -C boot
+	@$(AS) -fbin boot/bootload.asm -o $@
 lib/libc.a:	$(libc_OBJ)	
 	@echo "Linking $<"
-	ar rc $@ $^
+	@ar rc $@ $^
 clean:
 	@echo "Cleaning"
 	@rm -fr *.bin *.o *.img *.elf
-	@rm -fr kernel/*.o boot/*.bin drivers/*.o
+	@rm -fr kernel/*.o kernel/*.bin boot/*.bin drivers/*.o lib/*.o lib/*.a
