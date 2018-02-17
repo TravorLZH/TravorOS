@@ -1,3 +1,4 @@
+#include <def.h>
 #ifndef	__IOPORTS_H_
 #define	__IOPORTS_H_
 #define	port_byte_in	inb
@@ -5,8 +6,8 @@
 #ifdef	__cplusplus
 extern	"C"{
 #endif
-extern char inb(unsigned short port);
-extern char outb(unsigned short port,char val);
+extern uint8_t inb(uint16_t port);
+extern void outb(uint16_t port,uint8_t val);
 #ifdef	__cplusplus
 }
 #endif

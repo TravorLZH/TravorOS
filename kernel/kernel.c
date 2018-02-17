@@ -22,15 +22,14 @@
 #include <asm/interrupt.h>
 
 int main(void){
-	isr_install();
-	init_keyboard();
-	kmem_init(0xC0000);	// Dynamic Memory started from 0xC0000
-	set_interrupt();
+	//isr_install();
+	//init_keyboard();
+	//set_interrupt();
 	printf("Type anything you want (You can also erase this line): ");
-	char* buf=kmalloc(BUFSIZ);
-	gets(buf);
-	printf("You entered %s\n",buf);
-	kfree(buf);
+	//char buf[10];
+	//gets(buf);
+	printf("\nYou enter\n");
+	printf("Hey");
 	return 0;
 }
 

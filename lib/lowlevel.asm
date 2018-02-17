@@ -19,29 +19,3 @@ clear_interrupt:
 	cli
 	leave
 	ret
-
-[global inb]
-[global _inb]
-[global outb]
-[global _outb]
-
-; char inb(unsigned short port);
-_inb:
-inb:
-	push	ebp
-	mov	ebp,esp
-	mov	dx,word [ebp+8]
-	in	al,dx
-	leave
-	ret
-
-_outb:
-outb:
-	push	ebp
-	mov	ebp,esp
-	mov	dx,word [ebp+8]
-	mov	al,byte [ebp+12]
-	out	dx,al
-	leave
-	ret
-
