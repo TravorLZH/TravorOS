@@ -19,6 +19,11 @@
 #include <def.h>
 #ifndef	__MEM_H_
 #define	__MEM_H_
+
+#define OFFSET_BLOCK(block) ((block)-9)
+#define	SIZE_OFFSET(offset) *((size_t*)offset+4)
+#define	NEXT_OFFSET(offset) *((size_t*)offset+8)
+
 #ifdef	__cplusplus
 extern	"C"{
 #endif
