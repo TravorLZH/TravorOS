@@ -9,7 +9,7 @@ make
 ```
 ## Cygwin with [Cross Compiler][crosscompiler]
 
-Modify `vars.mak`.
+Modify `Makefile`.
 
 Original:
 ```Makefile
