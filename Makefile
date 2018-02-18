@@ -1,12 +1,22 @@
+AS=yasm
+CC=gcc
+LD=ld
+
 C_SOURCES=$(wildcard drivers/*.c kernel/*.c)
 ASM_SOURCES=$(wildcard drivers/*.asm)
 BOOT_SRC=$(wildcard boot/*.asm boot/32bit/*.asm)
 INCLUDE_DIR=-Iinclude
-include vars.mak
 kernel_LIBS=lib/libc.a
 OBJ=${C_SOURCES:.c=.o drivers/interrupt.o}
 libc_SOURCES=$(wildcard lib/*.c lib/*.asm)
 libc_OBJ=$(patsubst %.c,%.o,$(patsubst %.asm,%.o,$(libc_SOURCES)));
+
+%.o:	%.c
+	@echo "Compiling $^"
+	@${CC} -g -ffreestanding -nostdlib -m32 -c $< -o $@ $(INCLUDE_DIR)
+%.o:	%.asm
+	@echo "Assembling $^"
+	@${AS} -felf $< -o $@
 .PHONY:	clean all run debug
 all:	os.img kernel.elf
 run:	os.img
