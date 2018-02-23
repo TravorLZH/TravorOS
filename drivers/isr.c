@@ -1,5 +1,5 @@
-#include <drivers/idt.h>
-#include <drivers/isr.h>
+#include <cpu/idt.h>
+#include <cpu/isr.h>
 #include <stdio.h>
 #include <asm/ioports.h>
 

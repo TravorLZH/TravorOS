@@ -1,4 +1,4 @@
-#include <drivers/idt.h>
+#include <cpu/idt.h>
 
 void set_idt_gate(int n,uint32_t handler){
 	idt[n].low_offset=LOWORD(handler);
