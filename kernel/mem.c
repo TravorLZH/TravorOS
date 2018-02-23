@@ -1,3 +1,4 @@
+/* mem.c: Implementation of kernel dynamic memory allocator */
 #include <kernel/mem.h>
 #include <errno.h>
 
@@ -59,4 +60,3 @@ void kfree(void* ptr){
 	p->allocated=0;
 	calculate_free_size(p);
 }
-
