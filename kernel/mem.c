@@ -1,36 +1,62 @@
 #include <kernel/mem.h>
 #include <errno.h>
 
-unsigned char* mem_ptr; // Dynamic Memory started
+#define	HEAP_SIZE	0x10000000	// Heap Size: 2GB
+
+typedef struct mem_block memblock_t;
+
+struct mem_block{
+	char allocated;
+	size_t size;
+	memblock_t* prev;
+	memblock_t* next;
+	char content[];
+};
+
+memblock_t* mem_ptr;
+
+static void calculate_free_size(memblock_t* ptr){
+	size_t offset=(size_t)mem_ptr;
+	size_t szPtr=sizeof(ptr);
+	size_t offsetPtr=(size_t)ptr;
+	ptr->size=HEAP_SIZE-(offsetPtr-offset);
+}
+
+static void calculate_next_address(memblock_t* ptr){
+	ptr->next=(memblock_t*)(ptr->content+ptr->size);
+}
 
 void kmem_init(size_t offset){
-	mem_ptr=(unsigned char*)offset;
-	// TODO: First unallocated memory block
-	*mem_ptr=0;	// BYTE: 0: allocated, 1: unallocated
-	*((size_t*)mem_ptr+4)=0x1000000; // DWORD: 2GB unallocated
-	*((size_t*)mem_ptr+8)=(size_t)mem_ptr;	// Next block's address;
+	// TODO: Create the first memory block
+	mem_ptr=(memblock_t*)offset;
+	mem_ptr->allocated=0;
+	mem_ptr->size=HEAP_SIZE;
+	mem_ptr->prev=NULL;
+	mem_ptr->next=NULL;
 }
 void *kmalloc(size_t size){
-	char* offset=mem_ptr;
-	char* next=offset;
-	// If the size of the block is less than requirement or the block is allocated, enter the loop
-	while(*offset==1 || SIZE_OFFSET(offset)<size){
-		offset=(char*)NEXT_OFFSET(offset);	// goto the next block
+	memblock_t* ptr=mem_ptr;
+	do{
+		if((ptr->allocated || ptr->size<size) && ptr->next!=NULL){
+			ptr=ptr->next;
+			continue;
+		}
+		break;
+	}while(1);
+	// TODO: Set up an allocated block
+	ptr->allocated=1;
+	// Create new unallocated block.
+	if(ptr->next==NULL){
+		ptr->size=size;
+		calculate_next_address(ptr);
+		ptr->next->allocated=0;
+		ptr->next->prev=ptr;
 	}
-	// Set up an allocated block
-	*offset=1;					// Identify it's allocated
-	SIZE_OFFSET(offset)=size;
-	if(NEXT_OFFSET(offset)==NEXT_OFFSET(offset)){
-		NEXT_OFFSET(offset)=(size_t)offset+size+4;	// next unallocated block's address
-		next=(unsigned char*)NEXT_OFFSET(offset);	// Pointer to next
-		*next=0;				// Unallocated;
-		SIZE_OFFSET(next)=0x1000000-(size_t)next;	// Size of unallocated;
-		NEXT_OFFSET(next)=(size_t)next;		// Next unallocated block's address
-	}
-	return offset+9;
+	return ptr->content;
 }
 void kfree(void* ptr){
-	unsigned char* offset=OFFSET_BLOCK(ptr);
-	*offset=0;	// Unallocate the memory;
+	memblock_t* p=(memblock_t*)ptr-16;
+	p->allocated=0;
+	calculate_free_size(p);
 }
 
