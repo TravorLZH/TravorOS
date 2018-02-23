@@ -1,4 +1,4 @@
-/* 
+/*
 * TravorOS: A simple OS running on Intel x86 Architecture
 * Copyright (C) 2017  Travor Liu
 *
@@ -16,8 +16,9 @@
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include <drivers/kbd.h>
+#include <drivers/screen.h>
 #include <asm/ioports.h>
-#include <stdio.h>
+#include <kernel/utils.h>
 #include <ctypes.h>
 #include <cpu/isr.h>
 /* kbd.c: A simple keyboard driver */
@@ -107,6 +108,7 @@ void keyboard_handler(registers_t r){
 }
 
 void init_keyboard(){
+	kprint("Initializing keyboard ...");
 	register_interrupt_handler(0x21,keyboard_handler);
+	print_at("[OK]\n",-1,-1,0x02);
 }
-
