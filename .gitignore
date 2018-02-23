@@ -7,4 +7,4 @@
 *.swp
 *.elf
 demos/*.o
-license
+demos/license
