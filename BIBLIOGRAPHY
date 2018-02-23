@@ -7,5 +7,7 @@ It's very impossible to make an Operating System without outside help, so I'd li
 	- Implementation of vsprintf()
 * github.com/cfenollosa/os-tutorial
 	- Operating System Tutorial I found after `os-dev.pdf'
-* https://stackoverflow.com/questions/34873209/implementation-of-strcmp/34873406
+* stackoverflow.com/questions/34873209/implementation-of-strcmp/34873406
 	- Implementation of strcmp()
+* bos.asmhackers.net/docs/floppy/docs/floppy_tutorial.txt
+	- Implementation of Floppy I/O
