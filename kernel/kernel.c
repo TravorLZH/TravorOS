@@ -20,23 +20,16 @@
 #include <kernel/mem.h>
 #include <kernel/utils.h>
 #include <kernel/dbg.h>
-#include <drivers/isr.h>
+#include <cpu/isr.h>
+#include <cpu/timer.h>
 #include <asm/interrupt.h>
 
 int main(void){
 	isr_install();
-	init_keyboard();
 	set_interrupt();
+	init_timer();
+	init_keyboard();
 	kmem_init(0xC0000);
-	printf("Type anything you want (You can also erase this line): ");
-	char* buf=(char*)kmalloc(100);
-	size_t sz=SIZE_OFFSET(OFFSET_BLOCK(buf));
-	gets(buf);
-	printf("You entered: %s\n",buf);
-	ktrace("Is allocated: %d\n",(int)*OFFSET_BLOCK(buf));
-	ktrace("allocated size: %d (0x%x)\n",(int)sz,(int)sz);
-	kfree(buf);
-	ktrace("Is allocated: %d\n",(int)*OFFSET_BLOCK(buf));
 	return 0;
 }
 
