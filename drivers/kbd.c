@@ -19,7 +19,7 @@
 #include <asm/ioports.h>
 #include <stdio.h>
 #include <ctypes.h>
-#include <drivers/isr.h>
+#include <cpu/isr.h>
 /* kbd.c: A simple keyboard driver */
 
 // Flags for key pressed
