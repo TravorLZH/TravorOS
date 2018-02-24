@@ -50,7 +50,12 @@ load_kernel:
 	mov	dh,20				; that we load the first 20 sectors (excluding
 	mov	dl,[BOOT_DRIVE]		; the boot sector) from the boot disk (i.e. our
 	call	disk_load		; kernel code) to address KERNEL_OFFSET
-
+; This code is inspired by Linux, Torvalds said that if we turned it off now,
+; we won't need to worry about it later.
+kill_motor:
+	mov	dx,0x3F2
+	mov	al,0
+	out	dx,al
 	ret
 [bits	32]
 ; This is where we arrive after switching to and initializing protected mode.
