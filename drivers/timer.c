@@ -4,17 +4,23 @@
 #include <asm/ioports.h>
 #include <drivers/screen.h>
 
+uint8_t lock=0;	// For thread safe
 size_t tick=0;
 
+void delay(size_t ticks){
+	if(lock){
+		kprint("Using by another thread");
+	}
+	tick=ticks;
+	while(tick);
+}
+
 static void timer_callback(registers_t regs){
-	tick++;
-	if(tick%20)return;
-	char msg[BUFSIZ];
-	sprintf(msg,"Seconds: %d",(int)tick/20);
-	print_at(msg,(MAX_COLS-strlen(msg))/2,MAX_ROWS/2,0xF0);
+	if(tick>0)tick--;
 }
 
 void init_timer(void){
+	kprint("Initializing timer...");
 	register_interrupt_handler(IRQ0,timer_callback);
+	print_at("[OK]\n",-1,-1,0x02);
 }
-

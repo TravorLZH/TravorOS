@@ -1,4 +1,4 @@
-/* 
+/*
 * TravorOS: A simple OS running on Intel x86 Architecture
 * Copyright (C) 2017  Travor Liu
 *
@@ -17,6 +17,7 @@
 */
 /* kernel.c: The core part of the OS kernel (i.e. The heart of the OS) */
 #include <stdio.h>
+#include <drivers/floppy.h>
 #include <kernel/mem.h>
 #include <kernel/utils.h>
 #include <kernel/dbg.h>
@@ -29,7 +30,10 @@ int main(void){
 	set_interrupt();
 	init_timer();
 	init_keyboard();
+	init_floppy();
 	kmem_init(0xC0000);
+	printf("Next line will print 1 sec later\n");
+	delay(20);
+	printf("Hello world!");
 	return 0;
 }
-
