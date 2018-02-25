@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <asm/ioports.h>
 #include <kernel/utils.h>
+#include <kernel/dbg.h>
 #include <drivers/floppy.h>
 #include <cpu/isr.h>
 
@@ -91,4 +92,16 @@ void flp_configure_drive(int base,char drive){
 	flp_write_commmand(base,floppy_disk.headload_ndma);
 }
 
-void flp_read_sector(uint8_t sector,uint8_t head,uint8_t cylinder,uint8_t drive,char* buffer){}
+void flp_seek_track(uint8_t head,uint8_t cyl,uint8_t drive){
+	flp_write_commmand(FLP_PRIMARY_BASE,FLOPPY_SEEK_TRACK);
+	flp_write_commmand(FLP_PRIMARY_BASE,drive);
+	flp_write_commmand(FLP_PRIMARY_BASE,cyl);
+	flp_wait_irq();
+	flp_check_intstatus(FLP_PRIMARY_BASE,&st0,&cylinder);
+	assert(st0 & 0x20);
+	assert(st0 & 0x80);
+}
+
+void flp_read_sector(uint8_t sector,uint8_t head,uint8_t cylinder,uint8_t drive,char* buffer){
+	flp_seek_track(head,cylinder,drive);
+}
