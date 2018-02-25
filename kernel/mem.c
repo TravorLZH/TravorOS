@@ -1,5 +1,6 @@
 /* mem.c: Implementation of kernel dynamic memory allocator */
 #include <kernel/mem.h>
+#include <kernel/utils.h>
 #include <errno.h>
 
 #define	HEAP_SIZE	0x10000000	// Heap Size: 2GB
@@ -28,12 +29,14 @@ static void calculate_next_address(memblock_t* ptr){
 }
 
 void kmem_init(size_t offset){
+	kprint("Initializing heap started from Address %d (%x)...",(int)offset,offset);
 	// TODO: Create the first memory block
 	mem_ptr=(memblock_t*)offset;
 	mem_ptr->allocated=0;
 	mem_ptr->size=HEAP_SIZE;
 	mem_ptr->prev=NULL;
 	mem_ptr->next=NULL;
+	print_at("[OK]\n",-1,-1,0x02);
 }
 void *kmalloc(size_t size){
 	memblock_t* ptr=mem_ptr;
