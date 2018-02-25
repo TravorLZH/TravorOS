@@ -1,4 +1,4 @@
-/* 
+/*
 * TravorOS: A simple OS running on Intel x86 Architecture
 * Copyright (C) 2017  Travor Liu
 *
@@ -28,6 +28,7 @@ void clear_screen(){
 			print_char(' ',row,col,WHITE_ON_BLACK);
 		}
 	}
+	set_cursor(0);
 }
 
 int get_cursor(){
@@ -71,11 +72,11 @@ int handle_scrolling(int offset){
 	for(i=0;i<MAX_COLS*2;i++){
 		last_line[i]=0;
 	}
-	
+
 	// Move the offset back one row, such that it is now on
 	// row, rather than off the edge of the screen.
 	offset-=2*MAX_COLS;
-	
+
 	// Return the updated cursor position.
 	return offset;
 }
@@ -95,12 +96,12 @@ void print_at(const char* str,int col,int row,char attr){
 void print_char(char character,int col,int row,char attribute_byte){
 	/* Create a byte (char) pointer to the start of video memory */
 	unsigned char *vidmem=(unsigned char*)VIDEO_ADDRESS;
-	
+
 	/* If attribute byte is zero, assume the default style. */
 	if(!attribute_byte){
 		attribute_byte=WHITE_ON_BLACK;
 	}
-	
+
 	/* Get the video memory offset for the screen location */
 	int offset;
 	/* If col and row are non-negative, use them for offset. */
@@ -143,7 +144,7 @@ void print_char(char character,int col,int row,char attribute_byte){
 		vidmem[offset]=character;
 		vidmem[offset+1]=attribute_byte;
 	}
-	
+
 	// Update the offset to the next character cell, which is
 	// two bytes ahead of the current cell.
 	offset+=2;
