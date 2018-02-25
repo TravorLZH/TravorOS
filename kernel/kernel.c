@@ -40,9 +40,10 @@ terminal_loop:
 	if(!strcmp(cmd,"help")){
 		printf("TravorOS v0.5\n\n");
 		printf("Available Commands:\n");
-		printf("about: Information about this OS\n");
-		printf("clear: Clear the terminal screen\n");
-		printf("help:  Display this page\n");
+		printf("about:  Information about this OS\n");
+		printf("clear:  Clear the terminal screen\n");
+		printf("reboot: Reboot this machine\n");
+		printf("help:   Display this page\n");
 		goto terminal_loop;
 	}
 	if(!strcmp(cmd,"about")){
@@ -51,6 +52,15 @@ terminal_loop:
 	}
 	if(!strcmp(cmd,"clear")){
 		clear_screen();
+		goto terminal_loop;
+	}
+	if(!strcmp(cmd,"reboot")){
+		uint8_t x=0x02;
+		while(x & 0x02){
+			x=inb(0x64);
+		}
+		outb(0x64,0xFE);
+		__asm__ ("hlt");
 		goto terminal_loop;
 	}
 	print_at("Unknown Command, type `help' to see available commands\n",-1,-1,0x04);
