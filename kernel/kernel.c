@@ -37,6 +37,14 @@ int main(void){
 terminal_loop:
 	print_at("\nTravorOS> ",-1,-1,0x0E);
 	gets(cmd);
+	if(!strcmp(cmd,"help")){
+		printf("TravorOS v0.5\n\n");
+		printf("Available Commands:\n");
+		printf("about: Information about this OS\n");
+		printf("clear: Clear the terminal screen\n");
+		printf("help:  Display this page\n");
+		goto terminal_loop;
+	}
 	if(!strcmp(cmd,"about")){
 		printf("TravorOS written by Travor Liu <travor_lzh@outlook.com>\n");
 		goto terminal_loop;
@@ -45,7 +53,7 @@ terminal_loop:
 		clear_screen();
 		goto terminal_loop;
 	}
-	print_at("Invalid Command\n",-1,-1,0x04);
+	print_at("Unknown Command, type `help' to see available commands\n",-1,-1,0x04);
 	goto terminal_loop;
 	return 0;
 }
