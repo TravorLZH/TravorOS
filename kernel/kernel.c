@@ -18,6 +18,7 @@
 /* kernel.c: The core part of the OS kernel (i.e. The heart of the OS) */
 #include <stdio.h>
 #include <drivers/floppy.h>
+#include <drivers/screen.h>
 #include <kernel/mem.h>
 #include <kernel/utils.h>
 #include <kernel/dbg.h>
@@ -32,8 +33,19 @@ int main(void){
 	init_keyboard();
 	init_floppy();
 	kmem_init(0xC0000);
-	printf("Next line will print 1 sec later\n");
-	delay(20);
-	printf("Hello world!");
+	char cmd[100];
+terminal_loop:
+	print_at("\nTravorOS> ",-1,-1,0x0E);
+	gets(cmd);
+	if(!strcmp(cmd,"about")){
+		printf("TravorOS written by Travor Liu <travor_lzh@outlook.com>\n");
+		goto terminal_loop;
+	}
+	if(!strcmp(cmd,"clear")){
+		clear_screen();
+		goto terminal_loop;
+	}
+	print_at("Invalid Command\n",-1,-1,0x04);
+	goto terminal_loop;
 	return 0;
 }
