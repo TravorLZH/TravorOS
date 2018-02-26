@@ -1,4 +1,4 @@
-/* 
+/*
 * TravorOS: A simple OS running on Intel x86 Architecture
 * Copyright (C) 2017  Travor Liu
 *
@@ -59,3 +59,12 @@ void itoa(int n,char *s){
 	strrev(s);
 }
 
+void utoa(size_t n,char *s){
+	char *x=s;
+	do{
+		*x=n%10+'0';
+		x++;
+	}while(n/=10);
+	*x='\0';
+	strrev(s);
+}

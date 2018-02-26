@@ -1,4 +1,4 @@
-/* 
+/*
 * TravorOS: A simple OS running on Intel x86 Architecture
 * Copyright (C) 2017  Travor Liu
 *
@@ -23,6 +23,7 @@
 int vsprintf(char* buffer,const char *format,va_list vlist){
 	// TODO: Implementations
 	int int_temp;
+	size_t uint_temp;
 	char char_temp;
 	char* string_temp;
 	char buf_temp[BUFSIZ];
@@ -54,6 +55,14 @@ int vsprintf(char* buffer,const char *format,va_list vlist){
 				case 'd':
 				int_temp=va_arg(vlist,int);
 				itoa(int_temp,buf_temp);
+				len=strlen(buf_temp);
+				memcpy(buffer+offset,buf_temp,len);
+				offset+=len;
+				break;
+				// Print an unsigned int
+				case 'u':
+				uint_temp=va_arg(vlist,size_t);
+				utoa(uint_temp,buf_temp);
 				len=strlen(buf_temp);
 				memcpy(buffer+offset,buf_temp,len);
 				offset+=len;
@@ -95,4 +104,3 @@ int printf(const char* fmt,...){
 	va_end(vl);
 	return rs;
 }
-
