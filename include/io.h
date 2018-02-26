@@ -1,4 +1,4 @@
-/* 
+/*
 * TravorOS: A simple OS running on Intel x86 Architecture
 * Copyright (C) 2017  Travor Liu
 *
@@ -26,8 +26,9 @@ extern	"C"{
 #endif
 extern char getchar(void);
 extern char* gets(char* str);
+extern char* gets_real(char* str,char attribute);
+// attribute: character colors.
 #ifdef	__cplusplus
 }
 #endif
 #endif
-
