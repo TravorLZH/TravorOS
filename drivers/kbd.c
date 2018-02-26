@@ -24,6 +24,8 @@
 /* kbd.c: A simple keyboard driver */
 
 // Flags for key pressed
+static char ctrl=0;
+static char alt=0;
 static char shift=0;
 static char capital=0;
 static char kb_interrupt=0;
@@ -91,12 +93,28 @@ void keyboard_handler(registers_t r){
 			special=1;
 			shift=0;
 		}
+		if(code==VK_CONTROL){
+			special=1;
+			ctrl=0;
+		}
+		if(code==VK_MENU){
+			special=1;
+			alt=0;
+		}
 	}else{
 		code=code2char(x);
 		if(code==VK_SHIFT){
 			special=1;
 			shift=1;
 			return;
+		}
+		if(code==VK_CONTROL){
+			special=1;
+			ctrl=1;
+		}
+		if(code==VK_MENU){
+			special=1;
+			alt=1;
 		}
 		if(code==VK_CAPITAL){
 			special=1;
