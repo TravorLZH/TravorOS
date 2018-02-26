@@ -3,11 +3,11 @@ CC=gcc
 LD=ld
 
 C_SOURCES=$(wildcard drivers/*.c kernel/*.c)
-ASM_SOURCES=$(wildcard drivers/*.asm)
+ASM_SOURCES=$(wildcard drivers/*.asm kernel/*.asm)
 BOOT_SRC=$(wildcard boot/*.asm boot/32bit/*.asm)
 INCLUDE_DIR=-Iinclude
 kernel_LIBS=lib/libc.a
-OBJ=${C_SOURCES:.c=.o drivers/interrupt.o}
+OBJ=${C_SOURCES:.c=.o} ${ASM_SOURCES:.asm=.o}
 libc_SOURCES=$(wildcard lib/*.c lib/*.asm)
 libc_OBJ=$(patsubst %.c,%.o,$(patsubst %.asm,%.o,$(libc_SOURCES)));
 
