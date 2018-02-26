@@ -16,6 +16,7 @@
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 /* kernel.c: The core part of the OS kernel (i.e. The heart of the OS) */
+#include <config.h>
 #include <stdio.h>
 #include <drivers/floppy.h>
 #include <drivers/screen.h>
@@ -25,6 +26,7 @@
 #include <cpu/isr.h>
 #include <cpu/timer.h>
 #include <asm/interrupt.h>
+#include <asm/shutdown.h>
 
 int main(void){
 	isr_install();
@@ -35,19 +37,22 @@ int main(void){
 	kmem_init(0xC0000);
 	char cmd[100];
 terminal_loop:
-	print_at("\nTravorOS> ",-1,-1,0x0E);
+	print_at("TravorOS> ",-1,-1,0x0E);
 	gets(cmd);
 	if(!strcmp(cmd,"help")){
-		printf("TravorOS v0.5\n\n");
-		printf("Available Commands:\n");
-		printf("about:  Information about this OS\n");
-		printf("clear:  Clear the terminal screen\n");
-		printf("reboot: Reboot this machine\n");
-		printf("help:   Display this page\n");
+		printf("TravorOS version " VERSION "\n\n");
+		printf("Commands:\n");
+		printf("about:    Information about this OS\n");
+		printf("clear:    Clear the terminal screen\n");
+		printf("shutdown: Shutdown the machine\n");
+		printf("reboot:   Reboot this machine\n");
+		printf("help:     Display this page\n");
+		printf("\nThis OS is built for i386 Architecture.\n");
+		printf("Report bugs to " BUGREPORT "\n");
 		goto terminal_loop;
 	}
 	if(!strcmp(cmd,"about")){
-		printf("TravorOS written by Travor Liu <travor_lzh@outlook.com>\n");
+		printf("TravorOS version " VERSION "\nwritten by Travor Liu\nReport bugs to " BUGREPORT "\n");
 		goto terminal_loop;
 	}
 	if(!strcmp(cmd,"clear")){
@@ -61,6 +66,12 @@ terminal_loop:
 		}
 		outb(0x64,0xFE);
 		__asm__ ("hlt");
+		goto terminal_loop;
+	}
+	if(!strcmp(cmd,"shutdown")){
+		shutdown();
+	}
+	if(!strlen(cmd)){
 		goto terminal_loop;
 	}
 	print_at("Unknown Command, type `help' to see available commands\n",-1,-1,0x04);

@@ -20,7 +20,7 @@ libc_OBJ=$(patsubst %.c,%.o,$(patsubst %.asm,%.o,$(libc_SOURCES)));
 .PHONY:	clean all run debug
 all:	os.img kernel.elf
 run:	os.img
-	@qemu-system-i386 -fda os.img
+	@qemu-system-i386 -fda os.img -device isa-debug-exit,iobase=0xF4,iosize=0x04
 debug:	os.img kernel.elf
 	@exec gdb -tui -x debug.gdb
 os.img:	boot/bootload.bin kernel/kernel.bin $(kernel_LIBS)
@@ -36,7 +36,7 @@ drivers/interrupt.o:	drivers/interrupt.asm
 boot/bootload.bin:	$(BOOT_SRC)
 	@echo "Building bootloader"
 	@$(AS) -fbin boot/bootload.asm -o $@
-lib/libc.a:	$(libc_OBJ)	
+lib/libc.a:	$(libc_OBJ)
 	@echo "Linking $<"
 	@ar rc $@ $^
 clean:
