@@ -60,16 +60,12 @@ terminal_loop:
 		goto terminal_loop;
 	}
 	if(!strcmp(cmd,"reboot")){
-		uint8_t x=0x02;
-		while(x & 0x02){
-			x=inb(0x64);
-		}
-		outb(0x64,0xFE);
-		__asm__ ("hlt");
+		reboot();
 		goto terminal_loop;
 	}
 	if(!strcmp(cmd,"shutdown")){
 		shutdown();
+		goto terminal_loop;
 	}
 	if(!strlen(cmd)){
 		goto terminal_loop;
