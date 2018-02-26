@@ -38,7 +38,7 @@ int main(void){
 	char cmd[100];
 terminal_loop:
 	print_at("TravorOS> ",-1,-1,0x0E);
-	gets(cmd);
+	gets_real(cmd,0xA);
 	if(!strcmp(cmd,"help")){
 		printf("TravorOS version " VERSION "\n\n");
 		printf("Commands:\n");

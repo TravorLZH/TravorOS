@@ -1,4 +1,4 @@
-/* 
+/*
 * TravorOS: A simple OS running on Intel x86 Architecture
 * Copyright (C) 2017  Travor Liu
 *
@@ -22,11 +22,11 @@
 
 char getchar(void){
 	char c=_getchar();
-	putchar(c);
+	print_char(c,-1,-1,0x07);
 	return c;
 }
 
-char* gets(char* s){
+char* gets_real(char* s,char attribute){
 	char* st=s;
 	char temp,term,asterisk,skip,skip_print;
 	while(1){
@@ -52,8 +52,8 @@ char* gets(char* s){
 			break;
 		}
 		if(skip_print==1)continue;
-		putchar(temp);
-		if(asterisk==1)print_char('*',-1,-1,0x0F);
+		print_char(temp,-1,-1,0x0A);
+		if(asterisk==1)print_char('*',-1,-1,attribute);
 		if(skip==1)continue; // If there is a problem, skip the following
 		if(term==1){
 			*st=0;
@@ -67,3 +67,6 @@ char* gets(char* s){
 	return 0;
 }
 
+char* gets(char* str){
+	return gets_real(str,0x07);
+}
