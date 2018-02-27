@@ -14,7 +14,7 @@ shutdown:
 	push	-1
 	push	NO_SHUTDOWN
 	call	print_at
-	add		esp,16
+	add	esp,16
 	ret
 
 NO_SHUTDOWN	db	"shutdown: function not implemented!",0xA,0
