@@ -5,6 +5,7 @@
 #include <kernel/dbg.h>
 #include <drivers/floppy.h>
 #include <cpu/isr.h>
+#include <cpu/timer.h>
 
 volatile char irq_received=0;
 
@@ -27,8 +28,8 @@ void init_floppy(void){
 	kprint("Initializing floppy driver...");
 	register_interrupt_handler(IRQ6,floppy_handler);
 	memcpy(&floppy_disk,DISK_PARAMETER_ADDRESS,sizeof(floppy_parameters));
-	flp_reset_controller(FLP_PRIMARY_BASE,0);
 	print_at("[OK]\n",-1,-1,0x2);
+	flp_reset_controller(FLP_PRIMARY_BASE,0);
 }
 
 void flp_check_intstatus(int base,uint8_t *st0,uint8_t *cylinder){
@@ -37,6 +38,7 @@ void flp_check_intstatus(int base,uint8_t *st0,uint8_t *cylinder){
 	*st0=inb(base+FLP_DATA_REGISTER);
 	flp_wait_data(base);
 	*cylinder=inb(base+FLP_DATA_REGISTER);
+	ktrace("st0: %u (0x%x), cylinder: %u (0x%x)\n",st0,st0,cylinder,cylinder);
 	return;
 }
 
@@ -94,14 +96,14 @@ void flp_configure_drive(int base,char drive){
 
 void flp_seek_track(uint8_t head,uint8_t cyl,uint8_t drive){
 	flp_write_commmand(FLP_PRIMARY_BASE,FLOPPY_SEEK_TRACK);
-	flp_write_commmand(FLP_PRIMARY_BASE,drive);
+	flp_write_commmand(FLP_PRIMARY_BASE,((head & 1) << 2) + drive);
 	flp_write_commmand(FLP_PRIMARY_BASE,cyl);
 	flp_wait_irq();
 	flp_check_intstatus(FLP_PRIMARY_BASE,&st0,&cylinder);
-	assert(st0 & 0x20);
-	assert(st0 & 0x80);
 }
 
 void flp_read_sector(uint8_t sector,uint8_t head,uint8_t cylinder,uint8_t drive,char* buffer){
 	flp_seek_track(head,cylinder,drive);
+//	flp_start_dma(0x02,0x44,buffer,511);
+	//sleep(floppy_disk.head_settle_time);
 }
