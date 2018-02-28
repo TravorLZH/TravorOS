@@ -3,10 +3,9 @@
 #ifdef	__cplusplus
 extern	"C"{
 #endif
-extern char set_interrupt();
-extern char clear_interrupt();
+extern char set_interrupt(void);
+extern char clear_interrupt(void);
 #ifdef	__cplusplus
 }
 #endif
 #endif
-
