@@ -37,7 +37,7 @@ gdt_descriptor:
 
 CODE_SEGMENT	equ	code_descriptor - gdt_start
 DATA_SEGMENT	equ	data_descriptor - gdt_start
-MSG_PM	db	"[stage2] Switching to protected mode",0xD,0xA,0
+MSG_PM	db	"[stage2]: Switching to protected mode",0xD,0xA,0
 
 stage2_start:
 	; Clear the segment so my code won't go crazy

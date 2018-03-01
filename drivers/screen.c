@@ -117,9 +117,6 @@ void print_char(char character,int col,int row,char attribute_byte){
 		// If we see a Backspace, remove the current character and attribute
 		// then decrement the offset.
 		case '\b':
-		if((offset/2)%MAX_COLS==0){
-			return;
-		}
 		vidmem[offset-2]=0;
 		offset-=2;
 		set_cursor(offset);
