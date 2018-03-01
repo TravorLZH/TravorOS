@@ -1,4 +1,4 @@
-/* 
+/*
 * TravorOS: A simple OS running on Intel x86 Architecture
 * Copyright (C) 2017  Travor Liu
 *
@@ -22,11 +22,10 @@
 #ifdef	__cplusplus
 extern	"C"{
 #endif
-extern void kmem_init(size_t offset);
+extern void heap_init(size_t offset);
 extern void *kmalloc(size_t size);
 extern void kfree(void* ptr);
 #ifdef	__cplusplus
 }
 #endif
 #endif
-

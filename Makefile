@@ -2,8 +2,8 @@ AS=yasm
 CC=gcc
 LD=ld
 
-C_SOURCES=$(wildcard drivers/*.c kernel/*.c)
-ASM_SOURCES=$(wildcard drivers/*.asm kernel/*.asm)
+C_SOURCES=$(wildcard drivers/*.c kernel/*.c mm/*.c)
+ASM_SOURCES=$(wildcard drivers/*.asm kernel/*.asm mm/*.asm)
 BOOT_SRC=$(wildcard boot/*.asm)
 INCLUDE_DIR=-Iinclude
 kernel_LIBS=lib/libc.a
