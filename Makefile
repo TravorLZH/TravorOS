@@ -1,6 +1,6 @@
 AS=yasm
 CC=i386-elf-gcc
-LD=ld
+LD=i386-elf-ld
 
 C_SOURCES=$(wildcard drivers/*.c kernel/*.c mm/*.c)
 ASM_SOURCES=$(wildcard drivers/*.asm kernel/*.asm mm/*.asm)

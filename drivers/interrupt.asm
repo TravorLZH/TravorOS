@@ -6,9 +6,9 @@
 isr_common_stub:
 ; 1. Save CPU state
 	pusha
-	mov	ax,ds; Lower 16-bits of eax=ds
-	push	eax; Save the data segment descriptord
-	mov	ax,0x10; kernel data segment descriptor
+	mov	ax,ds	; Lower 16-bits of eax=ds
+	push	eax	; Save the data segment descriptord
+	mov	ax,0x10	; kernel data segment descriptor
 	mov	ds,ax
 	mov	es,ax
 	mov	fs,ax
@@ -24,7 +24,7 @@ isr_common_stub:
 	mov	fs,ax
 	mov	gs,ax
 	popa
-	add	esp,8; Cleans up the pushed error code and pushed ISR number
+	add	esp,8	; Cleans up the pushed error code and pushed ISR number
 	sti
 iret; pops 5 things at once: CS, EIP, EFLAGS, SS, and ESP
 
@@ -33,9 +33,9 @@ iret; pops 5 things at once: CS, EIP, EFLAGS, SS, and ESP
 irq_common_stub:
 ; 1. Save CPU state
 	pusha
-	mov	ax,ds; Lower 16-bits of eax=ds
-	push	eax; Save the data segment descriptord
-	mov	ax,0x10; kernel data segment descriptor
+	mov	ax,ds	; Lower 16-bits of eax=ds
+	push	eax	; Save the data segment descriptord
+	mov	ax,0x10	; kernel data segment descriptor
 	mov	ds,ax
 	mov	es,ax
 	mov	fs,ax

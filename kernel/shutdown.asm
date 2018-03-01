@@ -1,11 +1,7 @@
-%ifdef	MINGW
-%define	print_at _print_at
-%endif
 [global	shutdown]
 [global	reboot]
 [extern	print_at]
 
-_shutdown:
 shutdown:
 	push	0x0F
 	push	-1
@@ -18,7 +14,6 @@ shutdown:
 
 NO_SHUTDOWN	db	"shutdown: function not implemented! Attempting to halt",0xA,0
 
-_reboot:
 reboot:
 	cli			; Disable interrupts
 	mov	al,0xFE	; Tell the keyboard controller to
