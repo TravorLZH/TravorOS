@@ -29,10 +29,11 @@
 #include <asm/shutdown.h>
 
 int main(void){
+	enable_paging(0x10000);
+	heap_init(0xC0000);
 	isr_install();
 	set_interrupt();
 	init_keyboard();
-	kmem_init(0xC0000);
 	char cmd[100];
 terminal_loop:
 	print_at("TravorOS> ",-1,-1,0x0E);

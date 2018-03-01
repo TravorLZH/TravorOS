@@ -22,6 +22,10 @@
 #ifdef	__cplusplus
 extern	"C"{
 #endif
+// Paging Functions
+extern void enable_paging(size_t base);
+extern void disable_paging(void);
+// Memory Allocator
 extern void heap_init(size_t offset);
 extern void *kmalloc(size_t size);
 extern void kfree(void* ptr);
