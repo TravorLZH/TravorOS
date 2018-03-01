@@ -15,9 +15,10 @@ shutdown:
 	push	NO_SHUTDOWN
 	call	print_at
 	add	esp,16
+	hlt
 	ret
 
-NO_SHUTDOWN	db	"shutdown: function not implemented!",0xA,0
+NO_SHUTDOWN	db	"shutdown: function not implemented! Attempting to halt",0xA,0
 
 _reboot:
 reboot:
