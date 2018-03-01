@@ -104,6 +104,4 @@ void flp_seek_track(uint8_t head,uint8_t cyl,uint8_t drive){
 
 void flp_read_sector(uint8_t sector,uint8_t head,uint8_t cylinder,uint8_t drive,char* buffer){
 	flp_seek_track(head,cylinder,drive);
-//	flp_start_dma(0x02,0x44,buffer,511);
-	//sleep(floppy_disk.head_settle_time);
 }

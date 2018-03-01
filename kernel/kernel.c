@@ -31,9 +31,7 @@
 int main(void){
 	isr_install();
 	set_interrupt();
-	init_timer();
 	init_keyboard();
-	init_floppy();
 	kmem_init(0xC0000);
 	char cmd[100];
 terminal_loop:
