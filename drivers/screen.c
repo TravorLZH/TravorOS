@@ -25,7 +25,7 @@ void clear_screen(){
 	int col=0;
 	for(;row<MAX_ROWS;row++){
 		for(;col<MAX_COLS;col++){
-			print_char(' ',row,col,WHITE_ON_BLACK);
+			print_char(0,row,col,0x07);
 		}
 	}
 	set_cursor(0);
