@@ -37,7 +37,8 @@ kernel.elf:	kernel/kernel_entry.o $(OBJ) $(kernel_LIBS)
 	@$(LD) -melf_i386 -o $@ -emain -Ttext 0x1000 $^
 drivers/interrupt.o:	drivers/interrupt.asm
 boot/boot.bin:	${BOOT_SRC:.asm=.bin}
-	cat boot/bootload.bin boot/stage2.bin > $@
+	@echo "Creating boot image"
+	@cat boot/bootload.bin boot/stage2.bin > $@
 lib/libc.a:	$(libc_OBJ)
 	@echo "Linking $<"
 	@ar rc $@ $^
