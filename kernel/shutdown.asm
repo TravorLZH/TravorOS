@@ -2,9 +2,7 @@
 %define	print_at _print_at
 %endif
 [global	shutdown]
-[global	_shutdown]
 [global	reboot]
-[global	_reboot]
 [extern	print_at]
 
 _shutdown:
