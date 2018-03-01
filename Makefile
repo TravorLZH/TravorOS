@@ -1,5 +1,5 @@
 AS=yasm
-CC=i386-elf-gcc
+CC=i386-elf-gcc -Wno-implicit-function-declaration
 LD=i386-elf-ld
 
 C_SOURCES=$(wildcard drivers/*.c kernel/*.c mm/*.c)
@@ -37,7 +37,7 @@ kernel.elf:	kernel/kernel_entry.o $(OBJ) $(kernel_LIBS)
 	@$(LD) -melf_i386 -o $@ -emain -Ttext 0x1000 $^
 drivers/interrupt.o:	drivers/interrupt.asm
 boot/boot.bin:	${BOOT_SRC:.asm=.bin}
-	cat $^ > $@
+	cat boot/bootload.bin boot/stage2.bin > $@
 lib/libc.a:	$(libc_OBJ)
 	@echo "Linking $<"
 	@ar rc $@ $^
