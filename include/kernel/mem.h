@@ -19,11 +19,28 @@
 #include <def.h>
 #ifndef	__MEM_H_
 #define	__MEM_H_
+typedef struct page{
+	uint8_t present:1;	// Present in memory
+	uint8_t rw:1;		// Read-only if clear, read/write if set
+	uint8_t user:1;		// Supervisor level only if clear
+	uint8_t accessed:1;	// Accessed since last refresh?
+	uint8_t dirty:1;	// Written since last refresh
+	uint8_t unused:7;	// Amalgamation of unused and reserved bit
+	size_t frame:20;	// Frame address (shift to right 12 bits)
+}page_t;
+typedef struct page_table{
+	page_t pages[1024];
+} page_table_t;
+typedef struct page_directory{
+	page_table_t *tables[1024];
+	size_t tablesPhysical[1024];
+	size_t physicalAddr;
+} page_directory_t;
 #ifdef	__cplusplus
 extern	"C"{
 #endif
 // Paging Functions
-extern void enable_paging(size_t base);
+extern void enable_paging(page_directory_t* pd);
 extern void disable_paging(void);
 // Memory Allocator
 extern void heap_init(size_t offset);

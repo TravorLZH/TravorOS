@@ -1,6 +1,6 @@
 [global	enable_paging]
 
-; void enable_paging(size_t base);
+; void enable_paging(page_directory_t* pd);
 enable_paging:
 	push	ebp
 	mov	ebp,esp
