@@ -28,12 +28,10 @@
 #include <asm/interrupt.h>
 #include <asm/shutdown.h>
 
-page_directory_t page_dir;
-
 int main(void){
 	clear_interrupt();
-	enable_paging(&page_dir);
-	heap_init(0xC0000);
+	init_paging();
+	init_heap(0xC0000);
 	isr_install();
 	set_interrupt();
 	init_keyboard();

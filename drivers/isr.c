@@ -49,7 +49,7 @@ void isr_install(){
 	port_byte_out(0x21, 0x01);
 	port_byte_out(0xA1, 0x01);
 	port_byte_out(0x21, 0x0);
-	port_byte_out(0xA1, 0x0); 
+	port_byte_out(0xA1, 0x0);
 
 	// Install the IRQs
 	set_idt_gate(32, (uint32_t)irq0);
@@ -73,21 +73,9 @@ void isr_install(){
 }
 
 void isr_handler(registers_t r){
-	printf("Received interrupt: %d\n",r.int_no);
-	// INT 0x50: Dump register values
-	if(r.int_no==0x10){
-		printf("EAX: %d (0x%x), ",r.eax,r.eax);
-		printf("EBX: %d (0x%x), ",r.ebx,r.ebx);
-		printf("ECX: %d (0x%x), ",r.ecx,r.ecx);
-		printf("EDX: %d (0x%x), ",r.edx,r.edx);
-		printf("EDI: %d (0x%x), ",r.edi,r.edi);
-		printf("ESI: %d (0x%x)\n",r.esi,r.esi);
-		printf("\nEBP: %d (0x%x)\n",r.ebp,r.ebp);
-		printf("ESP: %d (0x%x)\n",r.esp,r.esp);
-		printf("EIP: %d (0x%x)\n",r.eip,r.eip);
-		printf("CS: %d (0x%x), ",r.cs,r.cs);
-		printf("DS: %d (0x%x), ",r.ds,r.ds);
-		printf("SS: %d (0x%x)\n",r.ss,r.ss);
+	if(handlers[r.int_no]!=0){
+		isr_t h=handlers[r.int_no];
+		h(r);
 	}
 }
 
@@ -105,4 +93,3 @@ void irq_handler(registers_t r){
 	if(r.int_no >= 40) port_byte_out(0xA0,0x20); /* slave */
 	port_byte_out(0x20,0x20); /* master */
 }
-

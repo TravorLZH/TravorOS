@@ -17,8 +17,8 @@
 */
 /* mem.h: A simple kernel memory allocator */
 #include <def.h>
-#ifndef	__MEM_H_
-#define	__MEM_H_
+#ifndef	__MEMORY_H_
+#define	__MEMORY_H_
 typedef struct page{
 	uint8_t present:1;	// Present in memory
 	uint8_t rw:1;		// Read-only if clear, read/write if set

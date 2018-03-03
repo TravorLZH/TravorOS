@@ -11,3 +11,5 @@ It's very impossible to make an Operating System without outside help, so I'd li
 	- Implementation of strcmp()
 * bos.asmhackers.net/docs/floppy/docs/floppy_tutorial.txt
 	- Implementation of Floppy I/O
+* http://www.jamesmolloy.co.uk/tutorial_html/6.-Paging.html
+	- Paging Tutorial
