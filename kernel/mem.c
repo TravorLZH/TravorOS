@@ -28,7 +28,7 @@ static void calculate_next_address(memblock_t* ptr){
 	ptr->next=(memblock_t*)(ptr->content+ptr->size);
 }
 
-void heap_init(size_t offset){
+void init_init(size_t offset){
 	kprint("Initializing heap started from Address %d (%x)...",(int)offset,offset);
 	// TODO: Create the first memory block
 	mem_ptr=(memblock_t*)offset;

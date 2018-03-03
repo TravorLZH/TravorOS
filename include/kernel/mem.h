@@ -43,7 +43,7 @@ extern	"C"{
 extern void enable_paging(page_directory_t* pd);
 extern void disable_paging(void);
 // Memory Allocator
-extern void heap_init(size_t offset);
+extern void init_heap(size_t offset);
 extern void *kmalloc(size_t size);
 extern void kfree(void* ptr);
 #ifdef	__cplusplus
