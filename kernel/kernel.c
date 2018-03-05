@@ -20,7 +20,7 @@
 #include <stdio.h>
 #include <drivers/floppy.h>
 #include <drivers/screen.h>
-#include <kernel/mem.h>
+#include <kernel/memory.h>
 #include <kernel/utils.h>
 #include <kernel/dbg.h>
 #include <cpu/isr.h>
@@ -29,11 +29,10 @@
 #include <asm/shutdown.h>
 
 int main(void){
-	clear_interrupt();
-	init_paging();
-	init_heap(0xC0000);
 	isr_install();
 	set_interrupt();
+	init_heap(0x100000);
+	init_paging();
 	init_keyboard();
 	char cmd[100];
 terminal_loop:
