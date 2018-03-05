@@ -15,10 +15,13 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-/* mem.h: A simple kernel memory allocator */
+/* memory.h: Memory management stuff for kernel */
 #include <def.h>
 #ifndef	__MEMORY_H_
 #define	__MEMORY_H_
+#define	INDEX_FROM_BIT(a)	(a/(8*4))
+#define	OFFSET_FROM_BIT(a)	(a%(8*4))
+
 typedef struct page{
 	uint8_t present:1;	// Present in memory
 	uint8_t rw:1;		// Read-only if clear, read/write if set
@@ -32,20 +35,38 @@ typedef struct page_table{
 	page_t pages[1024];
 } page_table_t;
 typedef struct page_directory{
+	/* Array of pointers to pagetables */
 	page_table_t *tables[1024];
+	/* Array of pointers to the pagetables above, but gives their *physical*
+	*  location, for loading into CR3 register.
+	*/
 	size_t tablesPhysical[1024];
+	/* The physical address of tablesPhysical. This comes into play when we get
+	*  our kernel heap allocated and directory may be in a different location in
+	*  virtual memory */
 	size_t physicalAddr;
 } page_directory_t;
 #ifdef	__cplusplus
 extern	"C"{
 #endif
 // Paging Functions
-extern void enable_paging(page_directory_t* pd);
-extern void disable_paging(void);
+extern void init_paging(void);
+/* Change CR3 Value */
+extern void switch_page_directory(page_directory_t *dir);
+/*
+* Get a pointer to the page required.
+* If make == 1, if the pagetable in which this page should
+* reside isn't created, create it!
+*/
+extern page_t *get_page(size_t address,int make,page_directory_t *dir);
+extern void alloc_frame(page_t *page,int is_kernel,int is_writable);
+extern void free_frame(page_t* page);
 // Memory Allocator
 extern void init_heap(size_t offset);
 extern void *kmalloc(size_t size);
-extern void kfree(void* ptr);
+extern void *kmalloc_a(size_t size);	// Page aligned
+extern void *kmalloc_p(size_t size,size_t* phys);	// Returns physical address
+extern void *kmalloc_ap(size_t size,size_t* phys);	// Both
 #ifdef	__cplusplus
 }
 #endif
