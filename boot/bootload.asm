@@ -45,7 +45,7 @@ load_stage2:
 load_kernel:
 	mov	bx,KERNEL_OFFSET
 	mov	ah,2
-	mov	al,20
+	mov	al,30	; This number will grow soon
 	mov	ch,0
 	mov	cl,4	; Kernel starts from 4th sector
 	mov	dh,0
