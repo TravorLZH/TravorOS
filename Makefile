@@ -45,4 +45,4 @@ lib/libc.a:	$(libc_OBJ)
 clean:
 	@echo "Cleaning"
 	@rm -fr *.bin *.o *.img *.elf
-	@rm -fr kernel/*.o kernel/*.bin boot/*.bin drivers/*.o lib/*.o lib/*.a
+	@rm -fr kernel/*.o kernel/*.bin boot/*.bin drivers/*.o lib/*.o lib/*.a mm/*.o

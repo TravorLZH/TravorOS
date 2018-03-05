@@ -1,4 +1,5 @@
 #include <kernel/memory.h>
+#include <kernel/dbg.h>
 
 size_t placement_address;
 
@@ -6,6 +7,7 @@ void init_heap(size_t base){
 	placement_address=base;
 }
 static void* kmalloc_real(size_t sz,int align,size_t *phys){
+	ktrace("Allocating with sz: %u, align: %d, phys: %u\n",sz,align,phys);
 	if(align==1 && (placement_address & 0xFFFFF000)){	// If the address is not already page aligned
 		// Align it.
 		placement_address&=0xFFFFF000;
@@ -35,5 +37,5 @@ void* kmalloc_p(size_t sz,size_t *phys){
 }
 // Page aligned and returns a physical address.
 void* kmalloc_ap(size_t sz,size_t *phys){
-	return kmalloc_real(sz,phys);
+	return kmalloc_real(sz,1,phys);
 }
