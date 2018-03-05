@@ -2,3 +2,6 @@
 # a floppy disk inserted into a computer boot time.
 floppya: 1_44=os.img, status=inserted
 boot: a
+log: bochs.log
+clock: sync=realtime
+mouse: enabled=0
