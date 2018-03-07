@@ -28,10 +28,15 @@
 #include <asm/interrupt.h>
 #include <asm/shutdown.h>
 
+static void kernel_doublefault(registers_t regs){
+	PANIC("Double fault! Error code: %u",regs.err_code);
+}
+
 int main(void){
 	isr_install();
+	register_interrupt_handler(8,kernel_doublefault);
 	set_interrupt();
-	init_heap(0x100000);
+	init_heap(0x10000);
 	init_paging();
 	init_keyboard();
 	char cmd[100];

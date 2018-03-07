@@ -1,4 +1,5 @@
 #include <kernel/memory.h>
+#define	NDEBUG
 #include <kernel/utils.h>
 
 size_t* frames;
@@ -9,9 +10,13 @@ extern size_t placement_address;
 
 // Static function to set a bit in the frame bitset
 static void set_frame(size_t frame_addr){
+	printvar(frame_addr);
 	size_t frame=frame_addr/0x1000;
+	printvar(frame);
 	size_t index=INDEX_FROM_BIT(frame);
+	printvar(index);
 	size_t offset=OFFSET_FROM_BIT(frame);
+	printvar(offset);
 	frames[index] |= (0x1 << offset);
 }
 // Clear a bit in the frames bitset

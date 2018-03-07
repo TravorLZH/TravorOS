@@ -7,16 +7,18 @@ void init_heap(size_t base){
 	placement_address=base;
 }
 static void* kmalloc_real(size_t sz,int align,size_t *phys){
-	ktrace("Allocating with sz: %u, align: %d, phys: %u\n",sz,align,phys);
-	if(align==1 && (placement_address & 0xFFFFF000)){	// If the address is not already page aligned
+	if(align==1 && (placement_address%0x1000)){	// If the address is not already page aligned
+		ktrace("Aligning placement address\n");
 		// Align it.
 		placement_address&=0xFFFFF000;
 		placement_address+=0x1000;
 	}
 	if(phys){
 		*phys=placement_address;
+		assert(*phys==placement_address);
 	}
 	size_t tmp=placement_address;
+	ktrace("Allocated a block with size: %u at %u (0x%x)\n",sz,placement_address,placement_address);
 	placement_address+=sz;
 	return (void*)tmp;
 }

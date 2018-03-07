@@ -33,12 +33,9 @@ void init_paging(void){
 	frames=(size_t*)kmalloc(INDEX_FROM_BIT(nframes));
 	memset(frames,0,INDEX_FROM_BIT(nframes));
 	// Let's create a page directory
-	ktrace("Allocating page directory\n");
 	kernel_directory=(page_directory_t*)kmalloc_a(sizeof(page_directory_t));
 	memset(kernel_directory,0,sizeof(page_directory_t));
-	ktrace("Clearing page directory\n");
 	current_directory=kernel_directory;
-	ktrace("Finish allocating page directory");
 	// We need to identity map (phys addr = virt addr) from
 	// 0x0 to the end of used memory, so we can access this
 	// transparently, as if the paging wasn't enabled.
@@ -53,17 +50,14 @@ void init_paging(void){
 		i+=0x1000;
 	}
 	ktrace("Registering interrupt handler\n");
-	// Before we enable paging, we must register our page fault handler.
 	register_interrupt_handler(14,page_fault);
-	// Now, enable paging!
-	ktrace("Setting CR3\n");
 	switch_page_directory(kernel_directory);
 }
 
 void switch_page_directory(page_directory_t *dir){
 	// FIXME: Triple fault while setting cr3
 	current_directory=dir;
-	__asm__ volatile("mov %0, %%cr3" :: "r" (dir->tablesPhysical));
+	__asm__ volatile("mov %0, %%cr3" :: "r" (&dir->tablesPhysical));
 	size_t cr0=0;
 	__asm__ volatile("mov %%cr0, %0" : "=r" (cr0));
 	cr0|=0x80000000;	// Enable paging

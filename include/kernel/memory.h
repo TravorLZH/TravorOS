@@ -46,6 +46,10 @@ typedef struct page_directory{
 	*  virtual memory */
 	size_t physicalAddr;
 } page_directory_t;
+
+extern page_directory_t *kernel_directory;
+extern page_directory_t *current_directory;
+
 #ifdef	__cplusplus
 extern	"C"{
 #endif
