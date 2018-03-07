@@ -1,3 +1,4 @@
+include ../config.mk
 all:	boot.img
 boot.img:	bootload.bin stage2.bin
 	cat $^ > $@

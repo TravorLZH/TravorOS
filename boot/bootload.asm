@@ -9,9 +9,9 @@ MSG_BOOT	db	"[boot]: Hello world!",0xD,0xA,0
 MSG_LOAD_STAGE2	db "[boot]: Loading stage 2 into memory",0xD,0xA,0
 FAILED_DISK	db	"[error]: Failed to read floppy",0xD,0xA,0
 READ_OK	db	"SUCCESS",0xD,0xA,0
-KERNEL_OFFSET	equ	0x1000
-STAGE2_OFFSET	equ	0x7E00
 BOOT_DRIVE	db	0
+
+%include "general.inc"
 
 bootloader_start:
 	mov	[BOOT_DRIVE],dl

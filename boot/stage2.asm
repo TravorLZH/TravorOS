@@ -6,34 +6,8 @@ jmp	stage2_start
 
 BOOT_DRIVE	db	0
 MSG_STAGE2	db	"[stage2]: Hello from stage2 in real mode",0xD,0xA,0
-KERNEL_OFFSET	equ	0x1000
 
-gdt_start:
-
-null_descriptor:
-	dd	0x0
-	dd	0x0
-code_descriptor:
-	dw	0xFFFF	; Limit
-	dw	0x0	; Base
-	db	0x0	; Base
-	db	10011010b	; (present)1 (privilage)00 (type)1
-					; type: (code)1 (conforming)0 (readable)1 (accessed)0
-	db	11001111b	; (granularity)1 (32-bit default)1 (64-bit seg)0 (AVL)0
-	db	0x0	; Base
-data_descriptor:
-	; Type flags: (code)0 (expand down)0 (writable)1 (accessed)0
-	dw	0xFFFF
-	dw	0x0
-	db	0x0
-	db	10010010b
-	db	11001111b
-	db	0x0
-gdt_end:
-
-gdt_descriptor:
-	dw	gdt_end-gdt_start-1
-	dd	gdt_start
+%include "general.inc"
 
 CODE_SEGMENT	equ	code_descriptor - gdt_start
 DATA_SEGMENT	equ	data_descriptor - gdt_start
