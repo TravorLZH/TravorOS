@@ -3,7 +3,7 @@ Building TravorOS
 
 ## Linux
 
-In Linux or Windows WSL, execute `linuxenv.sh` in the project directory. Then type `make` to build.
+In Linux or Windows WSL, modify `config.mk` in the project directory then type `make` to build.
 
 ## Cygwin with a [Cross Compiler][crosscompiler]
 
