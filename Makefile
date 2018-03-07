@@ -11,38 +11,28 @@ OBJ=${C_SOURCES:.c=.o} ${ASM_SOURCES:.asm=.o}
 libc_SOURCES=$(wildcard lib/*.c lib/*.asm)
 libc_OBJ=$(patsubst %.c,%.o,$(patsubst %.asm,%.o,$(libc_SOURCES)));
 
-%.bin:	%.asm
-	@echo "Assembling $^"
-	@${AS} -fbin $< -o $@
 %.o:	%.c
-	@echo "Compiling $^"
-	@${CC} -g -ffreestanding -nostdlib -m32 -c $< -o $@ $(INCLUDE_DIR)
+	${CC} -g -ffreestanding -nostdlib -m32 -c $< -o $@ $(INCLUDE_DIR)
 %.o:	%.asm
-	@echo "Assembling $^"
-	@${AS} -felf $< -o $@
+	${AS} -felf $< -o $@
 .PHONY:	clean all run debug
 all:	os.img kernel.elf
 run:	os.img
-	@qemu-system-i386 -fda os.img -device isa-debug-exit,iobase=0xF4,iosize=0x04
+	qemu-system-i386 -fda os.img -device isa-debug-exit,iobase=0xF4,iosize=0x04
 debug:	os.img kernel.elf
-	@exec gdb -tui -x debug.gdb
-os.img:	boot.bin kernel.bin $(kernel_LIBS)
-	@echo "Creating OS Image"
-	@cat boot.bin kernel.bin > os.img
+	exec gdb -tui -x debug.gdb
+os.img:	boot/boot.img kernel.bin $(kernel_LIBS)
+	cat boot/boot.img kernel.bin > os.img
 kernel.bin:	kernel/kernel_entry.o $(OBJ) $(kernel_LIBS)
-	@echo "Linking kernel.bin"
-	@$(LD) -melf_i386 -o $@ -e0x1000 -Ttext 0x1000 $^ --oformat binary
+	$(LD) -melf_i386 -o $@ -e0x1000 -Ttext 0x1000 $^ --oformat binary
 kernel.elf:	kernel/kernel_entry.o $(OBJ) $(kernel_LIBS)
-	@echo "Linking kernel symbol file"
-	@$(LD) -melf_i386 -o $@ -emain -Ttext 0x1000 $^
+	$(LD) -melf_i386 -o $@ -emain -Ttext 0x1000 $^
 drivers/interrupt.o:	drivers/interrupt.asm
-boot.bin:	${BOOT_SRC:.asm=.bin}
-	@echo "Creating boot image"
-	@cat boot/bootload.bin boot/stage2.bin > $@
+boot/boot.img:
+	(cd boot;make)
 lib/libc.a:	$(libc_OBJ)
-	@echo "Linking $<"
-	@ar rc $@ $^
+	ar rc $@ $^
 clean:
-	@echo "Cleaning"
-	@rm -fr *.bin *.o *.img *.elf
-	@rm -fr kernel/*.o boot/*.bin drivers/*.o lib/*.o lib/*.a mm/*.o
+	rm -fr *.bin *.o *.img *.elf
+	rm -fr kernel/*.o drivers/*.o lib/*.o lib/*.a mm/*.o
+	(cd boot;make clean)
