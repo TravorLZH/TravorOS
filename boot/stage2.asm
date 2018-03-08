@@ -9,8 +9,6 @@ MSG_STAGE2	db	"[stage2]: Hello from stage2 in real mode",0xD,0xA,0
 
 %include "general.inc"
 
-CODE_SEGMENT	equ	code_descriptor - gdt_start
-DATA_SEGMENT	equ	data_descriptor - gdt_start
 MSG_PM	db	"[stage2]: Switching to protected mode",0xD,0xA,0
 
 stage2_start:
@@ -66,6 +64,13 @@ start_pm:
 
 	mov	esi,HELLO_PM
 	call	print_string_pm
+; Moves kernel code from 0x1000 to 1MB
+move_kernel:
+	mov	esi,KERNEL_LOADED
+	mov	edi,KERNEL_OFFSET
+	mov	ecx,KERNEL_SECTORS
+	shl	ecx,9
+	rep	movsb
 	call	KERNEL_OFFSET	; We should not come back from this step
 	jmp	$
 
@@ -112,6 +117,7 @@ set_cursor_pm:
 	pop	edx
 	pop	eax
 	ret
+
 ; ESI: String address
 print_string_pm:
 	pusha

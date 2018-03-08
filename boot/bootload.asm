@@ -15,6 +15,10 @@ BOOT_DRIVE	db	0
 
 bootloader_start:
 	mov	[BOOT_DRIVE],dl
+	xor	ax,ax
+	mov	ds,ax
+	mov	ss,ax
+	mov	sp,0x9C00
 
 	mov	si,MSG_BOOT
 	call	print_string
@@ -41,11 +45,13 @@ load_stage2:
 	mov	dl,[BOOT_DRIVE]	; Select current drive
 	int	0x13	; Call BIOS
 	ret
-
+; Loads kernel at 0x1000
 load_kernel:
-	mov	bx,KERNEL_OFFSET
+	xor	ax,ax
+	mov	es,ax
+	mov	bx,KERNEL_LOADED
 	mov	ah,2
-	mov	al,30	; This number will grow soon
+	mov	al,KERNEL_SECTORS	; This number will grow soon
 	mov	ch,0
 	mov	cl,4	; Kernel starts from 4th sector
 	mov	dh,0
