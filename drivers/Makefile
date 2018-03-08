@@ -18,6 +18,10 @@ stdio_SOURCES=$(wildcard stdio/*.c)
 stdio_OBJ=$(stdio_SOURCES:.c=.o)
 stdio.elf:	$(stdio_OBJ)
 drivers_OBJ=$(time_OBJ) $(stdio_OBJ) $(disk_OBJ) $(int_OBJ)
+### Dependencies
+int/idt.o:	int/idt.c ../include/cpu/idt.h
+int/isr.o:	int/isr.c ../include/cpu/idt.h ../include/cpu/isr.h \
+	../include/stdio.h ../include/asm/ioports.h
 # All objects
 %.elf:
 	$(LD) -melf_i386 -r -o $@ $^

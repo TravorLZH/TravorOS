@@ -1,4 +1,4 @@
-/* 
+/*
 * TravorOS: A simple OS running on Intel x86 Architecture
 * Copyright (C) 2017  Travor Liu
 *
@@ -50,7 +50,7 @@ idt_register_t idt_reg;
 extern	"C"{
 #endif
 extern void set_idt_gate(int n,uint32_t handler);
-extern void set_idt();
+extern void set_idt(void);
 #ifdef	__cplusplus
 }
 #endif
