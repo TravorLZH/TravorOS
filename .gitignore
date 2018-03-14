@@ -7,5 +7,6 @@
 *.swp
 *.elf
 bochs.log
+old*/
 demos/*.o
 demos/license
