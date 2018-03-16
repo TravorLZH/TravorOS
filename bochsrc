@@ -1,7 +1,9 @@
 # Tell bochs to use our boot sector code as though it were
 # a floppy disk inserted into a computer boot time.
 floppya: 1_44=os.img, status=inserted
-boot: a
+ata0-master: type=cdrom, path=os.iso, status=inserted
+# The boot device
+boot: cdrom
 log: bochs.log
 clock: sync=realtime
 mouse: enabled=0

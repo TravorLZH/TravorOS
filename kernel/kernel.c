@@ -23,22 +23,19 @@
 #include <kernel/memory.h>
 #include <kernel/utils.h>
 #include <kernel/dbg.h>
+#include <cpu/gdt.h>
 #include <cpu/isr.h>
 #include <cpu/timer.h>
 #include <asm/interrupt.h>
 #include <asm/shutdown.h>
 
-static void kernel_doublefault(registers_t regs){
-	PANIC("Double fault! Error code: %u",regs.err_code);
-}
-
-int main(void){
+int main(void *multiboot){
+	gdt_install();
 	isr_install();
-	register_interrupt_handler(8,kernel_doublefault);
 	set_interrupt();
-	init_heap(0x10000);
-	init_paging();
 	init_keyboard();
+	init_heap(0x10000);
+	//init_paging();
 	char cmd[100];
 terminal_loop:
 	print_at("TravorOS> ",-1,-1,0x0E);

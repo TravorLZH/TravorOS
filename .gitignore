@@ -1,6 +1,7 @@
 *.o
 *.bin
 *.img
+*.iso
 *.a
 *.dsasm
 *~

@@ -17,7 +17,12 @@ time.elf:	$(time_OBJ)
 stdio_SOURCES=$(wildcard stdio/*.c)
 stdio_OBJ=$(stdio_SOURCES:.c=.o)
 stdio.elf:	$(stdio_OBJ)
-drivers_OBJ=$(time_OBJ) $(stdio_OBJ) $(disk_OBJ) $(int_OBJ)
+# Global Descriptor Table
+gdt_SOURCES=$(wildcard gdt/*.c gdt/*.asm)
+gdt_OBJ=$(patsubst %.c,%.o,$(patsubst %.asm,%.o,$(gdt_SOURCES)))
+gdt.elf:	$(gdt_OBJ)
+# All objects
+drivers_OBJ=$(time_OBJ) $(stdio_OBJ) $(disk_OBJ) $(int_OBJ) $(gdt_OBJ)
 ### Dependencies
 int/idt.o:	int/idt.c ../include/cpu/idt.h
 int/isr.o:	int/isr.c ../include/cpu/idt.h ../include/cpu/isr.h \
