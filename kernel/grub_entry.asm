@@ -12,7 +12,7 @@ MBOOT_CHECKSUM	equ	-(MBOOT_HEADER_MAGIC + MBOOT_HEADER_FLAGS)
 [extern	bss]
 [extern	end]
 [global	start]
-[extern	main]	; Declare that we will be referencing the external symbol 'kernel_main'
+[extern	kernel_main]	; Declare that we will be referencing the external symbol 'kernel_main'
 mboot:
 dd	MBOOT_HEADER_MAGIC	; GRUB will search for this value on each
 						; 4-byte boundary in your kernel file
@@ -28,5 +28,5 @@ dd	start
 start:
 	push	ebx
 	cli
-	call	main
+	call	kernel_main
 	jmp	$

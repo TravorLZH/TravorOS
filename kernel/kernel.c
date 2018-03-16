@@ -29,7 +29,7 @@
 #include <asm/interrupt.h>
 #include <asm/shutdown.h>
 
-int main(void *multiboot){
+int kernel_main(void *multiboot){
 	gdt_install();
 	isr_install();
 	set_interrupt();
