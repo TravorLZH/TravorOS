@@ -1,6 +1,6 @@
 AS=yasm
-CC=i386-elf-gcc
-LD=i386-elf-ld
+CC=gcc
+LD=ld
 drivers_TARGETS=int.elf disk.elf time.elf stdio.elf gdt.elf
 %.o:	%.c
 	${CC} -Wno-implicit-function-declaration -g -ffreestanding -nostdlib -m32 -c $< -o $@ $(INCLUDE_DIR)
