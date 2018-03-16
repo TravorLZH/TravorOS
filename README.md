@@ -6,18 +6,52 @@ This project has been activated since [December 15, 2017](https://github.com/Tra
 
 ![screenshot](screenshots/latest.png)
 
-### Bootloader
+## Table of Contents
 
-This OS uses a bootloader that switches from **16-bit real mode** to **32-bit protected mode**. It loads kernel code into memory address 0x1000 before it entered 32-bit protected mode.
+* [Bootloader](#bootloader)
 
-### Kernel
+	* [Custom](#bootloader)
 
-We entered protected mode which means we don't have access to BIOS functions. So, this kernel needs to reimplement those functions for controlling the hardware.
+		* [Boot Sector](#boot-sector)
 
-Now, I have reimplemented standard devices: screen and keyboard. In the further development. I am going to implement disk driver.
+		* [Stage 2](#stage-2)
 
-### Building System
+	* [GRUB](#grub)
 
-This project proves the greatest utility of [GNU Make](https://www.gnu.org/software/make "GNU Make Homepage") in the way it builds an Operating System.
+* [Kernel](#kernel)
 
-This project contains almost 3000 lines of code, but only 48 lines of Makefile code is needed for build.
+* [Memory Management](#memory-management)
+
+* [Building System](#building-system)
+
+## Bootloader
+
+### Custom
+
+This OS uses a 2-staged bootloader. In case the second stage is when we entered **Protected Mode** and calls kernel.
+
+#### Boot Sector
+
+The first 512 bytes of my floppy image contains the Boot Sector which does a lot of stuff that **Protected Mode** cannot do. (e.g. Loading stuff from disk). Then it jumps to the second stage loaded at `0x7E00` (just after the boot sector).
+
+#### Stage 2
+
+This stage loads the GDT and enters **Protected Mode**, then it copies the kernel loaded by boot sector at `0x1000` to `0x100000` (1 MB). At last jump!
+
+### GRUB
+
+The size of the kernel is always growing, but I can't always increase the sectors to load. As a solution. I decide to use GRUB. The kernel is stored as an ELF image (`kernel.img`) in a CD which uses `ISO 9660` as its file system. GRUB also supports multiboot, so my Operating System can work together with others (Windows, Linux, etc.).
+
+## Kernel
+
+We entered protected mode which means we don't have access to BIOS functions. So, this kernel needs to re-implement those functions for controlling the hardware.
+
+Now, I have re-implemented standard devices: screen and keyboard. In the further development. I am going to implement disk driver.
+
+## Memory Management
+
+This kernel uses paging from [JamesM's Tutorial](http://www.jamesmolloy.co.uk/tutorial_html/6.-Paging.html), but somehow it's still failing (Issue #2). More information will be added as soon as I fixed the problem.
+
+## Building System
+
+This project uses [GNU Make](https://www.gnu.org/software/make "GNU Make Homepage") to build.
