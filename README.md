@@ -50,7 +50,7 @@ Now, I have re-implemented standard devices: screen and keyboard. In the further
 
 ## Memory Management
 
-This kernel uses paging from [JamesM's Tutorial](http://www.jamesmolloy.co.uk/tutorial_html/6.-Paging.html), but somehow it's still [failing](issues/2). More information will be added as soon as I fixed the problem.
+This kernel uses paging from [JamesM's Tutorial](http://www.jamesmolloy.co.uk/tutorial_html/6.-Paging.html), but somehow it's still [failing](https://github.com/TravorLZH/TravorOS/issues/2). More information will be added as soon as I fixed the problem.
 
 ## Building System
 
