@@ -34,8 +34,7 @@ int kernel_main(void *multiboot){
 	isr_install();
 	set_interrupt();
 	init_keyboard();
-	init_heap(0x10000);
-	//init_paging();
+	init_paging();
 	char cmd[100];
 terminal_loop:
 	print_at("TravorOS> ",-1,-1,0x0E);

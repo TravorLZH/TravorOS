@@ -1,83 +1,23 @@
 #include <kernel/memory.h>
-#include <kernel/dbg.h>
-#include <drivers/screen.h>
-#include <cpu/isr.h>
-#include <stdio.h>
 
-extern size_t *frames;
-extern size_t nframes;
-extern size_t placement_address;
-page_directory_t *kernel_directory;
-page_directory_t *current_directory;
-
-static void page_fault(registers_t regs){
-	size_t faulting_address;
-	__asm__ volatile("mov %%cr2,%0" : "=r" (faulting_address));
-
-	int present=!(regs.err_code & 1);	// Page not present
-	int rw=regs.err_code & 0x2;	// Write operation
-	int us=regs.err_code & 0x4;	// User mode?
-	int reserved=regs.err_code & 0x8;	// Overwritten CPU-reserved bits of page entry
-	int id=regs.err_code & 0x10;	// Caused by an instruction fetch?
-
-	printf("Page fault! (present: %d, read-only: %d, user-mode: %d, reserved: %d) at 0x%x\n",present,rw,us,reserved,faulting_address);
-	PANIC("Page fault");
-}
+size_t page_directory[1024] __attribute__((aligned(4096)));
+size_t first_page_table[1024] __attribute__((aligned(4096)));
 
 void init_paging(void){
-	ktrace("Init paging\n",-1,-1,0xF);
-	// The size of physical memory. For the moment we
-	// assume it is 16 MB big.
-	size_t mem_end_page=0x1000000;
-	nframes=mem_end_page / 0x1000;
-	frames=(size_t*)kmalloc(INDEX_FROM_BIT(nframes));
-	memset(frames,0,INDEX_FROM_BIT(nframes));
-	// Let's create a page directory
-	kernel_directory=(page_directory_t*)kmalloc_a(sizeof(page_directory_t));
-	memset(kernel_directory,0,sizeof(page_directory_t));
-	current_directory=kernel_directory;
-	// We need to identity map (phys addr = virt addr) from
-	// 0x0 to the end of used memory, so we can access this
-	// transparently, as if the paging wasn't enabled.
-	// NOTE that we use a while loop here deliberately.
-	// inside the loop body we actually change placement_address
-	// by calling kmalloc(). A while loop causes this to be
-	// computed on-the-fly rather than once at the start;
-	size_t i=0;
-	while(i<placement_address){
-		// Kernel code is readable but not writeable from userspace
-		alloc_frame(get_page(i,1,kernel_directory),0,0);
-		i+=0x1000;
+	// TODO: Initialize the page directory
+	size_t i;
+	for(i=0;i<1024;i++){
+		/* Set the following flags to the pages:
+		 * Superwisor: Only kernel-mode can access them
+		 * Write Enabled: It can be both read from and written to
+		 * Not present: The page table is not present
+		*/
+		page_directory[i]=0x00000002;
 	}
-	ktrace("Registering interrupt handler\n");
-	register_interrupt_handler(14,page_fault);
-	switch_page_directory(kernel_directory);
-}
-
-void switch_page_directory(page_directory_t *dir){
-	// FIXME: Triple fault while setting cr3
-	current_directory=dir;
-	__asm__ volatile("mov %0, %%cr3" :: "r" (&dir->tablesPhysical));
-	size_t cr0=0;
-	__asm__ volatile("mov %%cr0, %0" : "=r" (cr0));
-	cr0|=0x80000000;	// Enable paging
-	__asm__ volatile("mov %0, %%cr0" :: "r" (cr0));
-}
-
-page_t *get_page(size_t address,int make,page_directory_t* dir){
-	// Turn address to index
-	address/=0x1000;
-	// Find the page table containing this address
-	size_t table_index=address/1024;
-	if(dir->tables[table_index]){	// if this table is already assigned
-		return &(dir->tables[table_index]->pages[address%1024]);
-	}else if(make){	// If auto create new table
-		size_t tmp;
-		dir->tables[table_index]=(page_table_t*)kmalloc_ap(sizeof(page_table_t),&tmp);
-		memset(dir->tables[table_index],0,0x1000);
-		dir->tablesPhysical[table_index]=tmp|0x7;	// Present, rw, user
-		return &(dir->tables[table_index]->pages[address%1024]);
-	}else{	// Or return an empty one
-		return 0;
+	// TODO: Initialize the first page table
+	for(i=0;i<1024;i++){
+		first_page_table[i]=(i*0x1000)|3;	// Attributes: supervisor, rw, present
 	}
+	page_directory[0]=((size_t)first_page_table) | 3;
+	load_page_directory(&page_directory);
 }
