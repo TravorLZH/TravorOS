@@ -1,4 +1,4 @@
-/* 
+/*
 * TravorOS: A simple OS running on Intel x86 Architecture
 * Copyright (C) 2017  Travor Liu
 *
@@ -70,7 +70,7 @@ int strcmp(const char* s1,const char* s2){
 	}
 }
 
-void* memcpy(void* dest,const void* src,size_t n){
+void *memcpy(void *dest,const void *src,size_t n){
 	char* d=(char*)dest;
 	char* s=(char*)src;
 	int i=0;
@@ -80,7 +80,16 @@ void* memcpy(void* dest,const void* src,size_t n){
 	return dest;
 }
 
-void* memset(void* dest,int ch,size_t count){
+void *memmove(void *dest,const void *src,size_t n){
+	char *d=(char*)dest;
+	char *s=(char*)src;
+	char tmp[n];
+	memcpy(tmp,s,n);
+	memcpy(d,tmp,n);
+	return d;
+}
+
+void *memset(void *dest,int ch,size_t count){
 	char* ptr=dest+count;
 	char c=(char)ch;
 	while(count--){
@@ -90,3 +99,15 @@ void* memset(void* dest,int ch,size_t count){
 	return dest;
 }
 
+int memcmp(const void *p1,const void *p2,size_t n){
+	char *pa=(char*)p1;
+	char *pb=(char*)p2;
+	int i=0;
+	int ret=0;
+	for(;n--;pa++,pb++){
+		if(*pa!=*pb){
+			return *pa-*pb;
+		}
+	}
+	return 0;
+}
