@@ -16,14 +16,17 @@ static void page_fault(registers_t regs){
 	reserved=regs.err_code & 0x8;	// Overwritten CPU-reserved bits of page entry?
 	id=regs.err_code & 0x10;		// Caused by an instruction fetch?
 	__asm__("movl %%cr2,%0":"=r" (faulting_address));
-	__kprintf("Page Fault: ");
-	if(!present){__kprintf("not-present ");}
-	if(rw){__kprintf("read-only ");}
-	if(us){__kprintf("user-mode ");}
-	if(reserved){__kprintf("reserved" );}
-	__kprintf("\nat 0x%x\n",faulting_address);
-	__kprintf("EIP: 0x%x\n",regs.eip);
-	__kprintf("Error code: 0x%x\n",regs.err_code);
+	clear_screen(0x1F);
+	kprint_set_color(0x1F);
+	kprintf("Page Fault: ");
+	if(!present){kprintf("not-present ");}
+	if(rw){kprintf("read-only ");}
+	if(us){kprintf("user-mode ");}
+	if(reserved){kprintf("reserved" );}
+	kprintf("\nat 0x%x\n",faulting_address);
+	kprintf("EIP: 0x%x\n",regs.eip);
+	kprintf("Error code: 0x%x\n",regs.err_code);
+	disable_cursor();
 	while(1);	// Hang so we don't repeat the same error again
 }
 
