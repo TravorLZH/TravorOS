@@ -62,7 +62,7 @@ This Operating System uses both segmentation and paging to provide memory protec
 
 1. **Data Segment for user**: Same as 4
 
-I also enable paging. Now I intentionally maped the fourth page in the first page table to `not-present` and `read-only`, so you can generate a **Page Fault** by executing entering `page` in my OS's command line.
+I also enable paging. Now I intentionally maped the fourth page in the first page table to `not-present` and `read-only`, so you can generate a **Page Fault** by executing entering `bsod` in my OS's command line.
 
 ![bluescreen](screenshots/bsod.png)
 

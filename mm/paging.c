@@ -1,8 +1,10 @@
 #include <kernel/memory.h>
 #include <kernel/utils.h>
+#include <kernel/bsod.h>
 #include <asm/shutdown.h>
 #include <drivers/screen.h>
 #include <cpu/isr.h>
+#include <stdio.h>
 
 size_t page_directory[1024] __attribute__((aligned(4096)));
 size_t first_page_table[1024] __attribute__((aligned(4096)));
@@ -16,18 +18,16 @@ static void page_fault(registers_t regs){
 	reserved=regs.err_code & 0x8;	// Overwritten CPU-reserved bits of page entry?
 	id=regs.err_code & 0x10;		// Caused by an instruction fetch?
 	__asm__("movl %%cr2,%0":"=r" (faulting_address));
-	clear_screen(0x1F);
-	kprint_set_color(0x1F);
-	kprintf("Page Fault: ");
-	if(!present){kprintf("not-present ");}
-	if(rw){kprintf("read-only ");}
-	if(us){kprintf("user-mode ");}
-	if(reserved){kprintf("reserved" );}
-	kprintf("\nat 0x%x\n",faulting_address);
-	kprintf("EIP: 0x%x\n",regs.eip);
-	kprintf("Error code: 0x%x\n",regs.err_code);
-	disable_cursor();
-	while(1);	// Hang so we don't repeat the same error again
+	char description[512];
+	sprintf(description,"Page fault occurs while %s address 0x%x\nPage attributes: %s%s%s%s",
+		rw?"writing":"reading",
+		faulting_address,
+		present?"\0":"not-present ",
+		us?"user-mode ":"\0",
+		reserved?"cpu-reserved ":"\0",
+		id?"instruction-fetch":"\0"
+	);
+	bsod_enter(regs.int_no,"Page Fault",regs.err_code,description,regs.eip);
 }
 
 void init_paging(void){

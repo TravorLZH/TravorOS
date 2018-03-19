@@ -47,7 +47,7 @@ terminal_loop:
 		printf("clear:    Clear the terminal screen\n");
 		printf("shutdown: Shutdown the machine\n");
 		printf("reboot:   Reboot this machine\n");
-		printf("page:     Trigger a Page Fault\n");
+		printf("bsod:     Trigger a Blue Screen of Death\n");
 		printf("help:     Display this page\n");
 		printf("\nThis OS is built for i386 Architecture.\n");
 		printf("Report bugs to " BUGREPORT "\n");
@@ -57,7 +57,7 @@ terminal_loop:
 		printf("TravorOS version " VERSION "\nwritten by Travor Liu\nReport bugs to " BUGREPORT "\n");
 		goto terminal_loop;
 	}
-	if(!strcmp(cmd,"page")){
+	if(!strcmp(cmd,"bsod")){
 		char *ptr=(char*)0x3000;
 		*ptr=1;
 		goto terminal_loop;
