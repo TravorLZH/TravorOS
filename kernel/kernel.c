@@ -63,7 +63,7 @@ terminal_loop:
 		goto terminal_loop;
 	}
 	if(!strcmp(cmd,"clear")){
-		clear_screen();
+		clear_screen(0x07);
 		goto terminal_loop;
 	}
 	if(!strcmp(cmd,"reboot")){
