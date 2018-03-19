@@ -19,6 +19,8 @@
 #include <def.h>
 #ifndef	__MEMORY_H_
 #define	__MEMORY_H_
+typedef	uint32_t	pte_t;
+typedef	uint32_t	page_t;
 #ifdef	__cplusplus
 extern	"C"{
 #endif
@@ -27,6 +29,7 @@ extern size_t page_directory[1024];
 // Paging Functions
 extern void init_paging(void);
 extern void load_page_directory(void *pgdir);
+extern void enable_paging(void);
 // Memory Allocator
 extern void init_heap(size_t offset);
 extern void *kmalloc(size_t size);

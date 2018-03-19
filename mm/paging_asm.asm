@@ -1,4 +1,5 @@
 [global load_page_directory]
+[global enable_paging]
 
 ; void load_page_directory(void *pgdir);
 ; Load the address of page directory to CR3

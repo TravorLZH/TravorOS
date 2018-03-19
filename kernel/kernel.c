@@ -58,7 +58,7 @@ terminal_loop:
 		goto terminal_loop;
 	}
 	if(!strcmp(cmd,"page")){
-		char *ptr=(char*)0xA0000;
+		char *ptr=(char*)0x3000;
 		*ptr=1;
 		goto terminal_loop;
 	}
