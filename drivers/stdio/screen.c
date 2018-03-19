@@ -27,13 +27,17 @@ void enable_cursor(uint8_t cursor_start,uint8_t cursor_end){
 	outb(0x3D5,(inb(0x3E0) & 0xE0) | cursor_end);
 }
 
-void clear_screen(){
-	int row=0;
-	int col=0;
-	for(;row<MAX_ROWS;row++){
-		for(;col<MAX_COLS;col++){
-			print_char(' ',row,col,0x07);
-		}
+void disable_cursor(void){
+	outb(0x3D4,0x0A);
+	outb(0x3D5,0x20);
+}
+
+void clear_screen(char color){
+	char *offset=(char*)0xB8000;
+	size_t end=0xB8FA0;
+	for(;(size_t)offset<end;offset+=2){
+		*offset=' ';
+		*(offset+1)=color;
 	}
 	set_cursor(0);
 }
