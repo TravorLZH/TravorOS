@@ -1,7 +1,12 @@
 #include <kernel/memory.h>
+#include <cpu/isr.h>
 
 size_t page_directory[1024] __attribute__((aligned(4096)));
 size_t first_page_table[1024] __attribute__((aligned(4096)));
+
+static void page_fault(registers_t regs){
+	printf("Page Fault!\n");
+}
 
 void init_paging(void){
 	// TODO: Initialize the page directory
@@ -20,4 +25,5 @@ void init_paging(void){
 	}
 	page_directory[0]=((size_t)first_page_table) | 3;
 	load_page_directory(&page_directory);
+	register_interrupt_handler(0xE,&page_fault);
 }

@@ -33,6 +33,7 @@ int kernel_main(void *multiboot){
 	gdt_install();
 	isr_install();
 	set_interrupt();
+	enable_cursor(0x0E,0x0F);
 	init_keyboard();
 	init_paging();
 	char cmd[100];
@@ -46,6 +47,7 @@ terminal_loop:
 		printf("clear:    Clear the terminal screen\n");
 		printf("shutdown: Shutdown the machine\n");
 		printf("reboot:   Reboot this machine\n");
+		printf("page:     Trigger a Page Fault\n");
 		printf("help:     Display this page\n");
 		printf("\nThis OS is built for i386 Architecture.\n");
 		printf("Report bugs to " BUGREPORT "\n");
@@ -53,6 +55,11 @@ terminal_loop:
 	}
 	if(!strcmp(cmd,"about")){
 		printf("TravorOS version " VERSION "\nwritten by Travor Liu\nReport bugs to " BUGREPORT "\n");
+		goto terminal_loop;
+	}
+	if(!strcmp(cmd,"page")){
+		char *ptr=(char*)0xA0000;
+		*ptr=1;
 		goto terminal_loop;
 	}
 	if(!strcmp(cmd,"clear")){

@@ -19,13 +19,20 @@
 #include <drivers/screen.h>
 
 // Implementations for screen operations
+void enable_cursor(uint8_t cursor_start,uint8_t cursor_end){
+	outb(0x3D4,0x0A);
+	outb(0x3D5,(inb(0x3D5) & 0xC0) | cursor_start);
+
+	outb(0x3D4,0x0B);
+	outb(0x3D5,(inb(0x3E0) & 0xE0) | cursor_end);
+}
 
 void clear_screen(){
 	int row=0;
 	int col=0;
 	for(;row<MAX_ROWS;row++){
 		for(;col<MAX_COLS;col++){
-			print_char(0,row,col,0x07);
+			print_char(' ',row,col,0x07);
 		}
 	}
 	set_cursor(0);
@@ -69,8 +76,9 @@ int handle_scrolling(int offset){
 	}
 	/* Blank the last line by setting all bytes to 0 */
 	char* last_line=(char*)(get_screen_offset(0,MAX_ROWS-1)+VIDEO_ADDRESS);
-	for(i=0;i<MAX_COLS*2;i++){
-		last_line[i]=0;
+	for(i=0;i<MAX_COLS*2;i+=2){
+		last_line[i]=0x20;
+		last_line[i+1]=0x07;
 	}
 
 	// Move the offset back one row, such that it is now on

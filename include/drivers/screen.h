@@ -1,4 +1,4 @@
-/* 
+/*
 * TravorOS: A simple OS running on Intel x86 Architecture
 * Copyright (C) 2017  Travor Liu
 *
@@ -16,6 +16,7 @@
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 /* screen.h: Function declarations of screen driver */
+#include <def.h>
 #ifndef	__SCREEN_H_
 #define	__SCREEN_H_
 #define	VIDEO_ADDRESS	0xb8000
@@ -37,6 +38,7 @@ extern "C"{
 #endif
 extern void print_at(const char* str,int col,int row,char attr);
 extern void print_char(char character,int col,int row,char attribute_byte);
+extern void enable_cursor(uint8_t cursor_start,uint8_t cursor_end);
 extern void set_cursor(int offset);
 extern int get_cursor();
 #ifdef	__cplusplus
