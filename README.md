@@ -50,8 +50,24 @@ Now, I have re-implemented standard devices: screen and keyboard. In the further
 
 ## Memory Management
 
-This kernel uses paging from [JamesM's Tutorial](http://www.jamesmolloy.co.uk/tutorial_html/6.-Paging.html), but somehow it's still [failing](https://github.com/TravorLZH/TravorOS/issues/2). More information will be added as soon as I fixed the problem.
+This Operating System uses both segmentation and paging to provide memory protection. In my **Global Descriptor Table**, I put 5 segment descriptors:
+
+1. **Null Segment**
+
+1. **Code Segment for kernel**: The segment where my kernel code belongs to
+
+1. **Data Segment for kernel**: The segment where my kernel global variables belong to
+
+1. **Code Segment for user**: Currently not using
+
+1. **Data Segment for user**: Same as 4
+
+I also enable paging. Now I intentionally maped the fourth page in the first page table to `not-present` and `read-only`, so you can generate a **Page Fault** by executing entering `page` in my OS's command line.
+
+![bluescreen](screenshots/bsod.png)
 
 ## Building System
 
-This project uses [GNU Make](https://www.gnu.org/software/make "GNU Make Homepage") to build.
+This project uses [GNU Make](https://www.gnu.org/software/make "GNU Make Homepage") to build. So, the way to build is to type `make`, if any problems occur during the build, type `make dep` before `make`.
+
+If you are not using Linux or WSL (Windows Subsystem for Linux), you will need to [download a cross compiler from here](https://github.com/nativeos/i386-elf-toolchain/releases). Then you need to modify `CC` and `LD` in `config.mk`.
