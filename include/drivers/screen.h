@@ -36,9 +36,11 @@
 #ifdef	__cplusplus
 extern "C"{
 #endif
+extern void clear_screen(char color);
 extern void print_at(const char* str,int col,int row,char attr);
 extern void print_char(char character,int col,int row,char attribute_byte);
 extern void enable_cursor(uint8_t cursor_start,uint8_t cursor_end);
+extern void disable_cursor(void);
 extern void set_cursor(int offset);
 extern int get_cursor();
 #ifdef	__cplusplus
