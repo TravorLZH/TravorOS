@@ -19,20 +19,27 @@
 #include <def.h>
 #ifndef	__MEMORY_H_
 #define	__MEMORY_H_
-typedef	size_t	pte_t;
-typedef	size_t page_t;
 #define	FRAME_SIZE	0x1000
-#define	MAPPED_SIZE	0x1000000	// Size of memory that is mapped
+#define	MAPPED_SIZE	0x1000000	// Size of physical memory that is mapped
+					// In case it's 16 MB.
 #define	MAX_FRAMES	(MAPPED_SIZE/FRAME_SIZE)
 #ifdef	__cplusplus
 extern	"C"{
 #endif
+extern size_t endkernel;
 // Global voriables
 extern size_t page_directory[1024];
 // Paging Functions
 extern void init_paging(void);
 extern void load_page_directory(void *pgdir);
 extern void enable_paging(void);
+// Frame function
+extern void set_frame(size_t addr);
+extern void clear_frame(size_t addr);
+extern size_t is_free_frame(size_t addr);
+extern int get_free_frame(void);
+extern void alloc_frame(size_t *page,char user,char writable);
+extern size_t get_frame_no(size_t frame_addr);
 // Memory Allocator
 extern void init_heap(size_t offset);
 extern void *kmalloc(size_t size);
