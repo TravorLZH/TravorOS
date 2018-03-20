@@ -18,11 +18,11 @@
 /* kernel.c: The core part of the OS kernel (i.e. The heart of the OS) */
 #include <config.h>
 #include <stdio.h>
-#include <drivers/floppy.h>
 #include <drivers/screen.h>
 #include <kernel/memory.h>
 #include <kernel/utils.h>
 #include <kernel/dbg.h>
+#include <kernel/multiboot.h>
 #include <cpu/gdt.h>
 #include <cpu/isr.h>
 #include <cpu/timer.h>
@@ -35,6 +35,7 @@ int kernel_main(multiboot_info_t *multiboot){
 	set_interrupt();
 	enable_cursor(0x0E,0x0F);
 	init_keyboard();
+	printvar(&endkernel);
 	init_paging();
 	char cmd[100];
 terminal_loop:
@@ -49,7 +50,7 @@ terminal_loop:
 		printf("reboot:   Reboot this machine\n");
 		printf("bsod:     Trigger a Blue Screen of Death\n");
 		printf("help:     Display this page\n");
-		printf("\nThis OS is built for i386 Architecture.\n");
+		printf("\nThis OS is built for i386\n");
 		printf("Report bugs to " BUGREPORT "\n");
 		goto terminal_loop;
 	}
