@@ -38,7 +38,7 @@ extern void set_frame(size_t addr);
 extern void clear_frame(size_t addr);
 extern size_t is_free_frame(size_t addr);
 extern int get_free_frame(void);
-extern void alloc_frame(size_t *page,char user,char writable);
+extern void alloc_frame(void *page,char user,char writable);
 extern size_t get_frame_no(size_t frame_addr);
 // Memory Allocator
 extern void init_heap(size_t offset);
