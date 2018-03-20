@@ -39,8 +39,8 @@ clean:
 	@$(MAKE) -C boot clean
 	@$(MAKE) -C drivers clean
 ### Dependencies
-mm/paging.o:	mm/paging.c mm/paging.h include/kernel/memory.h include/stdio.h
-mm/frame.o:	mm/frame.c mm/paging.h include/kernel/memory.h include/kernel/utils.h \
+mm/paging.o:	mm/paging.ch include/kernel/memory.h include/stdio.h
+mm/frame.o:	mm/frame.c include/kernel/memory.h include/kernel/utils.h \
 	include/kernel/dbg.h
 kernel/kernel.o:	kernel/kernel.c $(wildcard include/kernel/*.h)
 kernel/dbg.o:	kernel/dbg.c include/kernel/dbg.h include/kernel/utils.h
