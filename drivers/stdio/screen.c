@@ -130,6 +130,7 @@ void print_char(char character,int col,int row,char attribute_byte){
 		// then decrement the offset.
 		case '\b':
 		vidmem[offset-2]=0;
+		vidmem[offset-1]=0x07;
 		offset-=2;
 		set_cursor(offset);
 		return;
