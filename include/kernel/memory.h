@@ -19,8 +19,11 @@
 #include <def.h>
 #ifndef	__MEMORY_H_
 #define	__MEMORY_H_
-typedef	uint32_t	pte_t;
-typedef	uint32_t	page_t;
+typedef	size_t	pte_t;
+typedef	size_t page_t;
+#define	FRAME_SIZE	0x1000
+#define	MAPPED_SIZE	0x1000000	// Size of memory that is mapped
+#define	MAX_FRAMES	(MAPPED_SIZE/FRAME_SIZE)
 #ifdef	__cplusplus
 extern	"C"{
 #endif
