@@ -43,7 +43,7 @@ void init_paging(void){
 	}
 	// TODO: Initialize the first page table which maps 4 MB of the physical memory
 	for(i=0;i<1024;i++){
-		first_page_table[i]=(i*0x1000)|3;	// Attributes: supervisor, rw, present
+		first_page_table[i]=i*0x1000 | 3;
 	}
 	first_page_table[3]=3*0x1000;	// Create a not-present page
 	page_directory[0]=((size_t)first_page_table) | 3;
