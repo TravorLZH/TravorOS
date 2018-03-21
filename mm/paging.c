@@ -6,8 +6,8 @@
 #include <cpu/isr.h>
 #include <stdio.h>
 
-size_t page_directory[1024] __attribute__((aligned(4096)));
-size_t first_page_table[1024] __attribute__((aligned(4096)));
+size_t page_directory[1024] __attribute__((aligned(FRAME_SIZE)));
+size_t first_page_table[1024] __attribute__((aligned(FRAME_SIZE)));
 
 static void page_fault(registers_t regs){
 	size_t faulting_address;
