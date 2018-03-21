@@ -72,11 +72,7 @@ char _getchar(){
 	return code2char(code);
 }
 char getScancode(){
-	/*char flag=port_byte_in(0x64);
-	while(!(flag & 1)){
-		flag=port_byte_in(0x64);
-	}*/
-	while(!kb_interrupt || special);
+	while((!kb_interrupt) || special);
 	kb_interrupt=0;
 	return port_byte_in(0x60);
 }
