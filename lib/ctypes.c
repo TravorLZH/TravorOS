@@ -26,43 +26,43 @@ char* space="\t\n\r\v\a ";
 
 int isalpha(int c){
 	if(strchr(alpha,c)){
-		return TRUE;
+		return 1;
 	}
-	return FALSE;
+	return 0;
 }
 
 int isdigit(int c){
 	if(strchr(digit,c)){
-		return TRUE;
+		return 1;
 	}
-	return FALSE;
+	return 0;
 }
 
 int isspace(int c){
 	if(strchr(space,c)){
-		return TRUE;
+		return 1;
 	}
-	return FALSE;
+	return 0;
 }
 
 int ispunct(int c){
 	if(strchr(punct,c)){
-		return TRUE;
+		return 1;
 	}
-	return FALSE;
+	return 0;
 }
 
 int islower(int c){
 	if(c>='a' && c<='z'){
-		return TRUE;
+		return 1;
 	}
 }
 
 int isupper(int c){
 	if(c>='A' && c<='Z'){
-		return TRUE;
+		return 1;
 	}
-	return FALSE;
+	return 0;
 }
 
 /* Conversions between cases */

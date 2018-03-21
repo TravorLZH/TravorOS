@@ -17,14 +17,13 @@
 */
 /* def.h: Basic constants definitions */
 #include <types.h>
+#include <errno.h>
 #ifndef	__DEF_H_
 #define	__DEF_H_
 // Basic constants
 #define	NULL	0
 #define	EOF	-1
 #define	BUFSIZ	512
-#define	TRUE	1
-#define	FALSE	0
-#define	true	TRUE
-#define	false	FALSE
+#define	KERNEL_SUCCESS	0
+#define	KERNEL_FAILURE	1
 #endif
