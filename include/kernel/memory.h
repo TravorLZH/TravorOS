@@ -23,10 +23,30 @@
 #define	MAPPED_SIZE	0x1000000	// Size of physical memory that is mapped
 					// In case it's 16 MB.
 #define	MAX_FRAMES	(MAPPED_SIZE/FRAME_SIZE)
+// Flags for map_frame
+#define	FRAME_WRITABLE	0x01
+#define	FRAME_USER	0x02
+#define	FRAME_KERNEL	0x00
+#define	FRAME_READONLY	0x00
+typedef union page{
+	struct{
+		char present:1;
+		char writable:1;
+		char user:1;
+		char reserved:2;
+		char accessed:1;
+		char dirty:1;
+		char reserved2:2;
+		char avail:3;	// Available for this kernel
+		size_t frame:20;
+	}bits;
+	size_t val;
+} __attribute__((packed)) page_t;
+typedef size_t frame_t;
 #ifdef	__cplusplus
 extern	"C"{
 #endif
-extern size_t endkernel;
+extern size_t end_kernel;
 // Global voriables
 extern size_t page_directory[1024];
 // Paging Functions
@@ -34,8 +54,9 @@ extern void init_paging(void);
 extern void load_page_directory(void *pgdir);
 extern void enable_paging(void);
 // Frame function
-extern int get_free_frame(void);
-extern void alloc_frame(void *page,char user,char writable);
+extern frame_t alloc_frame(void);
+// This overrides the current frame of the page
+extern void map_frame(page_t *page,frame_t frame,char flags);
 // Memory Allocator
 extern void init_heap(size_t offset);
 extern void *kmalloc(size_t size);

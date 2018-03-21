@@ -21,7 +21,7 @@ SECTIONS
 		bss = .; _bss = .; __bss = .;
 		*(.bss)
 		. = ALIGN(0x1000);
-		endkernel = .;
+		end_kernel = . + 0x1000;
 	}
 
 	end = .; _end = .; __end = .;
