@@ -22,6 +22,8 @@ This project has been activated since [December 15, 2017](https://github.com/Tra
 
 * [Memory Management](#memory-management)
 
+	* [Page Frame Allocator](#page-frame-allocator)
+
 * [Building System](#building-system)
 
 ## Bootloader
@@ -65,6 +67,20 @@ This Operating System uses both segmentation and paging to provide memory protec
 I also enable paging. Now I intentionally maped the fourth page in the first page table to `not-present` and `read-only`, so you can generate a **Page Fault** by executing entering `bsod` in my OS's command line.
 
 ![bluescreen](screenshots/bsod.png)
+
+### Page Frame Allocator
+
+Currently I am also working on a page frame allocator, so the memory management will be more convenient and I will be easier to approach multitasking.
+
+As [JamesM's Tutorial](http://www.jamesmolloy.co.uk/tutorial_html/6.-Paging.html) suggests, I will use a bitset to identify whether a frame is free or not.
+
+```
+           1: Allocated      0: Free
+                 v              v
+frame_bitset: 11110111110101111101111111
+                  ^
+            get_free_frame()
+```
 
 ## Building System
 
