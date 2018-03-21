@@ -17,7 +17,7 @@ typedef struct gdt_entry_struct{
 #ifdef	__cplusplus
 extern	"C"{
 #endif
-extern gdt_entry_t gdt_entries[5];
+extern gdt_entry_t gdt_entries[];
 extern gdt_descriptor_t gdt_ptr;
 extern void gdt_install(void);
 extern void gdt_set_gate(int num,size_t base,size_t limit,uint8_t access,uint8_t gran);
