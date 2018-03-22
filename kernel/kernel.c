@@ -35,8 +35,9 @@ int kernel_main(multiboot_info_t *multiboot){
 	set_interrupt();
 	enable_cursor(0x0E,0x0F);
 	init_keyboard();
+	init_heap(0xC00000);
 	init_paging();
-	char cmd[100];
+	char cmd=kmalloc(512);
 terminal_loop:
 	print_at("TravorOS> ",-1,-1,0x0E);
 	gets_real(cmd,0xA);
