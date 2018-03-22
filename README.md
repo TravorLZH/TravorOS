@@ -23,6 +23,8 @@ This project has been activated since [December 15, 2017](https://github.com/Tra
 * [Memory Management](#memory-management)
 
 	* [Page Frame Allocator](#page-frame-allocator)
+	
+	* [Dynamic Memory Allocation](#dynamic-memory-allocation)
 
 * [Building System](#building-system)
 
@@ -70,9 +72,9 @@ I also enable paging. Now I intentionally maped the fourth page in the first pag
 
 ### Page Frame Allocator
 
-Currently I am also working on a page frame allocator, so the memory management will be more convenient and I will be easier to approach multitasking.
+This kernel provides a **Page Frame Allocator**, so the memory management will be more convenient and I will be easier to approach multitasking.
 
-As [JamesM's Tutorial](http://www.jamesmolloy.co.uk/tutorial_html/6.-Paging.html) suggests, I will use a bitset to identify whether a frame is free or not.
+As [JamesM's Tutorial](http://www.jamesmolloy.co.uk/tutorial_html/6.-Paging.html) suggests, I will use a bitset to determine whether a frame is free or not.
 
 ```
            1: Allocated      0: Free
@@ -80,6 +82,19 @@ As [JamesM's Tutorial](http://www.jamesmolloy.co.uk/tutorial_html/6.-Paging.html
 frame_bitset: 11110111110101111101111111
                   ^
             get_free_frame()
+```
+
+### Dynamic Memory Allocation
+
+I have currently implemented a simple **malloc** without **free** because all variables used by kernel never need to be freed until powers off.
+
+```
+Heap Allocation
+-----------------------------------------------
+Allocated |
+Memory    | Free.......until the end of memory
+          |
+-----------------------------------------------
 ```
 
 ## Building System
