@@ -7,7 +7,7 @@
 #include <cpu/isr.h>
 #include <stdio.h>
 
-extern bitset_t frame_bitset[];
+extern bitset_t *frame_bitset;
 extern size_t bitset_size;
 size_t page_directory[1024] __attribute__((aligned(FRAME_SIZE)));
 page_t first_page_table[1024] __attribute__((aligned(FRAME_SIZE)));
@@ -37,6 +37,7 @@ void init_paging(void){
 	assert(sizeof(page_t) == 4);	// Make sure the page union is set up properly
 	memset(frame_bitset,0,bitset_size*sizeof(size_t));
 	kprint("Initializing Paging...\n");
+	frame_bitset=(bitset_t*)kmalloc_a(bitset_size);
 	// TODO: Initialize the page directory
 	size_t i;
 	for(i=0;i<1024;i++){

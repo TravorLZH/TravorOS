@@ -18,7 +18,7 @@ static void* kmalloc_real(size_t sz,int align,size_t *phys){
 		assert(*phys==placement_address);
 	}
 	size_t tmp=placement_address;
-	ktrace("Allocated a block with size: %u at %u (0x%x)\n",sz,placement_address,placement_address);
+	ktrace("Allocated a%s block with size: 0x%x at 0x%x",align?"n aligned":"\0",sz,placement_address);
 	placement_address+=sz;
 	return (void*)tmp;
 }

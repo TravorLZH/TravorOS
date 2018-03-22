@@ -4,7 +4,7 @@
 #include <kernel/bsod.h>
 #include <bitset32.h>
 
-bitset_t frame_bitset[MAX_FRAMES/32];
+bitset_t *frame_bitset;
 size_t bitset_size=MAX_FRAMES/32;
 
 void set_frame(frame_t frm){
