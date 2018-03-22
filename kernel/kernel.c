@@ -35,7 +35,6 @@ int kernel_main(multiboot_info_t *multiboot){
 	set_interrupt();
 	enable_cursor(0x0E,0x0F);
 	init_keyboard();
-	printvar(&end_kernel);
 	init_paging();
 	char cmd[100];
 terminal_loop:
