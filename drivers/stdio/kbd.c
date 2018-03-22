@@ -28,7 +28,7 @@ static char ctrl=0;
 static char alt=0;
 static char shift=0;
 static char capital=0;
-static char kb_interrupt=0;
+static volatile char kb_interrupt=0;	// Make sure this is not erased by compiler
 static char special=0;
 // Table for scan code character mappings
 const char press_char[]={
