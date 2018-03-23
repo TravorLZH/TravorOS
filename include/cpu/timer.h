@@ -5,7 +5,7 @@
 extern	"C"{
 #endif
 extern void delay(size_t ticks);
-extern void init_timer(void);
+extern void init_timer(size_t freq);
 #ifdef	__cplusplus
 }
 #endif
