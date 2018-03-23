@@ -33,11 +33,12 @@ int kernel_main(multiboot_info_t *multiboot){
 	gdt_install();
 	isr_install();
 	set_interrupt();
-	enable_cursor(0x0E,0x0F);
 	init_keyboard();
-	init_heap(0xC00000);
+	init_timer(1000);	// Tick per millisecond
+	enable_cursor(0x0E,0x0F);
+	init_heap(0x200000);
 	init_paging();
-	char cmd=kmalloc(512);
+	char *cmd=(char*)kmalloc(512);
 terminal_loop:
 	print_at("TravorOS> ",-1,-1,0x0E);
 	gets_real(cmd,0xA);
@@ -47,6 +48,7 @@ terminal_loop:
 		printf("about:    Information about this OS\n");
 		printf("clear:    Clear the terminal screen\n");
 		printf("shutdown: Shutdown the machine\n");
+		printf("delay:    Delay 1 second\n");
 		printf("reboot:   Reboot this machine\n");
 		printf("bsod:     Trigger a Blue Screen of Death\n");
 		printf("help:     Display this page\n");
@@ -73,6 +75,10 @@ terminal_loop:
 	}
 	if(!strcmp(cmd,"shutdown")){
 		shutdown();
+		goto terminal_loop;
+	}
+	if(!strcmp(cmd,"delay")){
+		delay(1000);
 		goto terminal_loop;
 	}
 	if(!strlen(cmd)){
