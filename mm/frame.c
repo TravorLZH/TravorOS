@@ -30,7 +30,7 @@ int get_free_frame(frame_t *frame){
 }
 
 // Allocate a new frame
-frame_t alloc_page(page_t *page,char flags){
+frame_t alloc_page(page_t *page,char user,char writable){
 	static size_t times=0;
 	times++;
 	size_t eip;
@@ -45,7 +45,7 @@ frame_t alloc_page(page_t *page,char flags){
 	}
 	set_frame(free);	// The frame is now ours!
 	if(page!=NULL){
-		map_frame(page,free,flags);
+		map_frame(page,free,user,writable);
 	}
 	return free;
 }
@@ -62,9 +62,7 @@ void free_frame(frame_t frm){
 	assert(!bitset_test(frame_bitset,frm));	// Make sure it's freed
 }
 
-void map_frame(page_t *page,frame_t frame,char flags){
-	char user=flags & FRAME_USER;
-	char writable=flags & FRAME_WRITABLE;
+void map_frame(page_t *page,frame_t frame,char user,char writable){
 	page->bits.present=1;
 	page->bits.user=user;
 	page->bits.writable=writable;
