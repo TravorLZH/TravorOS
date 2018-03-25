@@ -12,6 +12,7 @@ MBOOT_CHECKSUM	equ	-(MBOOT_HEADER_MAGIC + MBOOT_HEADER_FLAGS)
 [extern	bss]
 [extern	end]
 [global	start]
+[extern print_at]
 [extern	kernel_main]	; Declare that we will be referencing the external symbol 'kernel_main'
 mboot:
 dd	MBOOT_HEADER_MAGIC	; GRUB will search for this value on each
@@ -26,7 +27,22 @@ dd	end
 dd	start
 
 start:
+	call	check_a20
+	cmp	eax,0
+a20_disabled:
+	push	0x0F
+	push	-1
+	push	-1
+	push	A20MSG
+	call	print_at
+	add	esp,16
+	call	enable_a20
+a20_enabled:
 	push	ebx
 	cli
 	call	kernel_main
 	jmp	$
+
+A20MSG	db	"[kernel] Enabling A20",0xA,0
+
+%include "a20.asm"
