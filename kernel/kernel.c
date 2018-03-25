@@ -36,7 +36,7 @@ int kernel_main(multiboot_info_t *multiboot){
 	init_keyboard();
 	init_timer(1000);	// Tick per millisecond
 	enable_cursor(0x0E,0x0F);
-	init_heap(0x200000);
+	init_heap(0x400000);
 	init_paging();
 	char *cmd=(char*)kmalloc(512);
 terminal_loop:
