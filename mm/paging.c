@@ -9,9 +9,9 @@
 
 extern bitset_t *frame_bitset;
 extern size_t bitset_size;
-size_t page_directory[1024] __attribute__((aligned(FRAME_SIZE)));
-page_t first_page_table[1024] __attribute__((aligned(FRAME_SIZE)));
-
+size_t kernel_directory[1024] __attribute__((aligned(FRAME_SIZE)));
+page_t kernel_table[1024] __attribute__((aligned(FRAME_SIZE)));
+page_t kernel_heap[1024] __attribute__((aligned(FRAME_SIZE)));
 static void page_fault(registers_t regs){
 	size_t faulting_address;
 	int present,rw,us,reserved,id;
@@ -46,18 +46,23 @@ void init_paging(void){
 		 * Write Enabled: It can be both read from and written to
 		 * Not present: The page table is not present
 		*/
-		page_directory[i]=0x00000002;
+		kernel_directory[i]=0x00000002;
 	}
 	kprint("Finished filling page directory\n");
 	// TODO: Initialize the first page table which maps 4 MB of the physical memory
 	for(i=0;i<1024;i++){
-		alloc_page(first_page_table+i,FRAME_WRITABLE|FRAME_KERNEL);
+		alloc_page(kernel_table+i,0,1);
+	}
+	// TODO: Initialize the second page table
+	for(i=1024;i<2048;i++){
+		alloc_page(kernel_heap+i,0,1);
 	}
 	kprint("Finished allocating pages for the first table\n");
-	first_page_table[3].val=3*0x1000;	// Create a not-present page
-	page_directory[0]=((size_t)first_page_table) | 3;
+	kernel_table[3].val=3*0x1000;	// Create a not-present page
+	kernel_directory[0]=((size_t)kernel_table) | 3;
+	kernel_directory[1]=((size_t)kernel_heap) | 3;
 	register_interrupt_handler(0xE,&page_fault);
-	load_page_directory(page_directory);
+	load_page_directory(kernel_directory);
 	enable_paging();
 	kprint("Paging Enabled!\n");
 }
