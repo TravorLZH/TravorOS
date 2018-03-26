@@ -43,6 +43,6 @@ a20_enabled:
 	call	kernel_main
 	jmp	$
 
-A20MSG	db	"[kernel] Enabling A20",0xA,0
+A20MSG	db	"[kernel]: Enabling A20",0xA,0
 
 %include "a20.asm"
