@@ -8,7 +8,7 @@ libc_OBJ=$(patsubst %.c,%.o,$(patsubst %.asm,%.o,$(libc_SOURCES)))
 drivers_STUFF=$(addprefix drivers/,$(drivers_TARGETS))
 OBJ=${C_SOURCES:.c=.o} ${ASM_SOURCES:.asm=.o} $(drivers_STUFF)
 
-.PHONY:	clean all run debug dep $(drivers_STUFF)
+.PHONY:	clean all run debug dep $(drivers_STUFF) boot/boot.img
 all:	os.img kernel.elf os.iso
 run:
 	qemu-system-i386 -fda os.img -device isa-debug-exit,iobase=0xF4,iosize=0x04
