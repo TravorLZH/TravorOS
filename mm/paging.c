@@ -54,7 +54,7 @@ void init_paging(void){
 		alloc_page(kernel_table+i,0,1);
 	}
 	// TODO: Initialize the second page table
-	for(i=1024;i<2048;i++){
+	for(i=0;i<1024;i++){
 		alloc_page(kernel_heap+i,0,1);
 	}
 	kprint("Finished allocating pages for the first table\n");
