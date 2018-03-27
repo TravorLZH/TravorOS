@@ -51,7 +51,8 @@ void init_paging(void){
 	kprint("Finished filling page directory\n");
 	// TODO: Initialize the first page table which maps 4 MB of the physical memory
 	for(i=0;i<1024;i++){
-		alloc_page(kernel_table+i,0,1);
+		map_frame(kernel_table+i,i,0,1);
+		set_frame(i);
 	}
 	// TODO: Initialize the second page table
 	for(i=0;i<1024;i++){
