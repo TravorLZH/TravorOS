@@ -38,8 +38,12 @@ $(drivers_STUFF):
 lib/libc.a:	$(libc_OBJ)
 	ar rc $@ $^
 dep:
-	@$(MAKE) -C boot
-	@$(MAKE) -C drivers
+	sed '/\#\#\# Dependencies/q' < Makefile > Makefile_temp
+	(for i in kernel/*.c;do echo -n kernel/;$(CPP) $(CPPFLAGS) -Iinclude -M $$i;done) >> Makefile_temp
+	(for i in mm/*.c;do echo -n mm/;$(CPP) $(CPPFLAGS) -Iinclude -M $$i;done) >> Makefile_temp
+	cp Makefile_temp Makefile
+	rm Makefile_temp
+	make -C drivers dep
 clean:
 	$(RM) -fr *.bin *.o *.img *.elf
 	$(RM) -fr kernel/*.o drivers/*.o lib/*.o lib/*.a mm/*.o
@@ -47,8 +51,34 @@ clean:
 	@$(MAKE) -C boot clean
 	@$(MAKE) -C drivers clean
 ### Dependencies
-mm/paging.o:	mm/paging.c include/kernel/memory.h include/stdio.h
-mm/frame.o:	mm/frame.c include/kernel/memory.h include/kernel/utils.h \
-	include/kernel/dbg.h
-kernel/kernel.o:	kernel/kernel.c $(wildcard include/kernel/*.h) $(wildcard include/drivers/*.h)
-kernel/dbg.o:	kernel/dbg.c include/kernel/dbg.h include/kernel/utils.h
+kernel/bitset32.o: kernel/bitset32.c include/string.h include/def.h \
+ include/types.h include/errno.h include/bitset32.h
+kernel/bsod.o: kernel/bsod.c include/kernel/bsod.h include/def.h include/types.h \
+ include/errno.h include/kernel/utils.h include/kernel/dbg.h \
+ include/drivers/screen.h
+kernel/dbg.o: kernel/dbg.c include/kernel/dbg.h include/kernel/utils.h \
+ include/stdio.h include/def.h include/types.h include/errno.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h include/io.h \
+ include/drivers/screen.h
+kernel/kernel.o: kernel/kernel.c include/config.h include/stdio.h include/def.h \
+ include/types.h include/errno.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h include/io.h \
+ include/drivers/screen.h include/kernel/memory.h include/kernel/utils.h \
+ include/kernel/dbg.h include/kernel/multiboot.h include/cpu/gdt.h \
+ include/cpu/isr.h include/cpu/timer.h include/asm/interrupt.h \
+ include/asm/shutdown.h
+kernel/utils.o: kernel/utils.c \
+ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h include/def.h \
+ include/types.h include/errno.h include/kernel/utils.h \
+ include/kernel/dbg.h include/drivers/screen.h
+mm/frame.o: mm/frame.c include/kernel/memory.h include/def.h include/types.h \
+ include/errno.h include/kernel/dbg.h include/kernel/utils.h \
+ include/kernel/bsod.h include/bitset32.h
+mm/heap.o: mm/heap.c include/kernel/memory.h include/def.h include/types.h \
+ include/errno.h include/kernel/dbg.h include/kernel/utils.h
+mm/paging.o: mm/paging.c include/kernel/memory.h include/def.h \
+ include/types.h include/errno.h include/bitset32.h \
+ include/kernel/utils.h include/kernel/dbg.h include/kernel/bsod.h \
+ include/asm/shutdown.h include/drivers/screen.h include/cpu/isr.h \
+ include/stdio.h /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h \
+ include/io.h
