@@ -9,25 +9,30 @@ drivers_STUFF=$(addprefix drivers/,$(drivers_TARGETS))
 OBJ=${C_SOURCES:.c=.o} ${ASM_SOURCES:.asm=.o} $(drivers_STUFF)
 
 .PHONY:	clean all run debug dep $(drivers_STUFF) boot/boot.img
-all:	os.img kernel.elf os.iso
+all:	floppy.img kernel.elf cdrom.iso
 run:
-	qemu-system-i386 -fda os.img -device isa-debug-exit,iobase=0xF4,iosize=0x04
+	qemu-system-i386 -fda floppy.img -device isa-debug-exit,iobase=0xF4,iosize=0x04
 debug:	all
 	exec gdb -tui -x debug.gdb
 boot/boot.img:
 	(cd boot;$(MAKE) boot.img)
 run-iso:
-	qemu-system-i386 -cdrom os.iso
-os.iso:	iso/boot/kernel.img
-	grub-mkrescue -o $@ iso/ 1>/dev/null
+	qemu-system-i386 -cdrom cdrom.iso
+cdrom.iso:	iso/boot/kernel.img
+	@echo "Creating CD-ROM"
+	@grub-mkrescue -o $@ iso/ 1>/dev/null 2>/dev/null
 iso/boot/kernel.img:	kernel/grub_entry.o $(OBJ) $(kernel_LIBS)
-	$(LD) -melf_i386 -o $@ -T link.ld $^
-os.img: boot/boot.img kernel.bin
-	cat boot/boot.img kernel.bin > os.img
+	@echo "Linking multiboot kernel"
+	@$(LD) -melf_i386 -o $@ -T link.ld $^
+floppy.img: boot/boot.img kernel.bin
+	@echo "Creating floppy disk"
+	@cat boot/boot.img kernel.bin > floppy.img
 kernel.bin:	kernel/kernel_entry.o $(OBJ) $(kernel_LIBS)
-	$(LD) -melf_i386 -o $@ -T link.ld $^ --oformat binary
+	@echo "Linking kernel"
+	@$(LD) -melf_i386 -o $@ -T link.ld $^ --oformat binary
 kernel.elf:	kernel/kernel_entry.o $(OBJ) $(kernel_LIBS)
-	$(LD) -melf_i386 -o $@ -T link.ld $^
+	@echo "Creating kernel symbol file"
+	@$(LD) -melf_i386 -o $@ -T link.ld $^
 $(drivers_STUFF):
 	(cd drivers;$(MAKE) $(patsubst drivers/%.elf,%.elf,$@))
 lib/libc.a:	$(libc_OBJ)
@@ -38,6 +43,7 @@ dep:
 clean:
 	$(RM) -fr *.bin *.o *.img *.elf
 	$(RM) -fr kernel/*.o drivers/*.o lib/*.o lib/*.a mm/*.o
+	$(RM) -fr iso/boot/kernel.img
 	@$(MAKE) -C boot clean
 	@$(MAKE) -C drivers clean
 ### Dependencies
