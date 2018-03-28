@@ -29,7 +29,6 @@ static char alt=0;
 static char shift=0;
 static char capital=0;
 static volatile char kb_interrupt=0;	// Make sure this is not erased by compiler
-static char special=0;
 // Table for scan code character mappings
 const char press_char[]={
 	VK_ESCAPE,'1','2','3','4','5','6','7','8','9','0','-','=',VK_BACK,
@@ -45,7 +44,7 @@ const char shift_char[]={
 	'|','Z','X','C','V','B','N','M','<','>','?',VK_SHIFT,'*',VK_MENU,
 	VK_SPACE,VK_CAPITAL,VK_F1,VK_F2,VK_F3,VK_F4,VK_F5,VK_F6,VK_F7,VK_F8,VK_F9,VK_F10
 };
-char code2char(unsigned char code){
+inline char code2char(unsigned char code){
 	char r;
 	if(shift==1){
 		r=shift_char[code-1];
@@ -71,53 +70,48 @@ char _getchar(){
 	}
 	return code2char(code);
 }
-char getScancode(){
-	while((!kb_interrupt) || special);
+inline char getScancode(){
+redo:
+	while(!kb_interrupt);
 	kb_interrupt=0;
-	return port_byte_in(0x60);
+	switch(inb(0x60)){
+		case VK_SPACE:case VK_MENU:case VK_CONTROL:case VK_SHIFT:
+		goto redo;
+	}
+	return inb(0x60);
 }
 
 void keyboard_handler(registers_t r){
 	int x=port_byte_in(0x60);
-	char code;
 	kb_interrupt=1;
-	special=0;
 	if(x & 0x80){
-		// TODO: Handler when key is released.
-		code=code2char(x-0x80);
-		if(code==VK_SHIFT){
-			special=1;
+		outb(0x20,0x20);
+		switch(code2char(x)){
+			case VK_SHIFT:
 			shift=0;
-		}
-		if(code==VK_CONTROL){
-			special=1;
+			break;
+			case VK_CONTROL:
 			ctrl=0;
-		}
-		if(code==VK_MENU){
-			special=1;
+			break;
+			case VK_MENU:
 			alt=0;
+			break;
 		}
 	}else{
-		code=code2char(x);
-		if(code==VK_SHIFT){
-			special=1;
+		switch(code2char(x)){
+			case VK_SHIFT:
 			shift=1;
-			return;
-		}
-		if(code==VK_CONTROL){
-			special=1;
+			break;
+			case VK_CONTROL:
 			ctrl=1;
-		}
-		if(code==VK_MENU){
-			special=1;
+			break;
+			case VK_MENU:
 			alt=1;
-		}
-		if(code==VK_CAPITAL){
-			special=1;
+			break;
+			case VK_CAPITAL:
 			capital=capital==1 ? 0 : 1;
-			return;
+			break;
 		}
-		//putchar(code);
 	}
 }
 
