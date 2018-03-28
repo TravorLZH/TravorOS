@@ -6,8 +6,7 @@ kernel_LIBS=lib/libc.a
 libc_SOURCES=$(wildcard lib/*.c lib/*.asm)
 libc_OBJ=$(patsubst %.c,%.o,$(patsubst %.asm,%.o,$(libc_SOURCES)))
 drivers_STUFF=$(addprefix drivers/,$(drivers_TARGETS))
-OBJ=${C_SOURCES:.c=.o} ${ASM_SOURCES:.asm=.o} $(drivers_STUFF)
-
+OBJ=${C_SOURCES:.c=.o} ${ASM_SOURCES:.asm=.o}
 .PHONY:	clean all run debug dep $(drivers_STUFF) boot/boot.img
 all:	floppy.img kernel.elf cdrom.iso
 run:
@@ -21,18 +20,18 @@ run-iso:
 cdrom.iso:	iso/boot/kernel.img
 	@echo "Creating CD-ROM"
 	@grub-mkrescue -o $@ iso/ 1>/dev/null 2>/dev/null
-iso/boot/kernel.img:	kernel/grub_entry.o $(OBJ) $(kernel_LIBS)
+iso/boot/kernel.img:	kernel/grub_entry.o $(OBJ) $(drivers_STUFF) $(kernel_LIBS)
 	@echo "Linking multiboot kernel"
-	@$(LD) -melf_i386 -o $@ -T link.ld $^
+	$(LD) -melf_i386 -o $@ -T link.ld $^
 floppy.img: boot/boot.img kernel.bin
 	@echo "Creating floppy disk"
 	@cat boot/boot.img kernel.bin > floppy.img
-kernel.bin:	kernel/kernel_entry.o $(OBJ) $(kernel_LIBS)
+kernel.bin:	kernel/kernel_entry.o $(OBJ) $(drivers_STUFF) $(kernel_LIBS)
 	@echo "Linking kernel"
-	@$(LD) -melf_i386 -o $@ -T link.ld $^ --oformat binary
-kernel.elf:	kernel/kernel_entry.o $(OBJ) $(kernel_LIBS)
+	$(LD) -melf_i386 -o $@ -T link.ld $^ --oformat binary
+kernel.elf:	kernel/kernel_entry.o $(OBJ) $(drivers_STUFF) $(kernel_LIBS)
 	@echo "Creating kernel symbol file"
-	@$(LD) -melf_i386 -o $@ -T link.ld $^
+	$(LD) -melf_i386 -o $@ -T link.ld $^
 $(drivers_STUFF):
 	(cd drivers;$(MAKE) $(patsubst drivers/%.elf,%.elf,$@))
 lib/libc.a:	$(libc_OBJ)

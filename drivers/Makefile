@@ -22,7 +22,9 @@ gdt_SOURCES=$(wildcard gdt/*.c gdt/*.asm)
 gdt_OBJ=$(patsubst %.c,%.o,$(patsubst %.asm,%.o,$(gdt_SOURCES)))
 gdt.elf:	$(gdt_OBJ)
 # All objects
-drivers_OBJ=$(time_OBJ) $(stdio_OBJ) $(int_OBJ) $(gdt_OBJ) # $(disk_OBJ)
+drivers_OBJ=$(time_OBJ) $(stdio_OBJ) $(int_OBJ) $(gdt_OBJ)
+%.elf:
+	$(LD) -melf_i386 -r -o $@ $^
 dep:
 	sed '/\#\#\# Dependencies/q' < Makefile > Makefile_temp
 	(for x in $(drivers_TARGETS:.elf=/);do \
@@ -32,7 +34,8 @@ dep:
 	rm Makefile_temp
 clean:
 	(for x in $(drivers_TARGETS:.elf=/);do \
-	rm -rf x/*.c;done)
+	rm -rf $${x}*.o;done)
+	rm -rf *.elf
 ### Dependencies
 int/idt.o: int/idt.c ../include/cpu/idt.h ../include/types.h
 int/isr.o: int/isr.c ../include/cpu/idt.h ../include/types.h \
@@ -51,3 +54,9 @@ stdio/screen.o: stdio/screen.c ../include/asm/ioports.h ../include/def.h \
  ../include/types.h ../include/errno.h ../include/drivers/screen.h
 gdt/gdt.o: gdt/gdt.c ../include/cpu/gdt.h ../include/def.h ../include/types.h \
  ../include/errno.h
+disk/floppy.o: disk/floppy.c ../include/stdio.h ../include/def.h \
+ ../include/types.h ../include/errno.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h ../include/io.h \
+ ../include/drivers/screen.h ../include/asm/ioports.h \
+ ../include/kernel/utils.h ../include/kernel/dbg.h \
+ ../include/drivers/floppy.h ../include/cpu/isr.h ../include/cpu/timer.h
