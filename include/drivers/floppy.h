@@ -12,6 +12,7 @@
 #define	DOR_DRIVE2	0x02
 #define	DOR_DRIVE3	0x03
 #define	DOR_RESET	0x04
+#define	DOR_DMA		0x08
 #define	DOR_DRIVE0_MOTOR	0x10
 #define	DOR_DRIVE1_MOTOR	0x20
 #define	DOR_DRIVE2_MOTOR	0x40
@@ -51,6 +52,8 @@
 #define	FLP_SECTOR_DTL_256	1
 #define	FLP_SECTOR_DTL_512	2
 #define	FLP_SECTOR_DTL_1024	4
+
+#define	FLP_SECTORS_PER_TRACK	80
 #ifdef	__cplusplus
 extern	"C"{
 #endif
@@ -59,6 +62,14 @@ extern void init_floppy(void);
 extern void flp_wait_irq(void);
 extern void flp_write_dor(uint8_t val);
 extern uint8_t flp_read_status(void);
+extern void flp_lba2chs(size_t lba,size_t *head,size_t *cylinder,size_t *sector);
+extern int flp_seek(size_t cyl,size_t head);
+extern void flp_check_int(size_t *st0,size_t *cyl);
+extern uint8_t *flp_read_sector(size_t sectorDMA);
+extern void flp_reset(void);
+extern int flp_control_motor(char enable);
+extern void flp_enable_controller(void);
+extern void flp_disable_controller(void);
 #ifdef	__cplusplus
 }
 #endif
