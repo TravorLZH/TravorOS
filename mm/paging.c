@@ -56,7 +56,8 @@ void init_paging(void){
 	}
 	// TODO: Initialize the second page table
 	for(i=0;i<1024;i++){
-		alloc_page(kernel_heap+i,0,1);
+		map_frame(kernel_heap+i,i+1024,0,1);
+		set_frame(i+1024);
 	}
 	kprint("Finished allocating pages for the first table\n");
 	kernel_table[3].val=3*0x1000;	// Create a not-present page
