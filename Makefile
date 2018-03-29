@@ -63,9 +63,9 @@ kernel/kernel.o: kernel/kernel.c include/config.h include/stdio.h include/def.h 
  include/types.h include/errno.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h include/io.h \
  include/drivers/screen.h include/kernel/memory.h include/kernel/utils.h \
- include/kernel/dbg.h include/kernel/multiboot.h include/cpu/gdt.h \
- include/cpu/isr.h include/cpu/timer.h include/asm/interrupt.h \
- include/asm/shutdown.h
+ include/kernel/dbg.h include/kernel/multiboot.h include/kernel/syscall.h \
+ include/cpu/gdt.h include/cpu/isr.h include/cpu/timer.h \
+ include/asm/interrupt.h include/asm/shutdown.h
 kernel/utils.o: kernel/utils.c \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h include/def.h \
  include/types.h include/errno.h include/kernel/utils.h \
