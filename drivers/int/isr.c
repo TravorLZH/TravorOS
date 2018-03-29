@@ -69,6 +69,8 @@ void isr_install(){
 	set_idt_gate(46, (uint32_t)irq14);
 	set_idt_gate(47, (uint32_t)irq15);
 
+	set_idt_gate(0x80,(uint32_t)syscall_handler);
+
 	set_idt(); // Load with ASM
 }
 
