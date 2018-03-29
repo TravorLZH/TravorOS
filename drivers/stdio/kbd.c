@@ -87,7 +87,6 @@ void keyboard_handler(registers_t r){
 	kb_interrupt=1;
 	special=0;
 	if(x & 0x80){
-		outb(0x20,0x20);
 		// TODO: Handler when key is released.
 		code=code2char(x-0x80);
 		if(code==VK_SHIFT){
