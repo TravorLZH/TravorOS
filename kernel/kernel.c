@@ -23,6 +23,7 @@
 #include <kernel/utils.h>
 #include <kernel/dbg.h>
 #include <kernel/multiboot.h>
+#include <kernel/syscall.h>
 #include <cpu/gdt.h>
 #include <cpu/isr.h>
 #include <cpu/timer.h>
@@ -52,8 +53,13 @@ terminal_loop:
 		printf("reboot:   Reboot this machine\n");
 		printf("bsod:     Trigger a Blue Screen of Death\n");
 		printf("help:     Display this page\n");
+		printf("print:    Call sys_print\n");
 		printf("\nThis OS is built for i386\n");
 		printf("Report bugs to " BUGREPORT "\n");
+		goto terminal_loop;
+	}
+	if(!strcmp(cmd,"print")){
+		sys_print("Hello world!\n");
 		goto terminal_loop;
 	}
 	if(!strcmp(cmd,"about")){
