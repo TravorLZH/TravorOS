@@ -5,10 +5,6 @@ all:	$(drivers_TARGETS)
 int_SOURCES=$(wildcard int/*.c int/*.asm)
 int_OBJ=$(patsubst %.c,%.o,$(patsubst %.asm,%.o,$(int_SOURCES)))
 int.elf:	$(int_OBJ)
-# Disk drivers
-disk_SOURCES=$(wildcard disk/*.c)
-disk_OBJ=$(disk_SOURCES:.c=.o)
-disk.elf:	$(disk_OBJ)
 # Time and clock drivers
 time_SOURCES=$(wildcard time/*.c)
 time_OBJ=$(time_SOURCES:.c=.o)
