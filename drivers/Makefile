@@ -10,15 +10,15 @@ time_SOURCES=$(wildcard time/*.c)
 time_OBJ=$(time_SOURCES:.c=.o)
 time.elf:	$(time_OBJ)
 # Standard input and output
-stdio_SOURCES=$(wildcard stdio/*.c)
-stdio_OBJ=$(stdio_SOURCES:.c=.o)
-stdio.elf:	$(stdio_OBJ)
+tty_SOURCES=$(wildcard tty/*.c)
+tty_OBJ=$(tty_SOURCES:.c=.o)
+tty.elf:	$(tty_OBJ)
 # Global Descriptor Table
 gdt_SOURCES=$(wildcard gdt/*.c gdt/*.asm)
 gdt_OBJ=$(patsubst %.c,%.o,$(patsubst %.asm,%.o,$(gdt_SOURCES)))
 gdt.elf:	$(gdt_OBJ)
 # All objects
-drivers_OBJ=$(time_OBJ) $(stdio_OBJ) $(int_OBJ) $(gdt_OBJ)
+drivers_OBJ=$(time_OBJ) $(tty_OBJ) $(int_OBJ) $(gdt_OBJ)
 %.elf:
 	$(LD) -melf_i386 -r -o $@ $^
 dep:
@@ -42,11 +42,11 @@ time/timer.o: time/timer.c ../include/cpu/timer.h ../include/def.h \
  ../include/types.h ../include/errno.h ../include/cpu/isr.h \
  ../include/kernel/utils.h ../include/kernel/dbg.h \
  ../include/asm/ioports.h ../include/drivers/screen.h
-stdio/kbd.o: stdio/kbd.c ../include/drivers/kbd.h ../include/drivers/screen.h \
+tty/kbd.o: tty/kbd.c ../include/drivers/kbd.h ../include/drivers/screen.h \
  ../include/def.h ../include/types.h ../include/errno.h \
  ../include/asm/ioports.h ../include/kernel/utils.h \
  ../include/kernel/dbg.h ../include/ctypes.h ../include/cpu/isr.h
-stdio/screen.o: stdio/screen.c ../include/asm/ioports.h ../include/def.h \
+tty/screen.o: tty/screen.c ../include/asm/ioports.h ../include/def.h \
  ../include/types.h ../include/errno.h ../include/drivers/screen.h
 gdt/gdt.o: gdt/gdt.c ../include/cpu/gdt.h ../include/def.h ../include/types.h \
  ../include/errno.h
