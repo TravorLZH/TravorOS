@@ -24,6 +24,7 @@
 #include <kernel/dbg.h>
 #include <kernel/multiboot.h>
 #include <kernel/shell.h>
+#include <kernel/test.h>
 #include <cpu/gdt.h>
 #include <cpu/isr.h>
 #include <cpu/timer.h>
@@ -39,6 +40,6 @@ int kernel_main(multiboot_info_t *multiboot){
 	enable_cursor(0x0E,0x0F);
 	init_heap(0x400000);
 	init_paging();
-	enter_shell();
+	kbd_test();
 	return 0;
 }
