@@ -44,9 +44,9 @@ dep:
 	rm Makefile_temp
 	make -C drivers dep
 clean:
-	$(RM) -fr *.bin *.o *.img *.elf
+	$(RM) -fr *.bin *.o *.img *.elf *.iso
 	$(RM) -fr kernel/*.o drivers/*.o lib/*.o lib/*.a mm/*.o
-	$(RM) -fr kernel/*.c.asm drivers/*.c.asm lib/*.c.asm mm/*.c.asm
+	find -name '*.dsasm' -type f -delete
 	$(RM) -fr iso/boot/kernel.img
 	@$(MAKE) -C boot clean
 	@$(MAKE) -C drivers clean

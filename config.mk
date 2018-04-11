@@ -6,6 +6,6 @@ CPPFLAGS=-ffreestanding -nostdlib
 CFLAGS=-Wno-implicit-function-declaration -Wno-packed-bitfield-compat -g -m32
 %.o:	%.c
 	${CC} $(CFLAGS) $(CPPFLAGS) $(INCLUDE_DIR) -c $< -o $@
-	@exec objconv -fnasm $@ $<.asm 1>/dev/null 2>/dev/null
+	@exec objconv -fnasm $@ $<.dsasm 1>/dev/null 2>/dev/null
 %.o:	%.asm
 	${AS} -felf $< -o $@

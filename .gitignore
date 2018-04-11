@@ -6,7 +6,7 @@
 *~
 *.swp
 *.elf
-*.c.asm
+*.dsasm
 bochs.log
 old*/
 demos/*.o
