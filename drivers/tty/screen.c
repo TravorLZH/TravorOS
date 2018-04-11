@@ -18,6 +18,8 @@
 #include <asm/ioports.h>
 #include <drivers/screen.h>
 
+unsigned char *vidmem=(unsigned char*)VIDEO_ADDRESS;
+
 // Implementations for screen operations
 void enable_cursor(uint8_t cursor_start,uint8_t cursor_end){
 	outb(0x3D4,0x0A);
@@ -106,9 +108,10 @@ void print_at(const char* str,int col,int row,char attr){
 }
 /* Print a char on the screen at col, row, or at cursor position */
 void print_char(char character,int col,int row,char attribute_byte){
-	/* Create a byte (char) pointer to the start of video memory */
-	unsigned char *vidmem=(unsigned char*)VIDEO_ADDRESS;
-
+	// Don't allow 0 to be printed
+	if(!character){
+		return;
+	}
 	/* If attribute byte is zero, assume the default style. */
 	if(!attribute_byte){
 		attribute_byte=WHITE_ON_BLACK;
