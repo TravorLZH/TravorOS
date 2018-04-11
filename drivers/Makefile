@@ -30,7 +30,7 @@ dep:
 	rm Makefile_temp
 clean:
 	(for x in $(drivers_TARGETS:.elf=/);do \
-	rm -rf $${x}*.o;done)
+	rm -rf $${x}*.o $${x}*.c.asm;done)
 	rm -rf *.elf
 ### Dependencies
 int/idt.o: int/idt.c ../include/cpu/idt.h ../include/types.h

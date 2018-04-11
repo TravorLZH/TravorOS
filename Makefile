@@ -46,6 +46,7 @@ dep:
 clean:
 	$(RM) -fr *.bin *.o *.img *.elf
 	$(RM) -fr kernel/*.o drivers/*.o lib/*.o lib/*.a mm/*.o
+	$(RM) -fr kernel/*.c.asm drivers/*.c.asm lib/*.c.asm mm/*.c.asm
 	$(RM) -fr iso/boot/kernel.img
 	@$(MAKE) -C boot clean
 	@$(MAKE) -C drivers clean

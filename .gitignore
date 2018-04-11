@@ -3,10 +3,10 @@
 *.img
 *.iso
 *.a
-*.dsasm
 *~
 *.swp
 *.elf
+*.c.asm
 bochs.log
 old*/
 demos/*.o
