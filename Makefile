@@ -64,9 +64,15 @@ kernel/kernel.o: kernel/kernel.c include/config.h include/stdio.h include/def.h 
  include/types.h include/errno.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h include/io.h \
  include/drivers/screen.h include/kernel/memory.h include/kernel/utils.h \
- include/kernel/dbg.h include/kernel/multiboot.h include/kernel/syscall.h \
- include/cpu/gdt.h include/cpu/isr.h include/cpu/timer.h \
- include/asm/interrupt.h include/asm/shutdown.h
+ include/kernel/dbg.h include/kernel/multiboot.h include/kernel/shell.h \
+ include/kernel/test.h include/cpu/gdt.h include/cpu/isr.h \
+ include/cpu/timer.h include/asm/interrupt.h include/asm/shutdown.h
+kernel/shell.o: kernel/shell.c include/kernel/shell.h include/kernel/syscall.h \
+ include/config.h
+kernel/test.o: kernel/test.c include/kernel/test.h include/stdio.h include/def.h \
+ include/types.h include/errno.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h include/io.h \
+ include/drivers/screen.h
 kernel/utils.o: kernel/utils.c \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h include/def.h \
  include/types.h include/errno.h include/kernel/utils.h \
