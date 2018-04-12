@@ -129,9 +129,9 @@ void print_char(char character,int col,int row,char attribute_byte){
 	// Detecting special characters
 	int rows;
 	switch(character){
-		// If we see a Backspace, remove the current character and attribute
-		// then decrement the offset.
-		case '\b':
+	// If we see a Backspace, remove the current character and attribute
+	// then decrement the offset.
+	case '\b':
 		vidmem[offset-2]=0;
 		vidmem[offset-1]=0x07;
 		offset-=2;
@@ -139,7 +139,7 @@ void print_char(char character,int col,int row,char attribute_byte){
 		return;
 		break;
 		// If we see a CR (Carriage Return), set the offset to the start of line.
-		case '\r':
+	case '\r':
 		rows=offset/(2*MAX_COLS);
 		set_cursor_pos(0,rows);
 		return;
@@ -147,13 +147,13 @@ void print_char(char character,int col,int row,char attribute_byte){
 		// If we see a newline character, set offset to the end of
 		// current row, so it will be advanced to the first col
 		// of the next row.
-		case '\n':
+	case '\n':
 		rows=offset/(2*MAX_COLS);
 		offset=get_screen_offset(79,rows);
 		break;
 		// Otherwise, write the character and its attribute byte to
 		// video memory at our calculated offset.
-		default:
+	default:
 		vidmem[offset]=character;
 		vidmem[offset+1]=attribute_byte;
 	}
