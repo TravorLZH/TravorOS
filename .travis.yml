@@ -2,7 +2,7 @@ language: c
 sudo: required
 compiler: gcc
 dist: trusty
-before-script:
+before_script:
   - sudo apt-get install g++
   - sudo apt-get install yasm
   - git clone https://github.com/vertis/objconv
