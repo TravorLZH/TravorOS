@@ -14,10 +14,7 @@ load_page_directory:
 ; void enable_paging(void);
 ; Set CR0.PG bit
 enable_paging:
-	push	ebp
-	mov	ebp,esp
 	mov	eax,cr0
 	or	eax,0x80000000
 	mov	cr0,eax
-	pop	ebp
 	ret
