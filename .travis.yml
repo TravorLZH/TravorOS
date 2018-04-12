@@ -1,0 +1,15 @@
+language: c
+compiler: gcc
+matrix:
+  include:
+    - os: linux
+      addons:
+        apt:
+	  sources:
+	    - ubuntu-toolchain-r-test
+	  packages:
+	    - gcc
+      env:
+         - MATRIX_EVAL="CC=gcc"
+
+script: make
