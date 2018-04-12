@@ -1,3 +1,14 @@
 language: c
+sudo: required
 compiler: gcc
+dist: trusty
+addons:
+  apt:
+    packages:
+    - gcc-4.8
+    - g++-4.8
+    - yasm
+before-script:
+  - git clone https://github.com/vertis/objconv
+  - g++ -o /usr/bin/objconv -O2 objconv/src/*.cpp
 script: make
