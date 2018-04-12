@@ -2,7 +2,8 @@
 #include <kernel/syscall.h>
 #include <config.h>
 
-void enter_shell(void){
+void enter_shell(void)
+{
 	char *cmd=(char*)kmalloc(512);	// Shell buffer
 terminal_loop:
 	print_at("TravorOS> ",-1,-1,0x0E);

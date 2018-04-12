@@ -5,7 +5,8 @@
 
 isr_t handlers[256];
 
-void isr_install(){
+void isr_install()
+{
 	set_idt_gate(0, (uint32_t)isr0);
 	set_idt_gate(1, (uint32_t)isr1);
 	set_idt_gate(2, (uint32_t)isr2);
@@ -75,18 +76,21 @@ void isr_install(){
 	set_idt(); // Load with ASM
 }
 
-void isr_handler(registers_t r){
+void isr_handler(registers_t r)
+{
 	if(handlers[r.int_no]!=0){
 		isr_t h=handlers[r.int_no];
 		h(r);
 	}
 }
 
-void register_interrupt_handler(uint8_t n,isr_t h){
+void register_interrupt_handler(uint8_t n,isr_t h)
+{
 	handlers[n]=h;
 }
 
-void irq_handler(registers_t r){
+void irq_handler(registers_t r)
+{
 	if(r.int_no >= 40) port_byte_out(0xA0,0x20); /* slave */
 	port_byte_out(0x20,0x20); /* master */
 	if(handlers[r.int_no]!=0){

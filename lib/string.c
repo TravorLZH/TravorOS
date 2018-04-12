@@ -37,7 +37,8 @@ char* strcpy(char* dest,char* src){
 	return (char*)memcpy(dest,src,sizeof(src));
 }
 
-size_t strlen(const char* str){
+size_t strlen(const char* str)
+{
 	size_t i=0;
 	for(;str[i];i++);
 	return i;
@@ -58,7 +59,8 @@ char* strrev(char* str){
 	return str;
 }
 
-int strcmp(const char* s1,const char* s2){
+int strcmp(const char* s1,const char* s2)
+{
 	int i=0;
 	for(;;i++){
 		if(s1[i]!=s2[i]){
@@ -99,7 +101,8 @@ void *memset(void *dest,int ch,size_t count){
 	return dest;
 }
 
-int memcmp(const void *p1,const void *p2,size_t n){
+int memcmp(const void *p1,const void *p2,size_t n)
+{
 	char *pa=(char*)p1;
 	char *pb=(char*)p2;
 	int i=0;

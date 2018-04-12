@@ -4,7 +4,8 @@
 
 #include <misc.h>
 
-size_t num_hex_digits(size_t n){
+size_t num_hex_digits(size_t n)
+{
 	int ret=0;
 	if(n==0)return 1;
 	while(n!=0){
@@ -14,7 +15,8 @@ size_t num_hex_digits(size_t n){
 	return ret;
 }
 
-void itoh(size_t n,char* s){
+void itoh(size_t n,char* s)
+{
 	int len=num_hex_digits(n);
 	const char hex_lookup[]="0123456789ABCDEF";
 

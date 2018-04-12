@@ -45,7 +45,8 @@ const char shift_char[]={
 	'|','Z','X','C','V','B','N','M','<','>','?',VK_SHIFT,'*',VK_MENU,
 	VK_SPACE,VK_CAPITAL,VK_F1,VK_F2,VK_F3,VK_F4,VK_F5,VK_F6,VK_F7,VK_F8,VK_F9,VK_F10
 };
-char code2char(unsigned char code){
+char code2char(unsigned char code)
+{
 	char r;
 	if(shift==1){
 		r=shift_char[code-1];
@@ -60,7 +61,8 @@ char code2char(unsigned char code){
 	}
 	return r;
 }
-char _getchar(){
+char _getchar()
+{
 	unsigned char code=0;
 	while(1){
 		code=getScancode();
@@ -71,7 +73,8 @@ char _getchar(){
 	}
 	return code2char(code);
 }
-char getScancode(){
+char getScancode()
+{
 	/*char flag=port_byte_in(0x64);
 	  while(!(flag & 1)){
 	  flag=port_byte_in(0x64);
@@ -81,7 +84,8 @@ char getScancode(){
 	return port_byte_in(0x60);
 }
 
-void keyboard_handler(registers_t r){
+void keyboard_handler(registers_t r)
+{
 	int x=port_byte_in(0x60);
 	char code;
 	kb_interrupt=1;
@@ -125,7 +129,8 @@ void keyboard_handler(registers_t r){
 	}
 }
 
-void init_keyboard(){
+void init_keyboard()
+{
 	kprint("Initializing keyboard ...");
 	register_interrupt_handler(0x21,keyboard_handler);
 	print_at("[OK]\n",-1,-1,0x02);

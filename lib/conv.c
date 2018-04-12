@@ -21,7 +21,8 @@
 // The following code is about the conversion between string and variety of integers.
 // I partially refer the 1st link in BIBLIOGRAPHY
 /* String -> Integer */
-int atoi(const char* nptr){
+int atoi(const char* nptr)
+{
 	char* x=(char*)nptr;
 	int res=0;
 	int sign=1;
@@ -40,7 +41,8 @@ int atoi(const char* nptr){
 }
 
 // Integer -> String
-void itoa(int n,char *s){
+void itoa(int n,char *s)
+{
 	char neg=0;
 	char *x=s;
 	if(n<0){
@@ -59,7 +61,8 @@ void itoa(int n,char *s){
 	strrev(s);
 }
 
-void utoa(size_t n,char *s){
+void utoa(size_t n,char *s)
+{
 	char *x=s;
 	do{
 		*x=n%10+'0';

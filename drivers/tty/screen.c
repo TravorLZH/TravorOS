@@ -21,7 +21,8 @@
 unsigned char *vidmem=(unsigned char*)VIDEO_ADDRESS;
 
 // Implementations for screen operations
-void enable_cursor(uint8_t cursor_start,uint8_t cursor_end){
+void enable_cursor(uint8_t cursor_start,uint8_t cursor_end)
+{
 	outb(0x3D4,0x0A);
 	outb(0x3D5,(inb(0x3D5) & 0xC0) | cursor_start);
 
@@ -29,12 +30,14 @@ void enable_cursor(uint8_t cursor_start,uint8_t cursor_end){
 	outb(0x3D5,(inb(0x3E0) & 0xE0) | cursor_end);
 }
 
-void disable_cursor(void){
+void disable_cursor(void)
+{
 	outb(0x3D4,0x0A);
 	outb(0x3D5,0x20);
 }
 
-void clear_screen(char color){
+void clear_screen(char color)
+{
 	char *offset=(char*)0xB8000;
 	size_t end=0xB8FA0;
 	for(;(size_t)offset<end;offset+=2){
@@ -44,7 +47,8 @@ void clear_screen(char color){
 	set_cursor(0);
 }
 
-int get_cursor(){
+int get_cursor()
+{
 	// The device uses its control register as an index
 	// to select its internal registers, of which we are
 	// interested in:
@@ -59,7 +63,8 @@ int get_cursor(){
 	return offset*2;
 }
 
-void set_cursor(int offset){
+void set_cursor(int offset)
+{
 	offset /=2;
 	if(offset<0){
 		set_cursor(0);
@@ -70,7 +75,8 @@ void set_cursor(int offset){
 	port_byte_out(REG_SCREEN_CTRL,15);
 	port_byte_out(REG_SCREEN_DATA,(offset & 0xFF));
 }
-int handle_scrolling(int offset){
+int handle_scrolling(int offset)
+{
 	// If the cursor is within the screen return it unmodified
 	if(offset<MAX_ROWS*MAX_COLS*2){
 		return offset;
@@ -94,10 +100,12 @@ int handle_scrolling(int offset){
 	// Return the updated cursor position.
 	return offset;
 }
-int get_screen_offset(int col,int row){
+int get_screen_offset(int col,int row)
+{
 	return (row*MAX_COLS+col)*2;
 }
-void print_at(const char* str,int col,int row,char attr){
+void print_at(const char* str,int col,int row,char attr)
+{
 	int i=0;
 	if(col>=0 && row>=0){
 		set_cursor(get_screen_offset(col,row));
@@ -107,7 +115,8 @@ void print_at(const char* str,int col,int row,char attr){
 	}
 }
 /* Print a char on the screen at col, row, or at cursor position */
-void print_char(char character,int col,int row,char attribute_byte){
+void print_char(char character,int col,int row,char attribute_byte)
+{
 	// Don't allow 0 to be printed
 	if(!character){
 		return;

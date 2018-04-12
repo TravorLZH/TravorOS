@@ -5,11 +5,13 @@
 
 static char color=0x0F;
 
-void kprint_set_color(char attr){
+void kprint_set_color(char attr)
+{
 	color=attr;
 }
 
-int kprintf(const char* str,...){
+int kprintf(const char* str,...)
+{
 	va_list vlist;
 	va_start(vlist,str);
 	char s[BUFSIZ];

@@ -33,7 +33,8 @@ static void page_fault(registers_t regs){
 	bsod_enter(regs.int_no,"Page Fault",regs.err_code,description,regs.eip);
 }
 
-void init_paging(void){
+void init_paging(void)
+{
 	assert(sizeof(page_t) == 4);	// Make sure the page union is set up properly
 	memset(frame_bitset,0,bitset_size*sizeof(size_t));
 	kprint("Initializing Paging...\n");

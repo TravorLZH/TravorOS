@@ -20,7 +20,8 @@
 #include <drivers/screen.h>
 #include <io.h>
 
-char getchar(void){
+char getchar(void)
+{
 	char c=_getchar();
 	print_char(c,-1,-1,0x07);
 	return c;

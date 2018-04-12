@@ -3,7 +3,8 @@
 
 size_t placement_address;
 
-void init_heap(size_t base){
+void init_heap(size_t base)
+{
 	placement_address=base;
 }
 static void* kmalloc_real(size_t sz,int align,size_t *phys){

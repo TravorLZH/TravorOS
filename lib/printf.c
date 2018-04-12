@@ -20,7 +20,8 @@
 #include <stdio.h>
 
 // formatting string: The fundamental function of printf family.
-int vsprintf(char* buffer,const char *format,va_list vlist){
+int vsprintf(char* buffer,const char *format,va_list vlist)
+{
 	// TODO: Implementations
 	int int_temp;
 	size_t uint_temp;
@@ -84,20 +85,23 @@ int vsprintf(char* buffer,const char *format,va_list vlist){
 	*(buffer+offset)='\0';	// Null Terminator
 	return offset;
 }
-int sprintf(char* buf,const char* fmt,...){
+int sprintf(char* buf,const char* fmt,...)
+{
 	va_list vl;
 	va_start(vl,fmt);
 	int rs=vsprintf(buf,fmt,vl);
 	va_end(vl);
 	return rs;
 }
-int vprintf(const char* fmt,va_list vlist){
+int vprintf(const char* fmt,va_list vlist)
+{
 	char buf[BUFSIZ];
 	int rs=vsprintf(buf,fmt,vlist);
 	puts(buf);
 	return rs;
 }
-int printf(const char* fmt,...){
+int printf(const char* fmt,...)
+{
 	va_list vl;
 	va_start(vl,fmt);
 	int rs=vprintf(fmt,vl);

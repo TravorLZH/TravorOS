@@ -10,7 +10,8 @@ unsigned long rand(void){
 	return (next%RAND_MAX);
 }
 
-void srand(unsigned int seed){
+void srand(unsigned int seed)
+{
 	next=seed;
 }
 
