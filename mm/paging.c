@@ -12,7 +12,8 @@ extern size_t bitset_size;
 size_t kernel_directory[1024] __attribute__((aligned(FRAME_SIZE)));
 page_t kernel_table[1024] __attribute__((aligned(FRAME_SIZE)));
 page_t kernel_heap[1024] __attribute__((aligned(FRAME_SIZE)));
-static void page_fault(registers_t regs){
+static void page_fault(registers_t regs)
+{
 	size_t faulting_address;
 	int present,rw,us,reserved,id;
 	present=regs.err_code & 1;	// Page not present

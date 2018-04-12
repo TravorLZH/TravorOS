@@ -5,7 +5,8 @@
 
 static unsigned long next=0xBABA;
 
-unsigned long rand(void){
+unsigned long rand(void)
+{
 	next=next*get_fibonacci(next)%RAND_MAX+12345;
 	return (next%RAND_MAX);
 }

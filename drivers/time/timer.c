@@ -12,7 +12,8 @@ void delay(size_t ticks)
 	while(tick);
 }
 
-static void timer_callback(registers_t regs){
+static void timer_callback(registers_t regs)
+{
 	if(tick>0)tick--;
 }
 
