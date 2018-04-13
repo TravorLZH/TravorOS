@@ -1,5 +1,5 @@
 include config.mk
-C_SOURCES=$(wildcard kernel/*.c mm/*.c)
+C_SOURCES=$(filter-out kernel/shell.c,$(wildcard kernel/*.c mm/*.c))
 ASM_SOURCES=$(filter-out kernel/kernel_entry.asm kernel/grub_entry.asm,$(wildcard kernel/*.asm mm/*.asm))
 INCLUDE_DIR=-Iinclude
 kernel_LIBS=lib/libc.a
@@ -58,21 +58,20 @@ kernel/bsod.o: kernel/bsod.c include/kernel/bsod.h include/def.h include/types.h
  include/drivers/screen.h
 kernel/dbg.o: kernel/dbg.c include/kernel/dbg.h include/kernel/utils.h \
  include/stdio.h include/def.h include/types.h include/errno.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h include/io.h \
- include/drivers/screen.h
+ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h
 kernel/kernel.o: kernel/kernel.c include/config.h include/stdio.h include/def.h \
  include/types.h include/errno.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h include/io.h \
- include/drivers/screen.h include/kernel/memory.h include/kernel/utils.h \
- include/kernel/dbg.h include/kernel/multiboot.h include/kernel/shell.h \
- include/kernel/test.h include/cpu/gdt.h include/cpu/isr.h \
- include/cpu/timer.h include/asm/interrupt.h include/asm/shutdown.h
+ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h \
+ include/drivers/screen.h include/drivers/keyboard.h \
+ include/kernel/memory.h include/kernel/utils.h include/kernel/dbg.h \
+ include/kernel/multiboot.h include/kernel/test.h include/cpu/gdt.h \
+ include/cpu/isr.h include/cpu/timer.h include/asm/interrupt.h \
+ include/asm/shutdown.h
 kernel/shell.o: kernel/shell.c include/kernel/shell.h include/kernel/syscall.h \
  include/config.h
 kernel/test.o: kernel/test.c include/kernel/test.h include/stdio.h include/def.h \
  include/types.h include/errno.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h include/io.h \
- include/drivers/screen.h
+ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h
 kernel/utils.o: kernel/utils.c \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h include/def.h \
  include/types.h include/errno.h include/kernel/utils.h \
@@ -86,5 +85,4 @@ mm/paging.o: mm/paging.c include/kernel/memory.h include/def.h \
  include/types.h include/errno.h include/bitset32.h \
  include/kernel/utils.h include/kernel/dbg.h include/kernel/bsod.h \
  include/asm/shutdown.h include/drivers/screen.h include/cpu/isr.h \
- include/stdio.h /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h \
- include/io.h
+ include/stdio.h /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h
