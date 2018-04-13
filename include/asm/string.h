@@ -1,7 +1,7 @@
 /* asm/string.h: x86 alternative for string functions */
 #ifndef	__STRING_H_
 #define	__STRING_H_
-#include <stddef.h>
+#include <def.h>
 #ifdef	__cplusplus
 static	"C"{
 #endif
@@ -54,4 +54,5 @@ static inline void *memset(void *dest,int c,size_t count){
 }
 #ifdef	__cplusplus
 }
+#endif
 #endif
