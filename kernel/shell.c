@@ -24,7 +24,7 @@ terminal_loop:
 		goto terminal_loop;
 	}
 	if(!strcmp(cmd,"print")){
-		sys_print("Hello world!\n");
+		sys_puts("Hello world!\n");
 		goto terminal_loop;
 	}
 	if(!strcmp(cmd,"about")){
