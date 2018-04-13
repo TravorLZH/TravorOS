@@ -129,7 +129,7 @@ void keyboard_handler(registers_t r)
 	}
 }
 
-void init_keyboard()
+void init_kbd(void)
 {
 	kprint("Initializing keyboard ...");
 	register_interrupt_handler(0x21,keyboard_handler);
