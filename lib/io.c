@@ -17,6 +17,7 @@
 */
 /* misc.h: It contains some fundamental standard and not standard C functions which are implemented by myself. */
 #include <random.h>
+#include <string.h>
 #include <drivers/screen.h>
 #include <io.h>
 
@@ -27,47 +28,25 @@ char getchar(void)
 	return c;
 }
 
-char* gets_real(char* s,char attribute){
-	char* st=s;
-	char temp,term,asterisk,skip,skip_print;
-	while(1){
-		temp=_getchar();
-		skip=0; // Reset the skip flag
-		term=0;
-		skip_print=0;
-		asterisk=0;
-		// I use switch because there might be more special characters
-		switch(temp){
-		case '\b':
-			if(st==s){
-				//asterisk=1;
-				skip_print=1;
-				break;
-			}
-			st--;
-			*st=0;
-			skip=1;
-			break;
-			case '\n':
-			term=1;
-			break;
-		}
-		if(skip_print==1)continue;
-		print_char(temp,-1,-1,0x0A);
-		if(asterisk==1)print_char('*',-1,-1,attribute);
-		if(skip==1)continue; // If there is a problem, skip the following
-		if(term==1){
-			*st=0;
-			return st;
-		}
-		// TODO: Store the character into the string
-		*st=temp;
-		st++;
+static void append(char *buf,char c)
+{
+	size_t len=strlen(buf);
+	if(c=='\b'){
+		buf[len-1]='\0';
+		return;
 	}
-	// Only if there is a problem, code will go here
-	return 0;
+	buf[len]=c;
+	buf[len+1]='\0';
 }
 
-char* gets(char* str){
-	return gets_real(str,0x07);
+char* gets(char* s)
+{
+	char* st=s;
+	char c;
+	while((c=getchar())!='\n'){
+		append(s,c);
+	}
+	// Only if there is a problem, code will go here
+	return s;
 }
+
