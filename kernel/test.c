@@ -5,8 +5,7 @@
 // This function reads string from terminal
 void kbd_test(void)
 {
-	char str[512];
-	printf("Enter some stuff: ");
-	gets(str);
-	printf("You entered: %s\n",str);
+	while(1){
+		getchar();
+	}
 }

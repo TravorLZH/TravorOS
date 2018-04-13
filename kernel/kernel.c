@@ -19,11 +19,11 @@
 #include <config.h>
 #include <stdio.h>
 #include <drivers/screen.h>
+#include <drivers/keyboard.h>
 #include <kernel/memory.h>
 #include <kernel/utils.h>
 #include <kernel/dbg.h>
 #include <kernel/multiboot.h>
-#include <kernel/shell.h>
 #include <kernel/test.h>
 #include <cpu/gdt.h>
 #include <cpu/isr.h>
@@ -36,7 +36,7 @@ int kernel_main(multiboot_info_t *multiboot)
 	gdt_install();
 	isr_install();
 	set_interrupt();
-	init_kbd();
+	init_keyboard();
 	init_timer(1000);	// Tick per millisecond
 	enable_cursor(0x0E,0x0F);
 	init_heap(0x400000);
