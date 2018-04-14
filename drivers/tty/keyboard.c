@@ -13,22 +13,23 @@
 #define	LSHIFT		0x2A
 #define	RSHIFT		0x36
 
-#define	RELEASED_KEY(code)	((code) & 0x80)
+#define	RELEASED(code)	((code) & 0x80)
+#define	TOGGLE(name)	((name)=~(name))
 
 static char keyboard_buffer[BUFSIZ];
 static void (*flush_handler)(const char*)=NULL;
 
 #define	MAX_SCANCODE	57
 
-const char scancode_table[]="??1234567890-=\b\tqwertyuiop[]\n?asdfghjkl;'`\?\\zxcvbnm,./??? ";
+const char scancode_table[]="??1234567890-=\b\tqwertyuiop[]\n?asdfghjkl;'`?\\zxcvbnm,./??? ";
 
 struct {
-	char interrupt:1;
 	char ctrl:1;
 	char shift:1;
 	char caps:1;
+	char interrupt:1;
 	char reserved:4;
-} __attribute__((packed)) kbd;
+} __attribute__((packed)) kbd_state;
 
 void kbd_flush(void)
 {
@@ -40,14 +41,8 @@ void kbd_flush(void)
 
 uint8_t kbd_read(void)
 {
-	while(!kbd.interrupt);
-	kbd.interrupt=0;
-	return inb(0x60);
-}
-
-uint8_t kbd_read2(void)
-{
-	while(!(inb(0x64) & 1));
+	while(!kbd_state.interrupt);
+	kbd_state.interrupt=0;
 	return inb(0x60);
 }
 
@@ -55,13 +50,6 @@ uint8_t kbd_read2(void)
 int getchar(void)
 {
 	char ch=scancode_table[kbd_read()];
-	print_char(ch,-1,-1,0x07);
-	return ch;
-}
-
-int getchar2(void)
-{
-	char ch=scancode_table[kbd_read2()];
 	print_char(ch,-1,-1,0x07);
 	return ch;
 }
@@ -84,7 +72,7 @@ static inline void append(char c)
 
 static void keyboard_callback(registers_t regs)
 {
-	kbd.interrupt=1;
+	kbd_state.interrupt=1;
 	uint8_t scancode=inb(0x60);
 	if(scancode>MAX_SCANCODE){
 		return;
@@ -112,5 +100,6 @@ void kbd_flush_handler(void (*handler)(const char*),char override)
 void init_keyboard(void)
 {
 	kprint("Initializing keyboard...\n");
+	assert(sizeof(kbd_state) == sizeof(char));	// Make sure it's 1 byte
 	register_interrupt_handler(IRQ1,keyboard_callback);
 }
