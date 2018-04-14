@@ -38,14 +38,30 @@ void kbd_flush(void)
 	memset(keyboard_buffer,0,BUFSIZ);
 }
 
-uint8_t kbd_read(void){
+uint8_t kbd_read(void)
+{
 	while(!kbd.interrupt);
 	kbd.interrupt=0;
 	return inb(0x60);
 }
 
-int getchar(void){
+uint8_t kbd_read2(void)
+{
+	while(!(inb(0x64) & 1));
+	return inb(0x60);
+}
+
+
+int getchar(void)
+{
 	char ch=scancode_table[kbd_read()];
+	print_char(ch,-1,-1,0x07);
+	return ch;
+}
+
+int getchar2(void)
+{
+	char ch=scancode_table[kbd_read2()];
 	print_char(ch,-1,-1,0x07);
 	return ch;
 }
