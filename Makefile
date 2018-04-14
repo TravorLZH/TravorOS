@@ -59,9 +59,8 @@ kernel/bsod.o: kernel/bsod.c include/kernel/bsod.h include/def.h include/types.h
 kernel/dbg.o: kernel/dbg.c include/kernel/dbg.h include/kernel/utils.h \
  include/stdio.h include/def.h include/types.h include/errno.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h
-kernel/kernel.o: kernel/kernel.c include/config.h include/stdio.h include/def.h \
- include/types.h include/errno.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h \
+kernel/kernel.o: kernel/kernel.c include/stdio.h include/def.h include/types.h \
+ include/errno.h /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h \
  include/drivers/screen.h include/drivers/keyboard.h \
  include/kernel/memory.h include/kernel/utils.h include/kernel/dbg.h \
  include/kernel/multiboot.h include/kernel/test.h include/cpu/gdt.h \
