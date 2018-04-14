@@ -35,7 +35,7 @@ int kernel_main(multiboot_info_t *multiboot)
 	gdt_install();
 	isr_install();
 	set_interrupt();
-	init_keyboard();
+//	init_keyboard();
 	init_timer(1000);	// Tick per millisecond
 	enable_cursor(0x0E,0x0F);
 	init_heap(0x400000);

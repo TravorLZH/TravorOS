@@ -6,6 +6,6 @@
 void kbd_test(void)
 {
 	while(1){
-		getchar();
+		getchar2();
 	}
 }
