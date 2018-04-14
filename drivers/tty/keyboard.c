@@ -20,7 +20,7 @@ static void (*flush_handler)(const char*)=NULL;
 
 #define	MAX_SCANCODE	57
 
-const char scancode_table[]="??1234567890-=??qwertyuiop[]??asdfghjkl;'`\?\\zxcvbnm,./??? ";
+const char scancode_table[]="??1234567890-=\b\tqwertyuiop[]\n?asdfghjkl;'`\?\\zxcvbnm,./??? ";
 
 struct {
 	char interrupt:1;
