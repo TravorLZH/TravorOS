@@ -16,7 +16,6 @@
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 /* kernel.c: The core part of the OS kernel (i.e. The heart of the OS) */
-#include <config.h>
 #include <stdio.h>
 #include <drivers/screen.h>
 #include <drivers/keyboard.h>
