@@ -1,4 +1,7 @@
-# TravorOS - Developing with Simplification [![Build Status](https://travis-ci.org/TravorLZH/TravorOS.svg?branch=master)](https://travis-ci.org/TravorLZH/TravorOS)
+# TravorOS - Developing with Simplification
+
+[![Build Status](https://travis-ci.org/TravorLZH/TravorOS.svg?branch=master)](https://travis-ci.org/TravorLZH/TravorOS)
+[![Coverage Status](https://coveralls.io/repos/github/TravorLZH/TravorOS/badge.svg)](https://coveralls.io/github/TravorLZH/TravorOS)
 
 This is the first [Operating System](https://en.wikipedia.org/wiki/Operating_System "Operating System Definition") I created. It's written in two languages: C language and Assembly.
 
