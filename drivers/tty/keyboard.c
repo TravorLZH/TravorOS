@@ -1,35 +1,48 @@
-#include <def.h>
+#include <stdio.h>
 #include <asm/string.h>
 #include <asm/ioports.h>
 #include <cpu/isr.h>
 #include <drivers/keyboard.h>
-#include <drivers/screen.h>
 #include <kernel/utils.h>
 #include <kernel/dbg.h>
-
-#define	BACKSPACE	0x0E
-#define	ENTER		0x1C
-#define	CTRL		0x1D
-#define	LSHIFT		0x2A
-#define	RSHIFT		0x36
-
 #define	RELEASED(code)	((code) & 0x80)
-#define	TOGGLE(name)	((name)=~(name))
 
 static char keyboard_buffer[BUFSIZ];
 static void (*flush_handler)(const char*)=NULL;
 
-#define	MAX_SCANCODE	57
+#define	MAX_SCANCODE	58
 
-const char scancode_table[]="??1234567890-=\b\tqwertyuiop[]\n?asdfghjkl;'`?\\zxcvbnm,./??? ";
+const char scancode_table[]="??1234567890-=\b\tqwertyuiop[]\n?asdfghjkl;'`?\\zxcvbnm,./??? ?";
+const char shift_table[]="..!@#$%^&*()_+\b\tQWERTYUIOP{}\n.ASDFGHJKL:\"~.|ZXCVBNM<>?.*. ?";
 
 struct {
-	char ctrl:1;
-	char shift:1;
-	char caps:1;
-	char interrupt:1;
-	char reserved:4;
+	uint8_t ctrl:1;
+	uint8_t shift:1;
+	uint8_t alt:1;
+	uint8_t caps:1;
+	uint8_t interrupt:1;
+	uint8_t special:1;
+	uint8_t reserved:2;
 } __attribute__((packed)) kbd_state;
+
+/* JUST FOR CONVENIENCE */
+static char toupper(char c)
+{
+	if(c>='a' && c<='z'){
+		return (c=c+'A'-'a');
+	}else{
+		return c;
+	}
+}
+
+static char tolower(char c)
+{
+	if(c>='A' && c<='Z'){
+		return (c=c+'a'-'A');
+	}else{
+		return c;
+	}
+}
 
 void kbd_flush(void)
 {
@@ -46,11 +59,29 @@ uint8_t kbd_read(void)
 	return inb(0x60);
 }
 
-
-int getchar(void)
+char kbd_parse_code(uint8_t code)
 {
-	char ch=scancode_table[kbd_read()];
-	print_char(ch,-1,-1,0x07);
+	if(kbd_state.caps&&!kbd_state.shift){
+		return toupper(scancode_table[code]);
+	}else if(!kbd_state.caps&&kbd_state.shift){
+		return shift_table[code];
+	}else if(kbd_state.caps&&kbd_state.shift){
+		return tolower(shift_table[code]);
+	}else{
+		return scancode_table[code];
+	}
+}
+
+char getchar(void)
+{
+	while(!kbd_state.interrupt||kbd_state.special==1);
+	kbd_state.interrupt=0;
+	uint8_t code=inb(0x60);
+	char ch=kbd_parse_code(code);
+	if(ch=='\n'){
+		assert(code==ENTER);
+	}
+	putchar(ch);
 	return ch;
 }
 
@@ -73,18 +104,50 @@ static inline void append(char c)
 static void keyboard_callback(registers_t regs)
 {
 	kbd_state.interrupt=1;
+	kbd_state.special=1;
 	uint8_t scancode=inb(0x60);
+	if(RELEASED(scancode)){
+		scancode&=0x7F;
+		// Handlers for released keys
+		switch(scancode){
+		case LSHIFT:case RSHIFT:
+			kbd_state.shift=0;
+			break;
+		case CTRL:
+			kbd_state.ctrl=0;
+			break;
+		case ALT:
+			kbd_state.alt=0;
+			break;
+		}
+		return;
+	}
 	if(scancode>MAX_SCANCODE){
 		return;
 	}
 	switch(scancode){
 	case BACKSPACE:
 		backspace();
+		kbd_state.special=0;
 		break;
 	case ENTER:
 		kbd_flush();
+		kbd_state.special=0;
+		break;
+	case LSHIFT:case RSHIFT:
+		kbd_state.shift=1;
+		break;
+	case CTRL:
+		kbd_state.ctrl=1;
+		break;
+	case ALT:
+		kbd_state.alt=1;
+		break;
+	case CAPS:
+		kbd_state.caps^=1;	// Toggle the bit
 		break;
 	default:
+		kbd_state.special=0;
 		append(scancode_table[scancode]);
 	}
 }
@@ -103,3 +166,4 @@ void init_keyboard(void)
 	assert(sizeof(kbd_state) == sizeof(char));	// Make sure it's 1 byte
 	register_interrupt_handler(IRQ1,keyboard_callback);
 }
+
