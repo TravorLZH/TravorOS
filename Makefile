@@ -14,28 +14,29 @@ run:
 debug:	all
 	exec gdb -tui -x debug.gdb
 boot/boot.img:
-	(cd boot;$(MAKE) boot.img)
+	@make -C boot boot.img
 run-iso:
 	qemu-system-i386 -cdrom cdrom.iso
 cdrom.iso:	iso/boot/kernel.img
-	@echo "Creating CD-ROM"
+	@echo "GEN $@"
 	@grub-mkrescue -o $@ iso/ 1>/dev/null 2>/dev/null
 iso/boot/kernel.img:	kernel/grub_entry.o $(OBJ) $(drivers_STUFF) $(kernel_LIBS)
-	@echo "Linking multiboot kernel"
-	$(LD) -melf_i386 -o $@ -T link.ld $^
+	@echo "GEN $@"
+	@$(LD) -melf_i386 -o $@ -T link.ld $^
 floppy.img: boot/boot.img kernel.bin
-	@echo "Creating floppy disk"
+	@echo "GEN $@"
 	@cat boot/boot.img kernel.bin > floppy.img
 kernel.bin:	kernel/kernel_entry.o $(OBJ) $(drivers_STUFF) $(kernel_LIBS)
-	@echo "Linking kernel"
-	$(LD) -melf_i386 -o $@ -T link.ld $^ --oformat binary
+	@echo "LINK $@"
+	@$(LD) -melf_i386 -o $@ -T link.ld $^ --oformat binary
 kernel.elf:	kernel/kernel_entry.o $(OBJ) $(drivers_STUFF) $(kernel_LIBS)
-	@echo "Creating kernel symbol file"
-	$(LD) -melf_i386 -o $@ -T link.ld $^
+	@echo "GEN $@"
+	@$(LD) -melf_i386 -o $@ -T link.ld $^
 $(drivers_STUFF):
-	(cd drivers;$(MAKE) $(patsubst drivers/%.elf,%.elf,$@))
+	@$(MAKE) -C drivers $(patsubst drivers/%.elf,%.elf,$@)
 lib/libc.a:	$(libc_OBJ)
-	ar rc $@ $^
+	
+	@ar rc $@ $^
 dep:
 	sed '/\#\#\# Dependencies/q' < Makefile > Makefile_temp
 	(for i in kernel/*.c;do echo -n kernel/;$(CPP) $(CPPFLAGS) -Iinclude -M $$i;done) >> Makefile_temp

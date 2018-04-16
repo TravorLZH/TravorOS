@@ -20,7 +20,8 @@ gdt.elf:	$(gdt_OBJ)
 # All objects
 drivers_OBJ=$(time_OBJ) $(tty_OBJ) $(int_OBJ) $(gdt_OBJ)
 %.elf:
-	$(LD) -melf_i386 -r -o $@ $^
+	@echo "GEN" "$@"
+	@$(LD) -melf_i386 -r -o $@ $^
 dep:
 	sed '/\#\#\# Dependencies/q' < Makefile > Makefile_temp
 	(for x in $(drivers_TARGETS:.elf=/);do \
