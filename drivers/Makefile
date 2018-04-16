@@ -42,10 +42,11 @@ time/timer.o: time/timer.c ../include/cpu/timer.h ../include/def.h \
  ../include/types.h ../include/errno.h ../include/cpu/isr.h \
  ../include/kernel/utils.h ../include/kernel/dbg.h \
  ../include/asm/ioports.h ../include/drivers/screen.h
-tty/keyboard.o: tty/keyboard.c ../include/def.h ../include/types.h \
- ../include/errno.h ../include/asm/string.h ../include/asm/ioports.h \
- ../include/cpu/isr.h ../include/drivers/keyboard.h \
- ../include/drivers/screen.h ../include/kernel/utils.h \
+tty/keyboard.o: tty/keyboard.c ../include/stdio.h ../include/def.h \
+ ../include/types.h ../include/errno.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h \
+ ../include/asm/string.h ../include/asm/ioports.h ../include/cpu/isr.h \
+ ../include/drivers/keyboard.h ../include/kernel/utils.h \
  ../include/kernel/dbg.h
 tty/screen.o: tty/screen.c ../include/asm/ioports.h ../include/def.h \
  ../include/types.h ../include/errno.h ../include/drivers/screen.h
