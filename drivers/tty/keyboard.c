@@ -72,7 +72,8 @@ char kbd_parse_code(uint8_t code)
 	}
 }
 
-char getchar(void)
+/* Standard function of reading character from keyboard */
+int getchar(void)
 {
 	while(!kbd_state.interrupt||kbd_state.special==1);
 	kbd_state.interrupt=0;
