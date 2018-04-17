@@ -79,10 +79,6 @@ int getchar(void)
 	kbd_state.interrupt=0;
 	uint8_t code=inb(0x60);
 	char ch=kbd_parse_code(code);
-	if(ch=='\n'){
-		assert(code==ENTER);
-	}
-	putchar(ch);
 	return ch;
 }
 
@@ -90,6 +86,7 @@ static inline void backspace(void)
 {
 	int len=strlen(keyboard_buffer);
 	if(len>0){
+		putchar('\b');
 		keyboard_buffer[len-1]='\0';
 	}
 }
@@ -107,6 +104,7 @@ static void keyboard_callback(registers_t regs)
 	kbd_state.interrupt=1;
 	kbd_state.special=1;
 	uint8_t scancode=inb(0x60);
+	char ch=NULL;
 	if(RELEASED(scancode)){
 		scancode&=0x7F;
 		// Handlers for released keys
@@ -132,6 +130,7 @@ static void keyboard_callback(registers_t regs)
 		kbd_state.special=0;
 		break;
 	case ENTER:
+		putchar('\n');
 		kbd_flush();
 		kbd_state.special=0;
 		break;
@@ -149,15 +148,15 @@ static void keyboard_callback(registers_t regs)
 		break;
 	default:
 		kbd_state.special=0;
-		append(scancode_table[scancode]);
+		ch=kbd_parse_code(scancode);
+		putchar(ch);
+		append(ch);
 	}
 }
 
-void kbd_flush_handler(void (*handler)(const char*),char override)
+void kbd_flush_handler(void (*handler)(const char*))
 {
-	if(!override&&flush_handler!=NULL){
-		return;
-	}
+	memset(keyboard_buffer,0,BUFSIZ);	// Clear the buffer first
 	flush_handler=handler;
 }
 
