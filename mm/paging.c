@@ -3,6 +3,7 @@
 #include <kernel/utils.h>
 #include <kernel/bsod.h>
 #include <asm/shutdown.h>
+#include <asm/string.h>
 #include <drivers/screen.h>
 #include <cpu/isr.h>
 #include <stdio.h>
@@ -43,30 +44,46 @@ void init_paging(void)
 	// TODO: Initialize the page directory
 	size_t i;
 	for(i=0;i<1024;i++){
-		/* Set the following flags to the pages:
-		 * Superwisor: Only kernel-mode can access them
-		 * Write Enabled: It can be both read from and written to
-		 * Not present: The page table is not present
+		/*
+		* Set the following flags to the pages:
+		* Superwisor: Only kernel-mode can access them
+		* Write Enabled: It can be both read from and written to
+		* Not present: The page table is not present
 		*/
 		kernel_directory[i]=0x00000002;
 	}
-	kprint("Finished filling page directory\n");
-	// TODO: Initialize the first page table which maps 4 MB of the physical memory
+	/* Identity map the first 8MB of the physical memory */
 	for(i=0;i<1024;i++){
 		map_frame(kernel_table+i,i,0,1);
 		set_frame(i);
 	}
-	// TODO: Initialize the second page table
 	for(i=0;i<1024;i++){
 		map_frame(kernel_heap+i,i+1024,0,1);
 		set_frame(i+1024);
 	}
-	kprint("Finished allocating pages for the first table\n");
 	kernel_table[3].val=3*0x1000;	// Create a not-present page
 	kernel_directory[0]=((size_t)kernel_table) | 3;
 	kernel_directory[1]=((size_t)kernel_heap) | 3;
 	register_interrupt_handler(0xE,&page_fault);
 	load_page_directory(kernel_directory);
 	enable_paging();
-	kprint("Paging Enabled!\n");
+	ktrace("SUCCESS");
 }
+
+page_t *get_page(void *address,char create,size_t *pgdir)
+{
+	size_t addr=(size_t)address;
+	addr/=0x1000;
+	size_t table_index=addr/1024;
+	if(pgdir[table_index]){
+		return (void*)(pgdir[table_index]+addr%1024);
+	}else if(create){
+		size_t tmp=(size_t)kmalloc_a(1024*sizeof(page_t));
+		memset((void*)tmp,0,0x1000);
+		pgdir[table_index]=tmp | 0x7;	// PRESENT, RW, US.
+		return (void*)(pgdir[table_index]+addr%1024);
+	}else{
+		return NULL;
+	}
+}
+
