@@ -1,3 +1,0 @@
-[submodule "liballoc"]
-	path = liballoc
-	url = ./liballoc/
