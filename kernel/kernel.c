@@ -17,6 +17,7 @@
 */
 /* kernel.c: The core part of the OS kernel (i.e. The heart of the OS) */
 #include <stdio.h>
+#include <config.h>
 #include <drivers/screen.h>
 #include <drivers/keyboard.h>
 #include <kernel/memory.h>
@@ -40,6 +41,7 @@ int kernel_main(multiboot_info_t *multiboot)
 	enable_cursor(0x0E,0x0F);
 	init_heap(0x400000);
 	init_paging();
+	printf("Welcome to TravorOS " VERSION "\n");
 	kbd_test();
 	return 0;
 }

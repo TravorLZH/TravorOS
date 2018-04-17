@@ -9,7 +9,7 @@ terminal_loop:
 	print_at("TravorOS> ",-1,-1,0x0E);
 	gets(cmd);
 	if(!strcmp(cmd,"help")){
-		printf("TravorOS version " VERSION "\n\n");
+		printf("TravorOS " VERSION "\n\n");
 		printf("Commands:\n");
 		printf("about:    Information about this OS\n");
 		printf("clear:    Clear the terminal screen\n");
