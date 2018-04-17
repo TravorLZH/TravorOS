@@ -3,7 +3,7 @@
 #define	__STRING_H_
 #include <def.h>
 #ifdef	__cplusplus
-static	"C"{
+extern	"C"{
 #endif
 static inline int strlen(const char *s)
 {
