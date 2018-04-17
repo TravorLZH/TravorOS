@@ -7,8 +7,10 @@ libc_SOURCES=$(wildcard lib/*.c lib/*.asm)
 libc_OBJ=$(patsubst %.c,%.o,$(patsubst %.asm,%.o,$(libc_SOURCES)))
 drivers_STUFF=$(addprefix drivers/,$(drivers_TARGETS))
 OBJ=${C_SOURCES:.c=.o} ${ASM_SOURCES:.asm=.o}
-.PHONY:	clean all run debug dep $(drivers_STUFF) boot/boot.img
+.PHONY:	clean all run debug dep format $(drivers_STUFF) boot/boot.img
 all:	floppy.img kernel.elf cdrom.iso
+format:
+	sh tools/format_function.sh
 run:
 	qemu-system-i386 -fda floppy.img -device isa-debug-exit,iobase=0xF4,iosize=0x04
 debug:	all
