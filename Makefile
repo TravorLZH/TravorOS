@@ -1,5 +1,5 @@
 include config.mk
-C_SOURCES=$(filter-out kernel/shell.c,$(wildcard kernel/*.c mm/*.c))
+C_SOURCES=$(filter-out kernel/test.c,$(wildcard kernel/*.c mm/*.c))
 ASM_SOURCES=$(filter-out kernel/kernel_entry.asm kernel/grub_entry.asm,$(wildcard kernel/*.asm mm/*.asm))
 INCLUDE_DIR=-Iinclude
 kernel_LIBS=lib/libc.a
@@ -8,7 +8,7 @@ libc_OBJ=$(patsubst %.c,%.o,$(patsubst %.asm,%.o,$(libc_SOURCES)))
 drivers_STUFF=$(addprefix drivers/,$(drivers_TARGETS))
 OBJ=${C_SOURCES:.c=.o} ${ASM_SOURCES:.asm=.o}
 .PHONY:	clean all run debug dep format $(drivers_STUFF) boot/boot.img
-all:	floppy.img kernel.elf cdrom.iso config
+all:	floppy.img kernel.elf cdrom.iso
 config:
 	sh tools/config.sh
 format:
@@ -66,16 +66,10 @@ kernel/dbg.o: kernel/dbg.c include/kernel/dbg.h include/kernel/utils.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h
 kernel/kernel.o: kernel/kernel.c include/stdio.h include/def.h include/types.h \
  include/errno.h /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h \
- include/drivers/screen.h include/drivers/keyboard.h \
+ include/config.h include/drivers/screen.h include/drivers/keyboard.h \
  include/kernel/memory.h include/kernel/utils.h include/kernel/dbg.h \
- include/kernel/multiboot.h include/kernel/test.h include/cpu/gdt.h \
- include/cpu/isr.h include/cpu/timer.h include/asm/interrupt.h \
- include/asm/shutdown.h
-kernel/shell.o: kernel/shell.c include/kernel/shell.h include/kernel/syscall.h \
- include/config.h
-kernel/test.o: kernel/test.c include/kernel/test.h include/stdio.h include/def.h \
- include/types.h include/errno.h \
- /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h
+ include/kernel/multiboot.h include/cpu/gdt.h include/cpu/isr.h \
+ include/cpu/timer.h include/asm/interrupt.h include/asm/shutdown.h
 kernel/utils.o: kernel/utils.c \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h include/def.h \
  include/types.h include/errno.h include/kernel/utils.h \
