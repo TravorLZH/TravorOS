@@ -84,5 +84,6 @@ mm/heap.o: mm/heap.c include/kernel/memory.h include/def.h include/types.h \
 mm/paging.o: mm/paging.c include/kernel/memory.h include/def.h \
  include/types.h include/errno.h include/bitset32.h \
  include/kernel/utils.h include/kernel/dbg.h include/kernel/bsod.h \
- include/asm/shutdown.h include/drivers/screen.h include/cpu/isr.h \
- include/stdio.h /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h
+ include/asm/shutdown.h include/asm/string.h include/drivers/screen.h \
+ include/cpu/isr.h include/stdio.h \
+ /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h
