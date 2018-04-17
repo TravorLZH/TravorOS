@@ -1,7 +1,7 @@
 AS=yasm
 CC=gcc
 LD=ld
-drivers_TARGETS=int.elf time.elf tty.elf gdt.elf
+drivers_TARGETS=cpu.elf time.elf tty.elf
 CPPFLAGS=-ffreestanding -nostdlib
 CFLAGS=-Wno-implicit-function-declaration -Wno-packed-bitfield-compat -g -m32
 ifndef	VERBOSE

@@ -1,10 +1,10 @@
 include	../config.mk
 INCLUDE_DIR=-I../include
 all:	$(drivers_TARGETS)
-# Interrupt driver
-int_SOURCES=$(wildcard int/*.c int/*.asm)
-int_OBJ=$(patsubst %.c,%.o,$(patsubst %.asm,%.o,$(int_SOURCES)))
-int.elf:	$(int_OBJ)
+# GDT and IDT drivers
+cpu_SOURCES=$(wildcard cpu/*.c cpu/*.asm)
+cpu_OBJ=$(patsubst %.c,%.o,$(patsubst %.asm,%.o,$(cpu_SOURCES)))
+cpu.elf:	$(cpu_OBJ)
 # Time and clock drivers
 time_SOURCES=$(wildcard time/*.c)
 time_OBJ=$(time_SOURCES:.c=.o)
@@ -13,12 +13,8 @@ time.elf:	$(time_OBJ)
 tty_SOURCES=$(wildcard tty/*.c)
 tty_OBJ=$(tty_SOURCES:.c=.o)
 tty.elf:	$(tty_OBJ)
-# Global Descriptor Table
-gdt_SOURCES=$(wildcard gdt/*.c gdt/*.asm)
-gdt_OBJ=$(patsubst %.c,%.o,$(patsubst %.asm,%.o,$(gdt_SOURCES)))
-gdt.elf:	$(gdt_OBJ)
 # All objects
-drivers_OBJ=$(time_OBJ) $(tty_OBJ) $(int_OBJ) $(gdt_OBJ)
+drivers_OBJ=$(time_OBJ) $(tty_OBJ) $(cpu_OBJ)
 %.elf:
 	@echo "GEN" "$@"
 	@$(LD) -melf_i386 -r -o $@ $^
@@ -34,8 +30,10 @@ clean:
 	rm -rf $${x}*.o $${x}*.c.asm;done)
 	rm -rf *.elf
 ### Dependencies
-int/idt.o: int/idt.c ../include/cpu/idt.h ../include/types.h
-int/isr.o: int/isr.c ../include/cpu/idt.h ../include/types.h \
+cpu/gdt.o: cpu/gdt.c ../include/cpu/gdt.h ../include/def.h ../include/types.h \
+ ../include/errno.h
+cpu/idt.o: cpu/idt.c ../include/cpu/idt.h ../include/types.h
+cpu/isr.o: cpu/isr.c ../include/cpu/idt.h ../include/types.h \
  ../include/cpu/isr.h ../include/stdio.h ../include/def.h \
  ../include/errno.h /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h \
  ../include/asm/ioports.h
@@ -51,5 +49,3 @@ tty/keyboard.o: tty/keyboard.c ../include/stdio.h ../include/def.h \
  ../include/kernel/dbg.h
 tty/screen.o: tty/screen.c ../include/asm/ioports.h ../include/def.h \
  ../include/types.h ../include/errno.h ../include/drivers/screen.h
-gdt/gdt.o: gdt/gdt.c ../include/cpu/gdt.h ../include/def.h ../include/types.h \
- ../include/errno.h
