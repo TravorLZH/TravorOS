@@ -27,7 +27,7 @@ extern	"C"{
 #endif
 // String functions
 extern char *strchr(const char*,int c);
-extern char *strcpy(char* dest,char* src);
+extern char *strcpy(char* dest,const char* src);
 extern unsigned int strlen(const char*);
 /* Not standard string function(s) */
 extern char *strrev(char *str);
