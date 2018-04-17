@@ -24,7 +24,6 @@
 #include <kernel/utils.h>
 #include <kernel/dbg.h>
 #include <kernel/multiboot.h>
-#include <kernel/test.h>
 #include <cpu/gdt.h>
 #include <cpu/isr.h>
 #include <cpu/timer.h>
@@ -42,6 +41,5 @@ int kernel_main(multiboot_info_t *multiboot)
 	init_heap(0x400000);
 	init_paging();
 	printf("Welcome to TravorOS " VERSION "\n");
-	kbd_test();
 	return 0;
 }
