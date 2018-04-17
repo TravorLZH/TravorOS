@@ -41,9 +41,10 @@ static inline char *strncpy(char *dest,const char *src,int count){
 	return dest;
 }
 static inline void *memcpy(void *dest,const void *src,size_t count){
-	__asm__("cld\n"
-		"rep movsb"
-		::"S"(src),"D"(dest),"c"(count):"memory");
+	__asm__("rep movsd"
+		::"S"(src),"D"(dest),"c"(count >> 2):"memory");
+	__asm__("rep movsb"
+		::"S"(src),"D"(dest),"c"(count & 7):"memory");
 	return dest;
 }
 static inline void *memset(void *dest,int c,size_t count){
