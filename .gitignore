@@ -8,6 +8,4 @@
 *.elf
 *.dsasm
 bochs.log
-old*/
-demos/*.o
-demos/license
+include/config.h
