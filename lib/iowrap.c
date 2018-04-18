@@ -18,7 +18,8 @@ int putchar(int c)
 	return c;
 }
 
-static void my_flush_handler(const char *buf){
+static void my_flush_handler(const char *buf)
+{
 	flushed=1;
 	if(userbuf!=NULL){
 		strcpy(userbuf,buf);
