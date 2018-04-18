@@ -37,6 +37,9 @@ cpu/isr.o: cpu/isr.c ../include/cpu/idt.h ../include/types.h \
  ../include/cpu/isr.h ../include/stdio.h ../include/def.h \
  ../include/errno.h /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h \
  ../include/asm/ioports.h
+time/rtc.o: time/rtc.c ../include/kernel/cmos.h ../include/def.h \
+ ../include/types.h ../include/errno.h ../include/asm/ioports.h \
+ ../include/drivers/rtc.h
 time/timer.o: time/timer.c ../include/cpu/timer.h ../include/def.h \
  ../include/types.h ../include/errno.h ../include/cpu/isr.h \
  ../include/kernel/utils.h ../include/kernel/dbg.h \
