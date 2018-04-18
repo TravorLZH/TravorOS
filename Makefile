@@ -22,24 +22,24 @@ boot/boot.img:
 run-iso:
 	qemu-system-i386 -cdrom cdrom.iso
 cdrom.iso:	iso/boot/kernel.img
-	@echo "GEN $@"
+	$(call green,"GEN $@")
 	@grub-mkrescue -o $@ iso/ 1>/dev/null 2>/dev/null
 iso/boot/kernel.img:	kernel/grub_entry.o $(OBJ) $(drivers_STUFF) $(kernel_LIBS)
-	@echo "GEN $@"
+	$(call green,"GEN $@")
 	@$(LD) -melf_i386 -o $@ -T link.ld $^
 floppy.img: boot/boot.img kernel.bin
-	@echo "GEN $@"
+	$(call green,"GEN $@")
 	@cat boot/boot.img kernel.bin > floppy.img
 kernel.bin:	kernel/kernel_entry.o $(OBJ) $(drivers_STUFF) $(kernel_LIBS)
-	@echo "LINK $@"
+	$(call yellow,"LINK $@")
 	@$(LD) -melf_i386 -o $@ -T link.ld $^ --oformat binary
 kernel.elf:	kernel/kernel_entry.o $(OBJ) $(drivers_STUFF) $(kernel_LIBS)
-	@echo "GEN $@"
+	$(call green,"GEN $@")
 	@$(LD) -melf_i386 -o $@ -T link.ld $^
 $(drivers_STUFF):
 	@$(MAKE) -C drivers $(patsubst drivers/%.elf,%.elf,$@)
 lib/libc.a:	$(libc_OBJ)
-	
+	$(call yellow,"LINK $@")
 	@ar rc $@ $^
 dep:	config
 	sed '/\#\#\# Dependencies/q' < Makefile > Makefile_temp

@@ -16,7 +16,7 @@ tty.elf:	$(tty_OBJ)
 # All objects
 drivers_OBJ=$(time_OBJ) $(tty_OBJ) $(cpu_OBJ)
 %.elf:
-	@echo "GEN" "$@"
+	$(call green,"GEN $@")
 	@$(LD) -melf_i386 -r -o $@ $^
 dep:
 	sed '/\#\#\# Dependencies/q' < Makefile > Makefile_temp

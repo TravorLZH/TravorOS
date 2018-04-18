@@ -1,10 +1,10 @@
 include ../config.mk
 all:	boot.img
 boot.img:	bootload.bin stage2.bin
-	@echo "GEN" "$@"
+	$(call green,"GEN $@")
 	@cat $^ > $@
 %.bin:	%.asm general.inc
-	@echo "AS" "$@"
+	$(call white,"AS $@")
 	@${AS} -fbin $< -o $@
 clean:
 	rm -f *.img *.bin
