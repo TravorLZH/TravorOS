@@ -20,6 +20,7 @@
 #include <config.h>
 #include <drivers/screen.h>
 #include <drivers/keyboard.h>
+#include <drivers/rtc.h>
 #include <kernel/memory.h>
 #include <kernel/utils.h>
 #include <kernel/dbg.h>
@@ -29,6 +30,8 @@
 #include <cpu/timer.h>
 #include <asm/interrupt.h>
 #include <asm/shutdown.h>
+
+struct tm time;
 
 int kernel_main(multiboot_info_t *multiboot)
 {
@@ -41,5 +44,9 @@ int kernel_main(multiboot_info_t *multiboot)
 	init_heap(0x400000);
 	init_paging();
 	printf("Welcome to TravorOS " VERSION "\n");
+	get_time(&time);
+	printf("Boot Time: 20%d/%d/%d",time.tm_year,time.tm_mon,time.tm_mday);
+	printf(" %d:%d:%d GMT\n",time.tm_hour,time.tm_min,time.tm_sec);
+	puts("Enjoy Typing...\n");
 	return 0;
 }
