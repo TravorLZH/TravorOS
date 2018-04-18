@@ -55,7 +55,7 @@ This project has been activated since [December 15, 2017](https://github.com/Tra
 
 - [ ] Multitasking
 
-- [ ] User-mode processed
+- [ ] User-mode processes
 
 - [ ] Hard Disk Driver
 
