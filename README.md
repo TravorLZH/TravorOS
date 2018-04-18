@@ -11,6 +11,8 @@ This project has been activated since [December 15, 2017](https://github.com/Tra
 
 ## Table of Contents
 
+* [Work Plan](#work-plan)
+
 * [Bootloader](#bootloader)
 
 	* [Custom](#bootloader)
@@ -30,6 +32,38 @@ This project has been activated since [December 15, 2017](https://github.com/Tra
 	* [Dynamic Memory Allocation](#dynamic-memory-allocation)
 
 * [Building System](#building-system)
+
+## Work Plan
+
+- [x] Write text to VGA
+
+- [x] CPU Interrupt (IDT, ISRs, IRQs, etc.)
+
+- [x] Read character from PS/2 Keyboard
+
+- [x] Read string from PS/2 Keyboard
+
+- [x] Virtual Memory (Paging, Frames, etc.)
+
+- [x] Page Frame Allocation and De-allocation
+
+- [ ] Dynamic Memory Allocation
+
+- [x] CPU Timer
+
+- [x] Real-Time Clock: So we can know when the movie starts
+
+- [ ] Multitasking
+
+- [ ] User-mode processed
+
+- [ ] Hard Disk Driver
+
+- [ ] Floppy Disk Driver
+
+- [ ] File System
+
+- [ ] Graphical User Interface
 
 ## Bootloader
 
