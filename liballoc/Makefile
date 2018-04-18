@@ -3,7 +3,7 @@
 
 # --------- FLAGS AND VARIABLES --------------------
 
-CFLAGS=-O2 -nostdlib -nodefaultlibs -fno-builtin -fPIC -Wall 
+CFLAGS=-m32 -O2 -nostdlib -nodefaultlibs -fno-builtin -fPIC -Wall 
 HEADERPATH=-I./
 
 
@@ -49,6 +49,6 @@ linux_debug:
 	gcc -DDEBUG $(HEADERPATH) $(CFLAGS) -static -c liballoc.c linux.c
 	ar -rcv liballoc.a  *.o
 	gcc -DDEBUG $(HEADERPATH) $(CFLAGS) -shared liballoc.c linux.c -o liballoc.so
-
-
-
+travoros:
+	gcc $(HEADERPATH) -I../include $(CFLAGS) -static -c liballoc.c travoros.c
+	ar -rcv liballoc.a liballoc.o travoros.o

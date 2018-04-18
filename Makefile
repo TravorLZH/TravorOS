@@ -7,7 +7,7 @@ libc_SOURCES=$(wildcard lib/*.c lib/*.asm)
 libc_OBJ=$(patsubst %.c,%.o,$(patsubst %.asm,%.o,$(libc_SOURCES)))
 drivers_STUFF=$(addprefix drivers/,$(drivers_TARGETS))
 OBJ=${C_SOURCES:.c=.o} ${ASM_SOURCES:.asm=.o}
-.PHONY:	clean all run debug dep format $(drivers_STUFF) boot/boot.img
+.PHONY:	clean all run debug dep format $(drivers_STUFF) liballoc/liballoc.a boot/boot.img
 all:	floppy.img kernel.elf cdrom.iso
 config:
 	sh tools/config.sh
@@ -38,7 +38,9 @@ kernel.elf:	kernel/kernel_entry.o $(OBJ) $(drivers_STUFF) $(kernel_LIBS)
 	@$(LD) -melf_i386 -o $@ -T link.ld $^
 $(drivers_STUFF):
 	@$(MAKE) -C drivers $(patsubst drivers/%.elf,%.elf,$@)
-lib/libc.a:	$(libc_OBJ)
+liballoc/liballoc.a:
+	@$(MAKE) -C liballoc travoros
+lib/libc.a:	$(libc_OBJ) liballoc/liballoc.a
 	$(call yellow,"LINK $@")
 	@ar rc $@ $^
 dep:	config
@@ -55,6 +57,7 @@ clean:
 	$(RM) -fr iso/boot/kernel.img
 	@$(MAKE) -C boot clean
 	@$(MAKE) -C drivers clean
+	@$(MAKE) -C liballoc clean
 ### Dependencies
 kernel/bitset32.o: kernel/bitset32.c include/string.h include/def.h \
  include/types.h include/errno.h include/bitset32.h
