@@ -104,6 +104,6 @@ Memory    | Free.......until the end of memory
 
 This project uses [GNU Make](https://www.gnu.org/software/make "GNU Make Homepage") to build. So, the way to build is to type `make`, if any problems occur during the build, type `make dep` before `make`. Open an issue if still stuck.
 
-[![asciicast](https://asciinema.org/a/176564.png)](https://asciinema.org/a/176564)
+[![asciicast](https://asciinema.org/a/176920.png)](https://asciinema.org/a/176920)
 
 If you are not using Linux or WSL (Windows Subsystem for Linux), you will need to [download a cross compiler from here](https://github.com/nativeos/i386-elf-toolchain/releases). Then modify `CC` and `LD` in `config.mk`.
