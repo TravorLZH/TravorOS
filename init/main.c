@@ -15,7 +15,7 @@
 * You should have received a copy of the GNU General Public License
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-/* kernel.c: The core part of the OS kernel (i.e. The heart of the OS) */
+/* init: The core part of the OS kernel (i.e. The heart of the OS) */
 #include <stdio.h>
 #include <config.h>
 #include <drivers/screen.h>
