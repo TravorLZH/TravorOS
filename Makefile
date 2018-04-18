@@ -1,5 +1,5 @@
 include config.mk
-C_SOURCES=$(filter-out kernel/test.c,$(wildcard kernel/*.c mm/*.c))
+C_SOURCES=$(filter-out kernel/test.c,$(wildcard init/*.c kernel/*.c mm/*.c))
 ASM_SOURCES=$(filter-out kernel/kernel_entry.asm kernel/grub_entry.asm,$(wildcard kernel/*.asm mm/*.asm))
 INCLUDE_DIR=-Iinclude
 kernel_LIBS=lib/libc.a
@@ -52,7 +52,7 @@ dep:	config
 	make -C drivers dep
 clean:
 	$(RM) -fr *.bin *.o *.img *.elf *.iso
-	$(RM) -fr kernel/*.o drivers/*.o lib/*.o lib/*.a mm/*.o
+	$(RM) -fr kernel/*.o init/*.o lib/*.o lib/*.a mm/*.o
 	find -name '*.dsasm' -type f -delete
 	$(RM) -fr iso/boot/kernel.img
 	@$(MAKE) -C boot clean
@@ -67,12 +67,6 @@ kernel/bsod.o: kernel/bsod.c include/kernel/bsod.h include/def.h include/types.h
 kernel/dbg.o: kernel/dbg.c include/kernel/dbg.h include/kernel/utils.h \
  include/stdio.h include/def.h include/types.h include/errno.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h
-kernel/kernel.o: kernel/kernel.c include/stdio.h include/def.h include/types.h \
- include/errno.h /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h \
- include/config.h include/drivers/screen.h include/drivers/keyboard.h \
- include/kernel/memory.h include/kernel/utils.h include/kernel/dbg.h \
- include/kernel/multiboot.h include/cpu/gdt.h include/cpu/isr.h \
- include/cpu/timer.h include/asm/interrupt.h include/asm/shutdown.h
 kernel/utils.o: kernel/utils.c \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h include/def.h \
  include/types.h include/errno.h include/kernel/utils.h \
