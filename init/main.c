@@ -1,20 +1,3 @@
-/*
-* TravorOS: A simple OS running on Intel x86 Architecture
-* Copyright (C) 2017  Travor Liu
-*
-* This program is free software: you can redistribute it and/or modify
-* it under the terms of the GNU General Public License as published by
-* the Free Software Foundation, either version 3 of the License, or
-* any later version.
-*
-* This program is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-* GNU General Public License for more details.
-*
-* You should have received a copy of the GNU General Public License
-* along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/
 /* init: The core part of the OS kernel (i.e. The heart of the OS) */
 #include <stdio.h>
 #include <config.h>
@@ -25,6 +8,7 @@
 #include <kernel/utils.h>
 #include <kernel/dbg.h>
 #include <kernel/multiboot.h>
+#include <kernel/syscall.h>
 #include <cpu/gdt.h>
 #include <cpu/isr.h>
 #include <cpu/timer.h>
@@ -32,6 +16,76 @@
 #include <asm/shutdown.h>
 
 struct tm time;
+char input_buf[BUFSIZ];
+const char host[]="TRAVOR";
+const char user[]="kernel";
+
+void print_time(struct tm time){
+	char tmp[3];
+	puts("20");
+	itoa(time.tm_year,tmp);
+	pad_zero(2,tmp);
+	puts(tmp);
+	putchar('/');
+	itoa(time.tm_mon,tmp);
+	pad_zero(2,tmp);
+	puts(tmp);
+	putchar('/');
+	itoa(time.tm_mday,tmp);
+	pad_zero(2,tmp);
+	puts(tmp);
+	putchar(' ');
+	itoa(time.tm_hour,tmp);
+	pad_zero(2,tmp);
+	puts(tmp);
+	putchar(':');
+	itoa(time.tm_min,tmp);
+	pad_zero(2,tmp);
+	puts(tmp);
+	putchar(':');
+	itoa(time.tm_sec,tmp);
+	pad_zero(2,tmp);
+	puts(tmp);
+	puts(" GMT\n");
+}
+
+void do_shell(void){
+begin:
+	kprint_set_color(0x0F);
+	kprintf(user);
+	kprint_set_color(0x0C);
+	kprintf("@");
+	kprint_set_color(0x0A);
+	kprintf(host);
+	kprint_set_color(0x0E);
+	kprintf("#");
+	putchar(' ');
+	kprint_set_color(0x0F);
+	gets(input_buf);
+	if(!strcmp(input_buf,"help")){
+		puts("time:    Get the current time from CMOS\n");
+		puts("uname:   Print system information\n");
+		puts("regdump: Dump the current register values\n");
+		goto begin;
+	}
+	if(!strcmp(input_buf,"time")){
+		get_time(&time);
+		print_time(time);
+		goto begin;
+	}
+	if(!strcmp(input_buf,"uname")){
+		puts("TravorOS TRAVOR " VERSION "i386 i386 i386 TravorOS\n");
+		goto begin;
+	}
+	if(!strcmp(input_buf,"hello")){
+		sys_puts("Hello world!\n");
+		goto begin;
+	}
+	kprint_set_color(0x04);
+	kprintf("Unknown Command, type `help' for a list of commands\n");
+	memset(input_buf,0,BUFSIZ);	// Clear the buffer before re-entering
+	goto begin;
+}
 
 int kernel_main(multiboot_info_t *multiboot)
 {
@@ -39,14 +93,15 @@ int kernel_main(multiboot_info_t *multiboot)
 	isr_install();
 	set_interrupt();
 	init_keyboard();
-	//init_timer(1000);	// Tick per millisecond
+	init_timer(1000);	// Tick per millisecond
 	enable_cursor(0x0E,0x0F);
 	init_heap(0x400000);
 	init_paging();
 	printf("Welcome to TravorOS " VERSION "\n");
 	get_time(&time);
-	printf("Boot Time: 20%d/%d/%d",time.tm_year,time.tm_mon,time.tm_mday);
-	printf(" %d:%d:%d GMT\n",time.tm_hour,time.tm_min,time.tm_sec);
-	puts("Enjoy Typing...\n");
+	puts("Boot Time: ");
+	print_time(time);
+	putchar('\n');
+	do_shell();
 	return 0;
 }
