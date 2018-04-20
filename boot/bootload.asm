@@ -11,7 +11,7 @@ nop
 OEMLabel	db	"TravorOS"
 BytesPerSector	dw	512
 SectorsPerCluster	db	1
-ReservedForBoot	dw	1
+ReservedForBoot	dw	2
 FATCount	db	2
 DirEntries	dw	224
 TotalSectors	dw	2880	; 1.44MB floppy
@@ -57,9 +57,11 @@ bootloader_start:
 	jmp	$
 
 load_stage2:
-	mov	bx,STAGE2_OFFSET	; Load the second stage at offset 0x0000:0x1000
+	mov	bx,0
+	mov	es,bx
+	mov	bx,STAGE2_OFFSET
 	mov	ah,2	; Read sectors
-	mov	al,2	; Read one sector
+	mov	al,1	; Read one sector
 	mov	ch,0	; First track
 	mov	cl,2	; Second sector
 	mov	dh,0	; First head
@@ -74,7 +76,7 @@ load_kernel:
 	mov	ah,2
 	mov	al,KERNEL_SECTORS	; This number will grow soon
 	mov	ch,0
-	mov	cl,4	; Kernel starts from 4th sector
+	mov	cl,3	; Kernel starts from 3rd sector
 	mov	dh,0
 	mov	dl,[BOOT_DRIVE]
 	int	0x13	; Call BIOS
