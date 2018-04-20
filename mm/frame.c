@@ -41,11 +41,7 @@ frame_t alloc_page(page_t *page,char user,char writable)
 	frame_t free;
 	int ret=get_free_frame(&free);	// Find the free frame
 	if(ret==ENOMEM){
-		char errbuf[512];
-		__asm__("movl %%esp,%%eax":"=a"(eip));
-		sprintf(errbuf,"Cannot allocate frame\n"
-			"frame_bitset[0]: 0x%x\ntimes: %x\n",*frame_bitset,times);
-		bsod_enter(ret,"Out of Memory",0xC0000000|ret,errbuf,eip);
+		PANIC("Out of Memory!");
 	}
 	set_frame(free);	// The frame is now ours!
 	if(page!=NULL){

@@ -32,7 +32,7 @@ static void page_fault(registers_t regs)
 		reserved?"cpu-reserved ":"\0",
 		id?"instruction-fetch":"\0"
 	);
-	bsod_enter(regs.int_no,"Page Fault",regs.err_code,description,regs.eip);
+	bsod_enter("Page Fault",description,&regs);
 }
 
 void init_paging(void)
