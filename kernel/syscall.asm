@@ -26,7 +26,7 @@ sys_putchar:
 syscall_handler:
 	push	fin
 	cmp	eax,5
-	je	sys_print
-	cmp	eax,6
 	je	sys_puts
+	cmp	eax,6
+	je	sys_putchar
 fin:	iret
