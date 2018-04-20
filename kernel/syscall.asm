@@ -5,7 +5,7 @@
 [global	syscall_handler]
 
 ; INT 0x80, EAX=5, ESI, String
-sys_print:
+sys_puts:
 	push	0x07
 	push	-1
 	push	-1
@@ -28,5 +28,5 @@ syscall_handler:
 	cmp	eax,5
 	je	sys_print
 	cmp	eax,6
-	je	sys_putchar
+	je	sys_puts
 fin:	iret
