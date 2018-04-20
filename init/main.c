@@ -65,7 +65,7 @@ begin:
 	if(!strcmp(input_buf,"help")){
 		puts("time:    Get the current time from CMOS\n");
 		puts("uname:   Print system information\n");
-		puts("regdump: Dump the current register values\n");
+		puts("bsod:    Enter blue screen\n");
 		goto begin;
 	}
 	if(!strcmp(input_buf,"time")){
@@ -79,6 +79,11 @@ begin:
 	}
 	if(!strcmp(input_buf,"hello")){
 		sys_puts("Hello world!\n");
+		goto begin;
+	}
+	if(!strcmp(input_buf,"bsod")){
+		char *x=(char*)0xA0000000;
+		*x=1;
 		goto begin;
 	}
 	kprint_set_color(0x04);
