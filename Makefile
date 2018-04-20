@@ -62,8 +62,8 @@ clean:
 kernel/bitset32.o: kernel/bitset32.c include/string.h include/def.h \
  include/types.h include/errno.h include/bitset32.h
 kernel/bsod.o: kernel/bsod.c include/kernel/bsod.h include/def.h include/types.h \
- include/errno.h include/kernel/utils.h include/kernel/dbg.h \
- include/drivers/screen.h
+ include/errno.h include/cpu/isr.h include/kernel/utils.h \
+ include/kernel/dbg.h include/drivers/screen.h
 kernel/dbg.o: kernel/dbg.c include/kernel/dbg.h include/kernel/utils.h \
  include/stdio.h include/def.h include/types.h include/errno.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h
@@ -73,12 +73,12 @@ kernel/utils.o: kernel/utils.c \
  include/kernel/dbg.h include/drivers/screen.h
 mm/frame.o: mm/frame.c include/kernel/memory.h include/def.h include/types.h \
  include/errno.h include/kernel/dbg.h include/kernel/utils.h \
- include/kernel/bsod.h include/bitset32.h
+ include/kernel/bsod.h include/cpu/isr.h include/bitset32.h
 mm/heap.o: mm/heap.c include/kernel/memory.h include/def.h include/types.h \
  include/errno.h include/kernel/dbg.h include/kernel/utils.h
 mm/paging.o: mm/paging.c include/kernel/memory.h include/def.h \
  include/types.h include/errno.h include/bitset32.h \
  include/kernel/utils.h include/kernel/dbg.h include/kernel/bsod.h \
- include/asm/shutdown.h include/asm/string.h include/drivers/screen.h \
- include/cpu/isr.h include/stdio.h \
+ include/cpu/isr.h include/asm/shutdown.h include/asm/string.h \
+ include/drivers/screen.h include/stdio.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h
