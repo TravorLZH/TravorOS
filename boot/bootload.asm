@@ -45,8 +45,12 @@ bootloader_start:
 
 	mov	ah,0	; Reset floppy
 	int	13h
-
 	call	load_stage2
+
+	mov	si,MSG_LOAD_KERNEL
+	call	print_string
+	mov	ah,0
+	int	13h
 	call	load_kernel
 	call	kill_motor	; We don't need floppy now
 	jnc	STAGE2_OFFSET
@@ -97,9 +101,8 @@ print_string:
 	ret
 
 MSG_BOOT	db	"[boot]: Hello world!",0xD,0xA,0
-MSG_LOAD_STAGE2	db "[boot]: Loading stage 2 into memory",0xD,0xA,0
-FAILED_DISK	db	"[error]: Failed to read floppy",0xD,0xA,0
-READ_OK	db	"SUCCESS",0xD,0xA,0
+MSG_LOAD_STAGE2	db	"[boot]: Loading stage 2 into memory",0xD,0xA,0
+MSG_LOAD_KERNEL	db	"[boot]: Loading kernel into memory",0xD,0xA,0
 BOOT_DRIVE	db	0
 
 times	510-($-$$)	db	0
