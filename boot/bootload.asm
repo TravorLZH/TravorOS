@@ -1,15 +1,32 @@
-; bootload.asm: This will be a new bootloader for TravorOS
+; bootload.asm: This is a new bootloader for TravorOS
 ; It loads second stage at 0x0000:0x07E0 (Directly after this one)
 ; Also kernel at 0x0000:0x1000
 [BITS	16]
 [ORG	0x7C00]
-jmp	bootloader_start
+jmp	short	bootloader_start
+nop
 
-MSG_BOOT	db	"[boot]: Hello world!",0xD,0xA,0
-MSG_LOAD_STAGE2	db "[boot]: Loading stage 2 into memory",0xD,0xA,0
-FAILED_DISK	db	"[error]: Failed to read floppy",0xD,0xA,0
-READ_OK	db	"SUCCESS",0xD,0xA,0
-BOOT_DRIVE	db	0
+; BIOS parameter block
+
+OEMLabel	db	"TravorOS"
+BytesPerSector	dw	512
+SectorsPerCluster	db	1
+ReservedForBoot	dw	1
+FATCount	db	2
+DirEntries	dw	224
+TotalSectors	dw	2880	; 1.44MB floppy
+MediaDescriptor	db	0xF0	; F0 for 1.44M
+SectorsPerFat	dw	9
+SectorsPerTrack	dw	18
+HeadCount	dw	2
+HiddenSectors	dd	0
+		dd	0
+DriveNumber	db	0	; Physical drive number, 0 is removable, 80h for hard disk
+DirtyBit	db	1
+extBootSig	db	0x29
+VolumeID	dd	77	; Serial number for the volume
+VolumeLabel	dd	"TravorOS  ",0	; 11 bytes
+FSType		db	"FAT12  "
 
 %include "general.inc"
 
@@ -78,6 +95,12 @@ print_string:
 	jmp	.looping
 .done:
 	ret
+
+MSG_BOOT	db	"[boot]: Hello world!",0xD,0xA,0
+MSG_LOAD_STAGE2	db "[boot]: Loading stage 2 into memory",0xD,0xA,0
+FAILED_DISK	db	"[error]: Failed to read floppy",0xD,0xA,0
+READ_OK	db	"SUCCESS",0xD,0xA,0
+BOOT_DRIVE	db	0
 
 times	510-($-$$)	db	0
 dw	0xAA55
