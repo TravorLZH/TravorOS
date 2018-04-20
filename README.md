@@ -65,6 +65,8 @@ This project has been activated since [December 15, 2017](https://github.com/Tra
 
 - [ ] Graphical User Interface
 
+- [ ] Interpret File system in boot loader
+
 ## Bootloader
 
 ### Custom
