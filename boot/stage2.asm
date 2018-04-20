@@ -141,4 +141,3 @@ print_string_pm:
 	ret
 
 times	512-($-$$)	db	0
-times	256	dw	0xBABA
