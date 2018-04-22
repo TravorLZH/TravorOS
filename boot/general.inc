@@ -1,7 +1,7 @@
 KERNEL_LOADED	equ	0x1000
 KERNEL_OFFSET	equ	0x100000
 STAGE2_OFFSET	equ	0x7E00
-KERNEL_SECTORS	equ	40	; This number will always change
+KERNEL_SECTORS	equ	48	; This number will always change
 CODE_SEGMENT	equ	code_descriptor - gdt_start
 DATA_SEGMENT	equ	data_descriptor - gdt_start
 
