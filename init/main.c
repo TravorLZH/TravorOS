@@ -13,7 +13,7 @@
 #include <cpu/isr.h>
 #include <cpu/timer.h>
 #include <asm/interrupt.h>
-#include <asm/shutdown.h>
+#include <asm/ioports.h>
 
 struct tm time;
 char input_buf[BUFSIZ];
@@ -63,11 +63,12 @@ begin:
 	kprint_set_color(0x0F);
 	gets(input_buf);
 	if(!strcmp(input_buf,"help")){
-		puts("time:    Get the current time from CMOS\n");
-		puts("uname:   Print system information\n");
-		puts("hello:   print \"Hello world!\"\n");
-		puts("bsod:    Enter blue screen\n");
-		puts("delay:   Wait 5 seconds\n");
+		puts("time:     Get the current time from CMOS\n");
+		puts("uname:    Print system information\n");
+		puts("hello:    print \"Hello world!\"\n");
+		puts("bsod:     Enter blue screen\n");
+		puts("delay:    Wait 5 seconds\n");
+		puts("shutdown: Shutdown the machine\n");
 		goto begin;
 	}
 	if(!strcmp(input_buf,"time")){
@@ -91,6 +92,11 @@ begin:
 	if(!strcmp(input_buf,"delay")){
 		delay(5000);
 		puts("5 seconds passed\n");
+		goto begin;
+	}
+	if(!strcmp(input_buf,"shutdown")){
+		outb(0xF4,0x00);	// Shutdown QEMU
+		puts("Failed to shutdown\n");
 		goto begin;
 	}
 	kprint_set_color(0x04);
