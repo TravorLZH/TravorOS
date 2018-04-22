@@ -4,6 +4,7 @@ LD=ld
 drivers_TARGETS=cpu.elf time.elf tty.elf
 CPPFLAGS=-ffreestanding -nostdlib
 CFLAGS=-Wno-implicit-function-declaration -Wno-packed-bitfield-compat -g -m32
+QEMU_FLAGS=-device isa-debug-exit,iobase=0xF4,iosize=0x04
 ifndef	VERBOSE
 MAKEFLAGS += --no-print-directory
 endif
