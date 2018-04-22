@@ -2,7 +2,6 @@
 #include <bitset32.h>
 #include <kernel/utils.h>
 #include <kernel/bsod.h>
-#include <asm/shutdown.h>
 #include <asm/string.h>
 #include <drivers/screen.h>
 #include <cpu/isr.h>
