@@ -4,29 +4,6 @@
 [BITS	16]
 [ORG	0x7C00]
 jmp	short	bootloader_start
-nop
-
-; BIOS parameter block
-
-OEMLabel	db	"TravorOS"
-BytesPerSector	dw	512
-SectorsPerCluster	db	1
-ReservedForBoot	dw	2
-FATCount	db	2
-DirEntries	dw	224
-TotalSectors	dw	2880	; 1.44MB floppy
-MediaDescriptor	db	0xF0	; F0 for 1.44M
-SectorsPerFat	dw	9
-SectorsPerTrack	dw	18
-HeadCount	dw	2
-HiddenSectors	dd	0
-		dd	0
-DriveNumber	db	0	; Physical drive number, 0 is removable, 80h for hard disk
-DirtyBit	db	1
-extBootSig	db	0x29
-VolumeID	dd	77	; Serial number for the volume
-VolumeLabel	dd	"TravorOS  ",0	; 11 bytes
-FSType		db	"FAT12  "
 
 %include "general.inc"
 
