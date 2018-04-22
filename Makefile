@@ -14,13 +14,17 @@ config:
 format:
 	sh tools/format_function.sh
 run:
-	qemu-system-i386 -fda floppy.img -device isa-debug-exit,iobase=0xF4,iosize=0x04
+	qemu-system-i386 -fda floppy.img $(QEMU_FLAGS)
+curses:
+	qemu-system-i386 -curses -fda floppy.img $(QEMU_FLAGS)
 debug:
 	exec gdb -tui -x debug.gdb
 boot/boot.img:
 	@make -C boot boot.img
 run-iso:
-	qemu-system-i386 -cdrom cdrom.iso
+	qemu-system-i386 -cdrom cdrom.iso $(QEMU_FLAGS)
+curses-iso:
+	qemu-system-i386 -curses -cdrom cdrom.iso $(QEMU_FLAGS)
 cdrom.iso:	iso/boot/kernel.img
 	$(call green,"GEN $@")
 	@grub-mkrescue -o $@ iso/ 1>/dev/null 2>/dev/null
@@ -47,6 +51,7 @@ dep:	config
 	sed '/\#\#\# Dependencies/q' < Makefile > Makefile_temp
 	(for i in kernel/*.c;do echo -n kernel/;$(CPP) $(CPPFLAGS) -Iinclude -M $$i;done) >> Makefile_temp
 	(for i in mm/*.c;do echo -n mm/;$(CPP) $(CPPFLAGS) -Iinclude -M $$i;done) >> Makefile_temp
+	(for i in init/*.c;do echo -n init/;$(CPP) $(CPPFLAGS) -Iinclude -M $$i;done) >> Makefile_temp
 	cp Makefile_temp Makefile
 	rm Makefile_temp
 	make -C drivers dep
@@ -81,3 +86,10 @@ mm/paging.o: mm/paging.c include/kernel/memory.h include/def.h \
  include/kernel/utils.h include/kernel/dbg.h include/kernel/bsod.h \
  include/cpu/isr.h include/asm/string.h include/drivers/screen.h \
  include/stdio.h /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h
+init/main.o: init/main.c include/stdio.h include/def.h include/types.h \
+ include/errno.h /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h \
+ include/config.h include/drivers/screen.h include/drivers/keyboard.h \
+ include/drivers/rtc.h include/kernel/memory.h include/kernel/utils.h \
+ include/kernel/dbg.h include/kernel/multiboot.h include/kernel/syscall.h \
+ include/cpu/gdt.h include/cpu/isr.h include/cpu/timer.h \
+ include/asm/interrupt.h include/asm/ioports.h
