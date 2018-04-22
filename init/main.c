@@ -65,7 +65,9 @@ begin:
 	if(!strcmp(input_buf,"help")){
 		puts("time:    Get the current time from CMOS\n");
 		puts("uname:   Print system information\n");
+		puts("hello:   print \"Hello world!\"\n");
 		puts("bsod:    Enter blue screen\n");
+		puts("delay:   Wait 5 seconds\n");
 		goto begin;
 	}
 	if(!strcmp(input_buf,"time")){
@@ -78,12 +80,17 @@ begin:
 		goto begin;
 	}
 	if(!strcmp(input_buf,"hello")){
-		sys_puts("Hello world!\n");
+		puts("Hello world!\n");
 		goto begin;
 	}
 	if(!strcmp(input_buf,"bsod")){
 		char *x=(char*)0xA0000000;
 		*x=1;
+		goto begin;
+	}
+	if(!strcmp(input_buf,"delay")){
+		delay(5000);
+		puts("5 seconds passed\n");
 		goto begin;
 	}
 	kprint_set_color(0x04);
