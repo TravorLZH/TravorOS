@@ -50,7 +50,8 @@ int strcmp(const char* s1,const char* s2)
 	return *s1-*s2;
 }
 
-void *memcpy(void *dest,const void *src,size_t n){
+void *memcpy(void *dest,const void *src,size_t n)
+{
 	char* d=(char*)dest;
 	char* s=(char*)src;
 	int i=0;
@@ -60,7 +61,8 @@ void *memcpy(void *dest,const void *src,size_t n){
 	return dest;
 }
 
-void *memmove(void *dest,const void *src,size_t n){
+void *memmove(void *dest,const void *src,size_t n)
+{
 	char *d=(char*)dest;
 	char *s=(char*)src;
 	char tmp[n];
@@ -69,7 +71,8 @@ void *memmove(void *dest,const void *src,size_t n){
 	return d;
 }
 
-void *memset(void *dest,int ch,size_t count){
+void *memset(void *dest,int ch,size_t count)
+{
 	int i;
 	char *ptr=(char*)dest;
 	char c=(char)ch;

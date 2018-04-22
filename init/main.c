@@ -20,7 +20,8 @@ char input_buf[BUFSIZ];
 const char host[]="TRAVOR";
 const char user[]="kernel";
 
-void print_time(struct tm time){
+void print_time(struct tm time)
+{
 	char tmp[3];
 	puts("20");
 	itoa(time.tm_year,tmp);
@@ -49,7 +50,8 @@ void print_time(struct tm time){
 	puts(" GMT\n");
 }
 
-void do_shell(void){
+void do_shell(void)
+{
 begin:
 	kprint_set_color(0x0F);
 	kprintf(user);

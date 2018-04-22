@@ -4,7 +4,8 @@
 #include <string.h>
 #include <stdio.h>
 
-char *pad_zero(int num,char *str){
+char *pad_zero(int num,char *str)
+{
 	int len=strlen(str);
 	int diff=num-len;
 	if(diff<=0){

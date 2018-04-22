@@ -26,7 +26,8 @@ static void my_flush_handler(const char *buf)
 	}
 }
 
-char *gets(char *s){
+char *gets(char *s)
+{
 	userbuf=s;
 	kbd_flush_handler(my_flush_handler);
 	while(!flushed);

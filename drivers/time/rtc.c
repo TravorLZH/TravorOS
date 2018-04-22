@@ -3,7 +3,8 @@
 
 #define	BCD_TO_BIN(val)	((val)=((val)&15) + ((val)>>4)*10)
 
-void get_time(struct tm *time){
+void get_time(struct tm *time)
+{
 	do{
 		time->tm_sec=CMOS_READ(0);
 		time->tm_min=CMOS_READ(2);
