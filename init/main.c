@@ -69,6 +69,7 @@ begin:
 		puts("bsod:     Enter blue screen\n");
 		puts("delay:    Wait 5 seconds\n");
 		puts("shutdown: Shutdown the machine\n");
+		puts("clear:    Clear screen\n");
 		goto begin;
 	}
 	if(!strcmp(input_buf,"time")){
@@ -97,6 +98,10 @@ begin:
 	if(!strcmp(input_buf,"shutdown")){
 		outb(0xF4,0x00);	// Shutdown QEMU
 		puts("Failed to shutdown\n");
+		goto begin;
+	}
+	if(!strcmp(input_buf,"clear")){
+		clear_screen(0x07);
 		goto begin;
 	}
 	kprint_set_color(0x04);
