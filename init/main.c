@@ -64,6 +64,9 @@ begin:
 	putchar(' ');
 	kprint_set_color(0x0F);
 	gets(input_buf);
+	if(strlen(input_buf)<1){
+		goto begin;
+	}
 	if(!strcmp(input_buf,"help")){
 		puts("time:     Get the current time from CMOS\n");
 		puts("uname:    Print system information\n");
