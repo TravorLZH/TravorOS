@@ -96,4 +96,4 @@ init/main.o: init/main.c include/stdio.h include/def.h include/types.h \
 init/shell.o: init/shell.c include/config.h include/kernel/utils.h \
  include/kernel/dbg.h include/asm/string.h include/def.h include/types.h \
  include/errno.h include/asm/ioports.h include/cpu/timer.h \
- include/drivers/rtc.h
+ include/cpu/cpuid.h include/drivers/rtc.h
