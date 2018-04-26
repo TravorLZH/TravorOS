@@ -3,6 +3,7 @@
 #include <asm/string.h>
 #include <asm/ioports.h>
 #include <cpu/timer.h>
+#include <cpu/cpuid.h>
 #include <drivers/rtc.h>
 
 extern struct tm time;
@@ -37,6 +38,7 @@ begin:
 		puts("delay:    Wait 5 seconds\n");
 		puts("shutdown: Shutdown the machine\n");
 		puts("clear:    Clear screen\n");
+		puts("info:     Print CPU information\n");
 		goto begin;
 	}
 	if(!strcmp(input_buf,"time")){
@@ -69,6 +71,34 @@ begin:
 	}
 	if(!strcmp(input_buf,"clear")){
 		clear_screen(0x07);
+		goto begin;
+	}
+	if(!strcmp(input_buf,"info")){
+		size_t where[4]={0,0,0,0};
+		char tmp[5]={0,0,0,0,0};
+		puts("Vendor String: ");
+		cpuid_string(CPUID_VENDORSTRING,where);
+		/*
+		* The following code print the vendor string in
+		* the correct order:
+		* EBX EDX ECX
+		*/
+		memcpy(tmp,&where[1],4);	// EBX
+		puts(tmp);
+		memcpy(tmp,&where[3],4);	// EDX
+		puts(tmp);
+		memcpy(tmp,&where[2],4);	// EBX
+		puts(tmp);
+		putchar('\n');
+		/* Print the brand string */
+		puts("Brand: ");
+		cpuid_string(CPUID_INTELBRANDSTRING,where);
+		puts(where);
+		cpuid_string(CPUID_INTELBRANDSTRINGMORE,where);
+		puts(where);
+		cpuid_string(CPUID_INTELBRANDSTRINGEND,where);
+		puts(where);
+		putchar('\n');
 		goto begin;
 	}
 	kprint_set_color(0x04);
