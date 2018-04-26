@@ -90,6 +90,8 @@ begin:
 		memcpy(tmp,&where[2],4);	// EBX
 		puts(tmp);
 		putchar('\n');
+		/* Make sure it does not print the value of tmp */
+		memset(tmp,0,5);
 		/* Print the brand string */
 		puts("Brand: ");
 		cpuid_string(CPUID_INTELBRANDSTRING,where);
