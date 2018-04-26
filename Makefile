@@ -93,3 +93,7 @@ init/main.o: init/main.c include/stdio.h include/def.h include/types.h \
  include/kernel/dbg.h include/kernel/multiboot.h include/kernel/syscall.h \
  include/cpu/gdt.h include/cpu/isr.h include/cpu/timer.h \
  include/asm/interrupt.h include/asm/ioports.h
+init/shell.o: init/shell.c include/config.h include/kernel/utils.h \
+ include/kernel/dbg.h include/asm/string.h include/def.h include/types.h \
+ include/errno.h include/asm/ioports.h include/cpu/timer.h \
+ include/drivers/rtc.h
