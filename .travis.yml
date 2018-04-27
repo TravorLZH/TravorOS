@@ -5,7 +5,5 @@ dist: trusty
 before_install:
   - sudo apt-get install g++
   - sudo apt-get install yasm
-  - git clone https://github.com/vertis/objconv
-  - sudo g++ -o /usr/bin/objconv -O2 objconv/src/*.cpp
   - make dep	# Refresh dependencies
 script: make
