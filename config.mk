@@ -26,10 +26,6 @@ endef
 %.o:	%.c
 	$(call white,"CC $@")
 	@${CC} $(CFLAGS) $(CPPFLAGS) $(INCLUDE_DIR) -c $< -o $@
-ifdef	GEN_ASM 
-	$(call green,"GEN $<.dsasm")
-	@exec objconv -fnasm $@ $<.dsasm 1>/dev/null 2>/dev/null
-endif
 %.o:	%.asm
 	$(call white,"AS" "$@")
 	@${AS} -felf $< -o $@
