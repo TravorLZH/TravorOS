@@ -65,28 +65,30 @@ clean:
 	@$(MAKE) -C liballoc clean
 ### Dependencies
 kernel/bitset32.o: kernel/bitset32.c include/string.h include/def.h \
- include/types.h include/errno.h include/bitset32.h
-kernel/bsod.o: kernel/bsod.c include/kernel/bsod.h include/def.h include/types.h \
- include/errno.h include/cpu/isr.h include/kernel/utils.h \
- include/kernel/dbg.h include/drivers/screen.h
+ include/sys/types.h include/errno.h include/bitset32.h
+kernel/bsod.o: kernel/bsod.c include/kernel/bsod.h include/def.h \
+ include/sys/types.h include/errno.h include/cpu/isr.h \
+ include/kernel/utils.h include/kernel/dbg.h include/drivers/screen.h
 kernel/dbg.o: kernel/dbg.c include/kernel/dbg.h include/kernel/utils.h \
- include/stdio.h include/def.h include/types.h include/errno.h \
+ include/stdio.h include/def.h include/sys/types.h include/errno.h \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h
 kernel/utils.o: kernel/utils.c \
  /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h include/def.h \
- include/types.h include/errno.h include/kernel/utils.h \
+ include/sys/types.h include/errno.h include/kernel/utils.h \
  include/kernel/dbg.h include/drivers/screen.h
-mm/frame.o: mm/frame.c include/kernel/memory.h include/def.h include/types.h \
- include/errno.h include/kernel/dbg.h include/kernel/utils.h \
- include/kernel/bsod.h include/cpu/isr.h include/bitset32.h
-mm/heap.o: mm/heap.c include/kernel/memory.h include/def.h include/types.h \
- include/errno.h include/kernel/dbg.h include/kernel/utils.h
+mm/frame.o: mm/frame.c include/kernel/memory.h include/def.h \
+ include/sys/types.h include/errno.h include/kernel/dbg.h \
+ include/kernel/utils.h include/kernel/bsod.h include/cpu/isr.h \
+ include/bitset32.h
+mm/heap.o: mm/heap.c include/kernel/memory.h include/def.h \
+ include/sys/types.h include/errno.h include/kernel/dbg.h \
+ include/kernel/utils.h
 mm/paging.o: mm/paging.c include/kernel/memory.h include/def.h \
- include/types.h include/errno.h include/bitset32.h \
+ include/sys/types.h include/errno.h include/bitset32.h \
  include/kernel/utils.h include/kernel/dbg.h include/kernel/bsod.h \
  include/cpu/isr.h include/asm/string.h include/drivers/screen.h \
  include/stdio.h /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h
-init/main.o: init/main.c include/stdio.h include/def.h include/types.h \
+init/main.o: init/main.c include/stdio.h include/def.h include/sys/types.h \
  include/errno.h /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h \
  include/config.h include/drivers/screen.h include/drivers/keyboard.h \
  include/drivers/rtc.h include/kernel/memory.h include/kernel/utils.h \
@@ -94,6 +96,6 @@ init/main.o: init/main.c include/stdio.h include/def.h include/types.h \
  include/cpu/gdt.h include/cpu/isr.h include/cpu/timer.h \
  include/asm/interrupt.h include/asm/ioports.h
 init/shell.o: init/shell.c include/config.h include/kernel/utils.h \
- include/kernel/dbg.h include/asm/string.h include/def.h include/types.h \
- include/errno.h include/asm/ioports.h include/cpu/timer.h \
- include/cpu/cpuid.h include/drivers/rtc.h
+ include/kernel/dbg.h include/asm/string.h include/def.h \
+ include/sys/types.h include/errno.h include/asm/ioports.h \
+ include/cpu/timer.h include/cpu/cpuid.h include/drivers/rtc.h
