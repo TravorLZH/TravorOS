@@ -16,7 +16,7 @@
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 /* misc.h: Some functions that I cannot put them into proper headers */
-#include <types.h>
+#include <sys/types.h>
 #ifndef	__MISC_H_
 #define	__MISC_H_
 #ifdef	__cplusplus

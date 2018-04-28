@@ -16,7 +16,7 @@
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 /* fibonacci.h: Algorithms of getting Fibonacci number */
-#include <types.h>
+#include <sys/types.h>
 #ifndef	__FIBONACCI_H_
 #define	__FIBONACCI_H_
 #ifdef	__cplusplus
