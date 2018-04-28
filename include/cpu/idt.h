@@ -16,7 +16,7 @@
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 /* idt.h: Declarations for Interrupt Descriptor Table */
-#include <types.h>
+#include <sys/types.h>
 #ifndef	__IDT_H_
 #define	__IDT_H_
 // Segment selectors

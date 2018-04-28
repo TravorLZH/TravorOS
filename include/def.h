@@ -16,7 +16,7 @@
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 /* def.h: Basic constants definitions */
-#include <types.h>
+#include <sys/types.h>
 #include <errno.h>
 #ifndef	__DEF_H_
 #define	__DEF_H_

@@ -16,7 +16,7 @@
 * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 /* isr.h: Declarations of interrupt service routines */
-#include <types.h>
+#include <sys/types.h>
 #ifndef	__ISR_H_
 #define	__ISR_H_
 /* Struct which aggregates many registers */
