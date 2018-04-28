@@ -51,6 +51,8 @@ This project has been activated since [December 15, 2017](https://github.com/Tra
 
 - [x] CPU Timer
 
+- [x] Get CPU Information
+
 - [x] Real-Time Clock: So we can know when the movie starts
 
 - [ ] Multitasking
@@ -64,8 +66,6 @@ This project has been activated since [December 15, 2017](https://github.com/Tra
 - [ ] File System
 
 - [ ] Graphical User Interface
-
-- [ ] Interpret File system in boot loader
 
 ## Bootloader
 
