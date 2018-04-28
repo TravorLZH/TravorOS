@@ -30,11 +30,5 @@ typedef unsigned char 		uint8_t;
 typedef unsigned short		uint16_t;
 typedef unsigned int		uint32_t;
 typedef unsigned long long	uint64_t;
-// Other names of unsigned int(s)
-typedef unsigned char		BYTE;
-typedef unsigned short		WORD;
-typedef unsigned int		DWORD;
-#define	LOWORD(n)	(uint16_t)((n) & 0xFFFF)
-#define	HIWORD(n)	(uint16_t)(((n) >> 16) & 0xFFFF)
 #endif
 #endif
