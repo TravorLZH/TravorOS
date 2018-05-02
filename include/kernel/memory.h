@@ -24,6 +24,8 @@
 					// In case it's 16 MB.
 #define	MAX_FRAMES	(MAPPED_SIZE/FRAME_SIZE)
 
+#define TABLE_PRESENT(table)	((table) & 0x1)	// Is the page table present?
+
 typedef union page{
 	struct{
 		char present:1;
