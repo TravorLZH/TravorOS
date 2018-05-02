@@ -23,9 +23,10 @@ a20_disabled:
 	add	esp,16
 	call	enable_a20
 a20_enabled:
+	xor	ebp,ebp
+	push	ebp
 	push	0
-	call	kernel_main
-	jmp	$
+	jmp	kernel_main
 
 A20MSG	db	"[kernel]: Enabling A20",0xA,0
 
