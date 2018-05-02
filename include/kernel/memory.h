@@ -23,20 +23,19 @@
 #define	MAPPED_SIZE	0x1000000	// Size of physical memory that is mapped
 					// In case it's 16 MB.
 #define	MAX_FRAMES	(MAPPED_SIZE/FRAME_SIZE)
-typedef struct page_bits_struct{
-	char present:1;
-	char writable:1;
-	char user:1;
-	char :2;
-	char accessed:1;
-	char dirty:1;
-	char :2;
-	char avail:3;	// Available for this kernel
-	size_t frame:20;
-} __attribute__((packed)) page_bits;
 
 typedef union page{
-	page_bits bits;
+	struct{
+		char present:1;
+		char writable:1;
+		char user:1;
+		char :2;
+		char accessed:1;
+		char dirty:1;
+		char :2;
+		char avail:3;	// Available for this kernel
+		size_t frame:20;
+	} __attribute__((packed));
 	size_t val;
 } page_t;
 typedef size_t frame_t;
