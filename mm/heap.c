@@ -1,3 +1,4 @@
+#define	NDEBUG
 #include <kernel/memory.h>
 #include <kernel/dbg.h>
 
@@ -9,7 +10,7 @@ void init_heap(size_t base)
 }
 static void* kmalloc_real(size_t sz,int align,size_t *phys){
 	if(align==1 && (placement_address%0x1000)){	// If the address is not already page aligned
-		ktrace("Aligning placement address\n");
+		ktrace("Aligning placement address");
 		// Align it.
 		placement_address&=0xFFFFF000;
 		placement_address+=0x1000;
