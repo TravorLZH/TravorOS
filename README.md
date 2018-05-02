@@ -55,6 +55,8 @@ This project has been activated since [December 15, 2017](https://github.com/Tra
 
 - [x] Real-Time Clock: So we can know when the movie starts
 
+- [ ] Kernel Stack Trace
+
 - [ ] Multitasking
 
 - [ ] User-mode processes
