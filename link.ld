@@ -7,21 +7,21 @@ SECTIONS
 	{
 		code = .; _code = .; __code = .;
 		*(.text)
-		. = ALIGN(0x1000);
+		. = ALIGN(0x200);
 	}
 	.data	:
 	{
 		data = .; _data = .; __data = .;
 		*(.data)
 		*(.rodata)
-		. = ALIGN(0x1000);
+		. = ALIGN(0x200);
 	}
 	.bss	:
 	{
 		bss = .; _bss = .; __bss = .;
 		*(.bss)
-		. = ALIGN(0x1000);
-		end_kernel = . + 0x1000;
+		. = ALIGN(0x200);
+		end_kernel = . + 0x200;
 	}
 
 	end = .; _end = .; __end = .;
