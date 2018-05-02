@@ -27,13 +27,15 @@ curses-iso:
 	qemu-system-i386 -curses -cdrom cdrom.iso $(QEMU_FLAGS)
 cdrom.iso:	iso/boot/kernel.img
 	$(call green,"GEN $@")
-	@grub-mkrescue -o $@ iso/ 1>/dev/null 2>/dev/null
+	@grub-mkrescue -o $@ iso/
 iso/boot/kernel.img:	kernel/grub_entry.o $(OBJ) $(drivers_STUFF) $(kernel_LIBS)
 	$(call green,"GEN $@")
 	@$(LD) -melf_i386 -o $@ -T link.ld $^
 floppy.img: boot/boot.img kernel.bin
 	$(call green,"GEN $@")
-	@cat boot/boot.img kernel.bin > floppy.img
+	@dd status=noxfer if=/dev/zero of=floppy.img bs=512 count=2880
+	@dd status=noxfer conv=notrunc if=boot/boot.img of=floppy.img
+	@dd status=noxfer if=kernel.bin of=floppy.img bs=1024 seek=1
 kernel.bin:	kernel/kernel_entry.o $(OBJ) $(drivers_STUFF) $(kernel_LIBS)
 	$(call yellow,"LINK $@")
 	@$(LD) -melf_i386 -o $@ -T link.ld $^ --oformat binary
