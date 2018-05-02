@@ -52,9 +52,9 @@ frame_t alloc_page(page_t *page,char user,char writable)
 
 void free_page(page_t *page)
 {
-	if(page->bits.frame){
-		free_frame((size_t)page->bits.frame);
-		page->bits.frame=NULL;
+	if(page->frame){
+		free_frame((size_t)page->frame);
+		page->frame=NULL;
 	}
 }
 
@@ -66,9 +66,9 @@ void free_frame(frame_t frm)
 
 void map_frame(page_t *page,frame_t frame,char user,char writable)
 {
-	page->bits.present=1;
-	page->bits.user=user;
-	page->bits.writable=writable;
-	page->bits.frame=frame;
+	page->present=1;
+	page->user=user;
+	page->writable=writable;
+	page->frame=frame;
 }
 
