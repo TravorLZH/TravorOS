@@ -9,9 +9,11 @@
 
 extern bitset_t *frame_bitset;
 extern size_t bitset_size;
-size_t kernel_directory[1024] __attribute__((aligned(FRAME_SIZE)));
-page_t kernel_table[1024] __attribute__((aligned(FRAME_SIZE)));
-page_t kernel_heap[1024] __attribute__((aligned(FRAME_SIZE)));
+size_t *kernel_directory;
+page_t *kernel_table;
+page_t *kernel_heap;
+page_t *liballoc_heap;
+
 static void page_fault(registers_t regs)
 {
 	size_t faulting_address;
@@ -40,6 +42,10 @@ void init_paging(void)
 	memset(frame_bitset,0,bitset_size*sizeof(size_t));
 	kprint("Initializing Paging...\n");
 	frame_bitset=(bitset_t*)kmalloc_a(bitset_size);
+	kernel_directory=(size_t*)kmalloc_a(1024*sizeof(size_t));
+	kernel_table=(page_t*)kmalloc_a(1024*sizeof(page_t));
+	kernel_heap=(page_t*)kmalloc_a(1024*sizeof(page_t));
+	liballoc_heap=(page_t*)kmalloc_a(1024*sizeof(page_t));
 	// TODO: Initialize the page directory
 	size_t i;
 	for(i=0;i<1024;i++){
@@ -60,9 +66,13 @@ void init_paging(void)
 		map_frame(kernel_heap+i,i+1024,0,1);
 		set_frame(i+1024);
 	}
+	for(i=0;i<1024;i++){
+		liballoc_heap[i].present=0;	// Make sure they are not present
+	}
 	kernel_table[3].val=3*0x1000;	// Create a not-present page
-	kernel_directory[0]=((size_t)kernel_table) | 3;
-	kernel_directory[1]=((size_t)kernel_heap) | 3;
+	kernel_directory[0]=((size_t)kernel_table) | 3;		/* 0 - 4MB:  Kernel space */
+	kernel_directory[1]=((size_t)kernel_heap) | 3;		/* 4 - 8MB:  Kernel heap */
+	kernel_directory[2]=((size_t)liballoc_heap) | 3;	/* 8 - 12MB: liballoc heap */
 	register_interrupt_handler(0xE,&page_fault);
 	load_page_directory(kernel_directory);
 	enable_paging();
@@ -86,3 +96,9 @@ page_t *get_page(void *address,char create,size_t *pgdir)
 	}
 }
 
+/* This function helps me integrate liballoc into my kernel */
+void *get_free_page(size_t *pgdir)
+{
+	size_t tb_index;
+	size_t pg_index;
+}
