@@ -7,5 +7,9 @@
 *.swp
 *.elf
 *.dsasm
+CMakeCache.txt
+cmake_install.cmake
 bochs.log
 include/config.h
+Makefile
+CMakefiles/
