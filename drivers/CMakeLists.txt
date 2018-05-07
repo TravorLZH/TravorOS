@@ -1,0 +1,7 @@
+set(DRIVERS cpu time tty PARENT_SCOPE)
+file(GLOB CPU_SOURCES cpu/*.c cpu/*.asm)
+file(GLOB TIME_SOURCES time/*.c)
+file(GLOB TTY_SOURCES tty/*.c)
+add_library(cpu STATIC ${CPU_SOURCES})
+add_library(time STATIC ${TIME_SOURCES})
+add_library(tty STATIC ${TTY_SOURCES})
