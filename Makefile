@@ -1,6 +1,6 @@
 include config.mk
 C_SOURCES=$(filter-out kernel/test.c,$(wildcard init/*.c kernel/*.c mm/*.c))
-ASM_SOURCES=$(filter-out kernel/kernel_entry.asm kernel/grub_entry.asm,$(wildcard kernel/*.asm mm/*.asm))
+ASM_SOURCES=$(filter-out init/kernel_entry.asm init/grub_entry.asm,$(wildcard kernel/*.asm mm/*.asm init/*.asm))
 INCLUDE_DIR=-Iinclude
 kernel_LIBS=lib/libc.a
 libc_SOURCES=$(wildcard lib/*.c lib/*.asm)
@@ -28,7 +28,7 @@ curses-iso:
 cdrom.iso:	iso/boot/kernel.img
 	$(call green,"GEN $@")
 	@grub-mkrescue -o $@ iso/
-iso/boot/kernel.img:	kernel/grub_entry.o $(OBJ) $(drivers_STUFF) $(kernel_LIBS)
+iso/boot/kernel.img:	init/grub_entry.o $(OBJ) $(drivers_STUFF) $(kernel_LIBS)
 	$(call green,"GEN $@")
 	@$(LD) -melf_i386 -o $@ -T link.ld $^
 floppy.img: boot/boot.img kernel.bin
@@ -36,10 +36,10 @@ floppy.img: boot/boot.img kernel.bin
 	@dd status=noxfer if=/dev/zero of=floppy.img bs=512 count=2880
 	@dd status=noxfer conv=notrunc if=boot/boot.img of=floppy.img
 	@dd status=noxfer if=kernel.bin of=floppy.img bs=1024 seek=1
-kernel.bin:	kernel/kernel_entry.o $(OBJ) $(drivers_STUFF) $(kernel_LIBS)
+kernel.bin:	init/kernel_entry.o $(OBJ) $(drivers_STUFF) $(kernel_LIBS)
 	$(call yellow,"LINK $@")
 	@$(LD) -melf_i386 -o $@ -T link.ld $^ --oformat binary
-kernel.elf:	kernel/kernel_entry.o $(OBJ) $(drivers_STUFF) $(kernel_LIBS)
+kernel.elf:	init/kernel_entry.o $(OBJ) $(drivers_STUFF) $(kernel_LIBS)
 	$(call green,"GEN $@")
 	@$(LD) -melf_i386 -o $@ -T link.ld $^
 $(drivers_STUFF):
@@ -58,7 +58,7 @@ dep:	config
 	rm Makefile_temp
 	make -C drivers dep
 clean:
-	$(RM) -fr *.bin *.o *.img *.elf *.iso
+	$(RM) -fr *.bin *.o *.img *.elf *.iso boot/*.bin boot/*.img
 	$(RM) -fr kernel/*.o init/*.o lib/*.o lib/*.a mm/*.o
 	find -name '*.dsasm' -type f -delete
 	$(RM) -fr iso/boot/kernel.img
