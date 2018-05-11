@@ -1,5 +1,6 @@
 # TravorOS - Developing with Simplification
 
+[![Github Release](https://img.shields.io/github/release/TravorLZH/TravorOS.svg)](https://github.com/TravorLZH/TravorOS/releases)
 [![Build Status](https://travis-ci.org/TravorLZH/TravorOS.svg?branch=master)](https://travis-ci.org/TravorLZH/TravorOS)
 [![Coverage Status](https://coveralls.io/repos/github/TravorLZH/TravorOS/badge.svg)](https://coveralls.io/github/TravorLZH/TravorOS)
 
