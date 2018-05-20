@@ -18,7 +18,7 @@
 /* types.h: Definitions of signed and unsigned integer types */
 #ifndef	__TYPES_H_
 #define	__TYPES_H_
-typedef unsigned int size_t;
+typedef unsigned long size_t;
 #ifndef	HAVE_INT
 // Definitions of signed int(s)
 typedef char			int8_t;

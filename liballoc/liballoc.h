@@ -9,7 +9,7 @@
 
 #ifndef _HAVE_SIZE_T
 #define _HAVE_SIZE_T
-typedef	unsigned int	size_t;
+typedef	unsigned long	size_t;
 #endif
 
 
@@ -31,9 +31,9 @@ extern "C" {
  */
 struct	boundary_tag
 {
-	unsigned int magic;			//< It's a kind of ...
-	unsigned int size; 			//< Requested size.
-	unsigned int real_size;		//< Actual size.
+	unsigned long magic;			//< It's a kind of ...
+	unsigned long size; 			//< Requested size.
+	unsigned long real_size;		//< Actual size.
 	int index;					//< Location in the page table.
 
 	struct boundary_tag *split_left;	//< Linked-list info for broken pages.	

@@ -20,9 +20,9 @@ char* strcpy(char* dest,const char* src){
 	return (char*)memcpy(dest,src,strlen(src)+1);
 }
 
-size_t strlen(const char* str)
+unsigned int strlen(const char* str)
 {
-	size_t i=0;
+	uint32_t i=0;
 	for(;str[i];i++);
 	return i;
 }
