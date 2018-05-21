@@ -67,6 +67,9 @@ extern void *alloc_pages(int n);
 /* Determine whether a page is free or not */
 extern char is_free_page(void *addr);
 
+/* Mark page as present */
+extern void set_page(void *addr);
+
 /* Free a single page */
 extern void free_page(void *addr);
 
