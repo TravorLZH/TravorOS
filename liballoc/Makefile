@@ -4,7 +4,7 @@
 # --------- FLAGS AND VARIABLES --------------------
 
 CFLAGS=-m32 -O2 -nostdlib -nodefaultlibs -fno-builtin -fPIC -Wall 
-HEADERPATH=-I./
+HEADERPATH=-I./ -I../include
 
 
 
