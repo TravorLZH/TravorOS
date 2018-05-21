@@ -3,7 +3,7 @@
 [![Github Release](https://img.shields.io/github/release/TravorLZH/TravorOS.svg)](https://github.com/TravorLZH/TravorOS/releases)
 [![Github License](https://img.shields.io/github/license/TravorLZH/TravorOS.svg)](LICENSE)
 [![Build Status](https://travis-ci.org/TravorLZH/TravorOS.svg?branch=master)](https://travis-ci.org/TravorLZH/TravorOS)
-[![AppVeyor Branch](https://ci.appveyor.com/project/TravorLZH/travoros)](https://ci.appveyor.com/api/projects/status/github/TravorLZH/TravorOS?svg=true)
+[![AppVeyor Branch](https://ci.appveyor.com/api/projects/status/github/TravorLZH/TravorOS?svg=true)](https://ci.appveyor.com/project/TravorLZH/travoros)
 [![Coverage Status](https://coveralls.io/repos/github/TravorLZH/TravorOS/badge.svg)](https://coveralls.io/github/TravorLZH/TravorOS)
 
 This is the first [Operating System](https://en.wikipedia.org/wiki/Operating_System "Operating System Definition") I created. It's written in two languages: C language and Assembly.
