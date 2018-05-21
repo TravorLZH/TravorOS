@@ -21,7 +21,7 @@
 #ifndef	__DEF_H_
 #define	__DEF_H_
 // Basic constants
-#define	NULL	0
+#define	NULL	(void*)0
 #define	EOF	-1
 #define	BUFSIZ	512
 #define	KERNEL_SUCCESS	0
