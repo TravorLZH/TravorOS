@@ -3,7 +3,7 @@
 
 # --------- FLAGS AND VARIABLES --------------------
 
-CFLAGS=-m32 -O2 -nostdlib -nodefaultlibs -fno-builtin -fPIC -Wall 
+CFLAGS=-m32 -O2 -nostdlib -nodefaultlibs -fno-builtin -Wall -Wno-packed-bitfield-compat
 HEADERPATH=-I./ -I../include
 
 
