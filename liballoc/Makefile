@@ -49,6 +49,6 @@ linux_debug:
 	gcc -DDEBUG $(HEADERPATH) $(CFLAGS) -static -c liballoc.c linux.c
 	ar -rcv liballoc.a  *.o
 	gcc -DDEBUG $(HEADERPATH) $(CFLAGS) -shared liballoc.c linux.c -o liballoc.so
-travoros:
+liballoc.a:
 	gcc $(HEADERPATH) -I../include $(CFLAGS) -static -c liballoc.c travoros.c
-	ar -rcv liballoc.a liballoc.o travoros.o
+	ar -rcv $@ liballoc.o travoros.o
