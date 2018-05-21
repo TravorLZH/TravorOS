@@ -36,13 +36,6 @@ static void page_fault(registers_t regs)
 	bsod_enter("Page Fault",description,&regs);
 }
 
-size_t *current_page_directory(void)
-{
-	register size_t *ret;
-	__asm__("movl %%cr3,%0":"=r" (ret)::"eax");
-	return ret;
-}
-
 void init_paging(void)
 {
 	assert(sizeof(page_t) == 4);	// Make sure the page union is set up properly
@@ -111,8 +104,8 @@ page_t *get_page(void *address,char create,size_t *pgdir)
 
 void *alloc_page(void)
 {
-	void *addr=get_free_page();
-	page_t *page=get_page(addr,1,0,current_page_directory());
+	void *addr=get_free_page(NULL);
+	page_t *page=get_page(addr,1,current_page_directory());
 	page->present=1;
 	return addr;
 }
@@ -120,8 +113,30 @@ void *alloc_page(void)
 void *alloc_pages(int n)
 {
 	assert(n>0);
-	int i,j;
-	for(i=0;i<MAX_FRAMES;i++){
+	char *addr=NULL;
+	char *tmp=NULL;
+	int i;
+	char found=1;
+	while(addr<(char*)MAPPED_SIZE){
+		if(is_free_page(addr)){
+			tmp=addr;
+			for(i=1;i<n;i++){
+				tmp+=PAGE_SIZE;
+				if(!is_free_page(tmp)){
+					found=0;
+					break;
+				}
+			}
+			if(found){
+				for(i=0;i<n;i++){
+					set_page(addr+i*FRAME_SIZE);
+				}
+				return addr;
+			}
+			addr+=n*FRAME_SIZE;
+		}
+		addr+=PAGE_SIZE;
+	}
 }
 
 void free_page(void *address)
@@ -147,6 +162,12 @@ void free_pages(void *address,int n)
 		free_page((void*)addr);
 		addr+=PAGE_SIZE;
 	}
+}
+
+void set_page(void *address)
+{
+	page_t *pg=get_page(address,1,NULL);
+	pg->present=1;
 }
 
 char is_free_page(void *address)
