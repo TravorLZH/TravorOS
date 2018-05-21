@@ -7,40 +7,41 @@
 bitset_t *frame_bitset;
 size_t bitset_size=MAX_FRAMES/32;
 
-void set_frame(frame_t frm)
+void set_frame(void *frm)
 {
-	bitset_set(frame_bitset,frm);
-	assert(bitset_test(frame_bitset,frm));	// Make sure
+	size_t addr=(size_t)frm;
+	bitset_set(frame_bitset,addr/FRAME_SIZE);
 }
 
-char is_free_frame(frame_t frm)
+char is_free_frame(void *frm)
 {
-	return bitset_test(frame_bitset,frm)?0:1;
+	size_t addr=(size_t)frm;
+	return bitset_test(frame_bitset,addr/FRAME_SIZE)?0:1;
 }
 
-int get_free_frame(frame_t *frame)
+int get_free_frame(void **frame)
 {
 	int i;
 	int ret;
 	for(i=0;i<MAX_FRAMES;i++){
-		if(ret=is_free_frame(i)){
+		if(ret=is_free_frame((void*)(i*FRAME_SIZE))){
 			printvar(ret);
-			*frame=i;
+			*frame=(void*)(i*FRAME_SIZE);
 			return 0;
 		}
 	}
-	return ENOMEM;
+	return -ENOMEM;
 }
 
-// Allocate a new frame
-frame_t alloc_page(page_t *page,char user,char writable)
+// Allocate frame for a page
+void *alloc_frame(page_t *page,char user,char writable)
 {
 	static size_t times=0;
 	times++;
 	size_t eip;
-	frame_t free;
+	void *free;
 	int ret=get_free_frame(&free);	// Find the free frame
-	if(ret==ENOMEM){
+	if(ret==-ENOMEM){
 		PANIC("Out of Memory!");
 	}
 	set_frame(free);	// The frame is now ours!
@@ -50,25 +51,17 @@ frame_t alloc_page(page_t *page,char user,char writable)
 	return free;
 }
 
-void free_page(page_t *page)
+void free_frame(void *addr)
 {
-	if(page->frame){
-		free_frame((size_t)page->frame);
-		page->frame=NULL;
-	}
+	size_t frm=(size_t)addr;
+	bitset_clear(frame_bitset,frm/FRAME_SIZE);
 }
 
-void free_frame(frame_t frm)
-{
-	bitset_clear(frame_bitset,frm);
-	assert(!bitset_test(frame_bitset,frm));	// Make sure it's freed
-}
-
-void map_frame(page_t *page,frame_t frame,char user,char writable)
+void map_frame(page_t *page,void *frame,char user,char writable)
 {
 	page->present=1;
 	page->user=user;
 	page->writable=writable;
-	page->frame=frame;
+	page->frame=((size_t)frame)/FRAME_SIZE;
 }
 

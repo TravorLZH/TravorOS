@@ -42,7 +42,6 @@ typedef union page{
 	} __attribute__((packed));
 	size_t val;
 } page_t;
-typedef size_t frame_t;
 #ifdef	__cplusplus
 extern	"C"{
 #endif
