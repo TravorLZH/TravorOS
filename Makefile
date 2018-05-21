@@ -1,8 +1,8 @@
 include config.mk
 C_SOURCES=$(filter-out kernel/test.c,$(wildcard init/*.c kernel/*.c mm/*.c))
 ASM_SOURCES=$(filter-out init/kernel_entry.asm init/grub_entry.asm,$(wildcard kernel/*.asm mm/*.asm init/*.asm))
-INCLUDE_DIR=-Iinclude
-kernel_LIBS=lib/libc.a
+INCLUDE_DIR=-Iinclude -Iliballoc
+kernel_LIBS=lib/libc.a liballoc/liballoc.a
 libc_SOURCES=$(wildcard lib/*.c lib/*.asm)
 libc_OBJ=$(patsubst %.c,%.o,$(patsubst %.asm,%.o,$(libc_SOURCES)))
 drivers_STUFF=$(addprefix drivers/,$(drivers_TARGETS))
