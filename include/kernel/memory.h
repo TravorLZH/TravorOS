@@ -51,7 +51,7 @@ extern size_t page_directory[1024];
 // Paging Functions
 extern void init_paging(void);
 
-extern void load_page_directory(void *pgdir);
+extern void load_page_directory(size_t *pgdir);
 
 extern void enable_paging(void);
 
@@ -69,6 +69,8 @@ extern char is_free_page(void *addr);
 
 /* Free a single page */
 extern void free_page(void *addr);
+
+extern void *get_free_page(size_t *pgdir);
 
 /* Free n pages from addr */
 extern void free_pages(void *addr,int n);
