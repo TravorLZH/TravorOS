@@ -5,6 +5,7 @@
 #include <cpu/timer.h>
 #include <cpu/cpuid.h>
 #include <drivers/rtc.h>
+#include <liballoc.h>
 
 extern struct tm time;
 extern void print_time(struct tm);
@@ -101,6 +102,15 @@ begin:
 		cpuid_string(CPUID_INTELBRANDSTRINGEND,where);
 		puts(where);
 		putchar('\n');
+		goto begin;
+	}
+	if(!strcmp(input_buf,"malloc")){
+		char *sth=malloc(10);
+		printf("Before freed: 0x%x\n",sth);
+		free(sth);
+		printf("After freed and malloc'ed: 0x%x\n",sth);
+		sth=malloc(10);
+		free(sth);
 		goto begin;
 	}
 	kprint_set_color(0x04);
