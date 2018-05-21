@@ -20,9 +20,11 @@
 #ifndef	__MEMORY_H_
 #define	__MEMORY_H_
 #define	FRAME_SIZE	0x1000
+#define	PAGE_SIZE	0x1000
 #define	MAPPED_SIZE	0x1000000	// Size of physical memory that is mapped
 					// In case it's 16 MB.
 #define	MAX_FRAMES	(MAPPED_SIZE/FRAME_SIZE)
+#define	MAX_PAGES	MAX_FRAMES	// npages = nframes
 
 #define TABLE_PRESENT(table)	((table) & 0x1)	// Is the page table present?
 
@@ -49,20 +51,59 @@ extern size_t end_kernel;
 extern size_t page_directory[1024];
 // Paging Functions
 extern void init_paging(void);
+
 extern void load_page_directory(void *pgdir);
+
 extern void enable_paging(void);
-// Frame function
-extern int get_free_frame(frame_t *frame);
-extern frame_t alloc_page(page_t *page,char user,char writable);
-extern void free_page(page_t *page);
-extern void free_frame(frame_t frame);
+
+/* This dude returns the physical address of page directory */
+extern size_t *current_page_directory(void);
+/************ Page Allocator *****************/
+/* Allocate a single page */
+extern void *alloc_page(void);
+
+/* Allocate multiple pages */
+extern void *alloc_pages(int n);
+
+/* Determine whether a page is free or not */
+extern char is_free_page(void *addr);
+
+/* Free a single page */
+extern void free_page(void *addr);
+
+/* Free n pages from addr */
+extern void free_pages(void *addr,int n);
+/*********************************************/
+/************ Page Frame Allocator ***********/
+/* Get the first free frame */
+extern int get_free_frame(void **frame);
+
+/* Allocate frame for a page */
+extern void *alloc_frame(page_t *page,char user,char writable);
+
+/* Determine whether a frame is freed or not */
+extern char is_free_frame(void *frameaddr);
+
+/* Free a frame */
+extern void free_frame(void *frameaddr);
+
 // This overrides the current frame of the page
-extern void map_frame(page_t *page,frame_t frame,char user,char writable);
-// Memory Allocator
+extern void map_frame(page_t *page,void *frame,char user,char writable);
+/*********************************************/
+
+// Placement Memory Allocator
 extern void init_heap(size_t offset);
+
+/* Allocate memory */
 extern void *kmalloc(size_t size);
-extern void *kmalloc_a(size_t size);	// Page aligned
+
+/* Allocate page aligned memory address */
+extern void *kmalloc_a(size_t size);
+
+/* Allocate virtual memory and its physical address */
 extern void *kmalloc_p(size_t size,size_t* phys);	// Returns physical address
+
+/* Both of the above */
 extern void *kmalloc_ap(size_t size,size_t* phys);	// Both
 #ifdef	__cplusplus
 }
