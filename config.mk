@@ -25,7 +25,7 @@ define white
 endef
 %.o:	%.c
 	$(call white,"CC $@")
-	@${CC} $(CFLAGS) $(CPPFLAGS) $(INCLUDE_DIR) -c $< -o $@
+	@${CC} $(CFLAGS) $(CPPFLAGS) -c $< -o $@
 %.o:	%.asm
 	$(call white,"AS" "$@")
 	@${AS} -felf $< -o $@

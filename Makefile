@@ -3,6 +3,7 @@ C_SOURCES=$(filter-out kernel/test.c,$(wildcard init/*.c kernel/*.c mm/*.c))
 ASM_SOURCES=$(filter-out init/kernel_entry.asm init/grub_entry.asm,$(wildcard kernel/*.asm mm/*.asm init/*.asm))
 INCLUDE_DIR=-Iinclude -Iliballoc
 kernel_LIBS=lib/libc.a liballoc/liballoc.a
+CPPFLAGS+=$(INCLUDE_DIR)
 libc_SOURCES=$(wildcard lib/*.c lib/*.asm)
 libc_OBJ=$(patsubst %.c,%.o,$(patsubst %.asm,%.o,$(libc_SOURCES)))
 drivers_STUFF=$(addprefix drivers/,$(drivers_TARGETS))
@@ -51,9 +52,9 @@ lib/libc.a:	$(libc_OBJ) liballoc/liballoc.a
 	@ar rc $@ $^
 dep:	config
 	sed '/\#\#\# Dependencies/q' < Makefile > Makefile_temp
-	(for i in kernel/*.c;do echo -n kernel/;$(CPP) $(CPPFLAGS) -Iinclude -M $$i;done) >> Makefile_temp
-	(for i in mm/*.c;do echo -n mm/;$(CPP) $(CPPFLAGS) -Iinclude -M $$i;done) >> Makefile_temp
-	(for i in init/*.c;do echo -n init/;$(CPP) $(CPPFLAGS) -Iinclude -M $$i;done) >> Makefile_temp
+	(for i in kernel/*.c;do echo -n kernel/;$(CPP) $(CPPFLAGS) -M $$i;done) >> Makefile_temp
+	(for i in mm/*.c;do echo -n mm/;$(CPP) $(CPPFLAGS) -M $$i;done) >> Makefile_temp
+	(for i in init/*.c;do echo -n init/;$(CPP) $(CPPFLAGS) -M $$i;done) >> Makefile_temp
 	cp Makefile_temp Makefile
 	rm Makefile_temp
 	make -C drivers dep
@@ -100,4 +101,5 @@ init/main.o: init/main.c include/stdio.h include/def.h include/sys/types.h \
 init/shell.o: init/shell.c include/config.h include/kernel/utils.h \
  include/kernel/dbg.h include/asm/string.h include/def.h \
  include/sys/types.h include/errno.h include/asm/ioports.h \
- include/cpu/timer.h include/cpu/cpuid.h include/drivers/rtc.h
+ include/cpu/timer.h include/cpu/cpuid.h include/drivers/rtc.h \
+ liballoc/liballoc.h

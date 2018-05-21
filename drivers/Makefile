@@ -1,5 +1,6 @@
 include	../config.mk
-INCLUDE_DIR=-I../include
+INCLUDE_DIR=-I../include -I../liballoc
+CPPFLAGS+=$(INCLUDE_DIR)
 all:	$(drivers_TARGETS)
 # GDT and IDT drivers
 cpu_SOURCES=$(wildcard cpu/*.c cpu/*.asm)
