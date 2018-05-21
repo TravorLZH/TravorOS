@@ -104,7 +104,7 @@ static void keyboard_callback(registers_t regs)
 	kbd_state.interrupt=1;
 	kbd_state.special=1;
 	uint8_t scancode=inb(0x60);
-	char ch=NULL;
+	char ch;
 	if(RELEASED(scancode)){
 		scancode&=0x7F;
 		// Handlers for released keys
