@@ -3,6 +3,7 @@
 [![Github Release](https://img.shields.io/github/release/TravorLZH/TravorOS.svg)](https://github.com/TravorLZH/TravorOS/releases)
 [![Github License](https://img.shields.io/github/license/TravorLZH/TravorOS.svg)](LICENSE)
 [![Build Status](https://travis-ci.org/TravorLZH/TravorOS.svg?branch=master)](https://travis-ci.org/TravorLZH/TravorOS)
+[![AppVeyor Branch](https://ci.appveyor.com/project/TravorLZH/travoros)](https://ci.appveyor.com/api/projects/status/github/TravorLZH/TravorOS?svg=true)
 [![Coverage Status](https://coveralls.io/repos/github/TravorLZH/TravorOS/badge.svg)](https://coveralls.io/github/TravorLZH/TravorOS)
 
 This is the first [Operating System](https://en.wikipedia.org/wiki/Operating_System "Operating System Definition") I created. It's written in two languages: C language and Assembly.
@@ -49,7 +50,7 @@ This project has been activated since [December 15, 2017](https://github.com/Tra
 
 - [x] Page Frame Allocation and De-allocation
 
-- [ ] Dynamic Memory Allocation
+- [x] Dynamic Memory Allocation (liballoc)
 
 - [x] CPU Timer
 
@@ -129,7 +130,7 @@ frame_bitset: 11110111110101111101111111
 
 ### Dynamic Memory Allocation
 
-I have currently implemented a simple **malloc** without **free** because all variables used by kernel never need to be freed until powers off.
+I have currently implemented a placement **malloc** without **free** because all variables used by kernel never need to be freed until powers off.
 
 ```
 Heap Allocation
@@ -139,6 +140,8 @@ Memory    | Free.......until the end of memory
           |
 -----------------------------------------------
 ```
+
+Because I am lazy, I port a 3rd party memory allocator called [`liballoc`](https://github.com/blanham/liballoc) which only required few functions in my OS.
 
 ## Building System
 
