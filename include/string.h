@@ -2,9 +2,6 @@
 #include <def.h>
 #ifndef	__STRING_H_
 #define	__STRING_H_
-#ifdef	ASM_FUNC
-#define	memcpy	memcpy1
-#endif
 #ifdef	__cplusplus
 extern	"C"{
 #endif
