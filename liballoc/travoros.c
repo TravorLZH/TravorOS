@@ -1,5 +1,5 @@
 #define	_ALLOC_SKIP_DEFINE
-#include <def.h>
+#include <kernel/memory.h>
 #include "liballoc.h"
 
 int liballoc_lock(void)
@@ -14,10 +14,11 @@ int liballoc_unlock(void)
 
 void *liballoc_alloc(int pages)
 {
-	return NULL;
+	return alloc_pages(pages);
 }
 
 int liballoc_free(void *addr,int pages)
 {
+	free_pages(addr,pages);
 	return 0;
 }
