@@ -5,7 +5,7 @@
 #ifdef	__cplusplus
 extern	"C"{
 #endif
-static inline int strlen(const char *s)
+extern inline int strlen(const char *s)
 {
 	int ret;
 	__asm__("xor	%%ecx,%%ecx\n\t"
@@ -17,17 +17,17 @@ static inline int strlen(const char *s)
 		"dec	%%ecx\n\t":"=c"(ret):"D"(s));
 	return ret;
 }
-static inline char *strcpy(char *dest,const char *src)
+extern inline char *strcpy(char *dest,const char *src)
 {
-	__asm__("cld\n"
+	__asm__("cld\n\t"
 		"1:\tlodsb\n\t"
 		"stosb\n\t"
-		"test	%%al,%%al\n\t"
+		"testb	%%al,%%al\n\t"
 		"jne	1b"
 		::"S"(src),"D"(dest):"esi","edi","eax");
 	return  dest;
 }
-static inline char *strncpy(char *dest,const char *src,int count)
+extern inline char *strncpy(char *dest,const char *src,int count)
 {
 	__asm__("cld\n"
 		"1:\tdecl	%2\n\t"
@@ -41,7 +41,7 @@ static inline char *strncpy(char *dest,const char *src,int count)
 		::"S"(src),"D"(dest),"c"(count):"esi","edi","eax","ecx");
 	return dest;
 }
-static inline void *memcpy(void *dest,const void *src,size_t count)
+extern inline void *memcpy(void *dest,const void *src,size_t count)
 {
 	__asm__("rep movsd"
 		::"S"(src),"D"(dest),"c"(count >> 2):"memory");
@@ -49,7 +49,7 @@ static inline void *memcpy(void *dest,const void *src,size_t count)
 		::"S"(src),"D"(dest),"c"(count & 7):"memory");
 	return dest;
 }
-static inline void *memset(void *dest,int c,size_t count)
+extern inline void *memset(void *dest,int c,size_t count)
 {
 	__asm__("cld\n"
 		"rep stosb"

@@ -32,6 +32,7 @@ struct fs_node {
 	uint32_t uid;
 	uint32_t gid;
 	uint32_t flags;		// Type of node
+	uint32_t inode;		// Device - provides a way for a filesystem to identify files
 	uint32_t length;	// Size of file
 	uint32_t impl;		// An implementation-defined number
 	readfunc_t read;
@@ -56,6 +57,8 @@ extern void open_fs(fs_node_t *node,uint8_t read,uint8_t write);
 extern void close_fs(fs_node_t *node);
 /* Read a directory */
 extern struct dirent *readdir_fs(fs_node_t *node,uint32_t index);
+/* Find a directory */
+extern fs_node_t *finddir_fs(fs_node_t *node,char *name);
 #ifdef	__cplusplus
 }
 #endif
