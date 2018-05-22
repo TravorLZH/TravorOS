@@ -1,7 +1,7 @@
 AS=yasm
 CC=gcc
 LD=ld
-drivers_TARGETS=cpu.elf time.elf tty.elf
+drivers_TARGETS=cpu.elf time.elf tty.elf block_dev.elf
 CPPFLAGS=-ffreestanding -nostdlib
 CFLAGS=-Wno-implicit-function-declaration -Wno-packed-bitfield-compat -g -m32
 QEMU_FLAGS=-device isa-debug-exit,iobase=0xF4,iosize=0x04

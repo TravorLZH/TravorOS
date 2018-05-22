@@ -5,7 +5,7 @@ CPPFLAGS+=-Iinclude -Iliballoc
 kernel_LIBS=kernel/libkernel.a libc/libc.a liballoc/liballoc.a
 drivers_STUFF=$(addprefix drivers/,$(drivers_TARGETS))
 OBJ=${C_SOURCES:.c=.o} ${ASM_SOURCES:.asm=.o}
-.PHONY:	clean all run debug dep fo$(RM)at drivers $(kernel_LIBS)
+.PHONY:	clean all run debug dep format drivers $(kernel_LIBS) boot/boot.img
 all:	drivers floppy.img kernel.elf cdrom.iso
 
 config:
@@ -24,13 +24,19 @@ run-iso:
 curses-iso:
 	exec qemu-system-i386 -curses -cdrom cdrom.iso $(QEMU_FLAGS)
 
-cdrom.iso:	iso/boot/kernel.img
+cdrom.iso:	iso/boot/kernel.img iso/boot/initrd.img
 	$(call green,"GEN $@")
 	@grub-mkrescue -o $@ iso/
 
 iso/boot/kernel.img:	init/grub_entry.o $(OBJ) $(drivers_STUFF) $(kernel_LIBS)
 	$(call green,"GEN $@")
 	@$(LD) -melf_i386 -o $@ -T link.ld $^
+
+iso/boot/initrd.img:	tools/make_initrd
+	tools/make_initrd test.txt test.txt
+
+tools/make_initrd:	tools/make_initrd.c
+	$(CC) -o $@ $^
 
 floppy.img: boot/boot.img kernel.bin
 	$(call green,"GEN $@")
@@ -82,7 +88,7 @@ dep:	config
 clean:
 	$(RM) -rf *.bin *.o *.img *.elf *.iso boot/*.bin boot/*.img
 	$(RM) -rf init/*.o mm/*.o
-	$(RM) -rf iso/boot/kernel.img
+	$(RM) -rf iso/boot/*.img
 	@$(MAKE) -C boot clean
 	@$(MAKE) -C drivers clean
 	@$(MAKE) -C liballoc clean
@@ -105,10 +111,11 @@ mm/paging.o: mm/paging.c include/kernel/memory.h include/def.h \
 init/main.o: init/main.c include/stdio.h include/def.h include/sys/types.h \
  include/errno.h /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h \
  include/config.h include/drivers/screen.h include/drivers/keyboard.h \
- include/drivers/rtc.h include/kernel/memory.h include/kernel/utils.h \
- include/kernel/dbg.h include/kernel/multiboot.h include/kernel/syscall.h \
- include/cpu/gdt.h include/cpu/isr.h include/cpu/timer.h \
- include/asm/interrupt.h include/asm/ioports.h
+ include/drivers/rtc.h include/drivers/initrd.h include/kernel/fs.h \
+ include/kernel/memory.h include/kernel/utils.h include/kernel/dbg.h \
+ include/kernel/multiboot.h include/kernel/syscall.h include/cpu/gdt.h \
+ include/cpu/isr.h include/cpu/timer.h include/asm/interrupt.h \
+ include/asm/ioports.h
 init/shell.o: init/shell.c include/config.h include/kernel/utils.h \
  include/kernel/dbg.h include/asm/string.h include/def.h \
  include/sys/types.h include/errno.h include/asm/ioports.h \

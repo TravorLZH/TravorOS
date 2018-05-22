@@ -14,8 +14,10 @@ time.elf:	$(time_OBJ)
 tty_SOURCES=$(wildcard tty/*.c)
 tty_OBJ=$(tty_SOURCES:.c=.o)
 tty.elf:	$(tty_OBJ)
-# All objects
-drivers_OBJ=$(time_OBJ) $(tty_OBJ) $(cpu_OBJ)
+# Block device
+block_dev_SOURCES=$(wildcard block_dev/*.c)
+block_dev_OBJ=$(block_dev_SOURCES:.c=.o)
+block_dev.elf:	$(block_dev_OBJ)
 %.elf:
 	$(call green,"GEN $@")
 	@$(LD) -melf_i386 -r -o $@ $^
@@ -53,3 +55,6 @@ tty/keyboard.o: tty/keyboard.c ../include/stdio.h ../include/def.h \
  ../include/kernel/dbg.h
 tty/screen.o: tty/screen.c ../include/asm/ioports.h ../include/def.h \
  ../include/sys/types.h ../include/errno.h ../include/drivers/screen.h
+block_dev/initrd.o: block_dev/initrd.c ../include/drivers/initrd.h \
+ ../include/kernel/fs.h ../include/def.h ../include/sys/types.h \
+ ../include/errno.h ../include/asm/string.h ../liballoc/liballoc.h
