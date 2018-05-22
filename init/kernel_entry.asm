@@ -26,7 +26,8 @@ a20_enabled:
 	xor	ebp,ebp
 	push	ebp
 	push	0
-	jmp	kernel_main
+	call	kernel_main
+	jmp	$
 
 A20MSG	db	"[kernel]: Enabling A20",0xA,0
 
