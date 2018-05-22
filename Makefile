@@ -1,5 +1,5 @@
 include config.mk
-C_SOURCES=$(wildcard init/*.c mm/*.c)
+C_SOURCES=$(wildcard init/*.c mm/*.c fs/*.c)
 ASM_SOURCES=$(filter-out init/kernel_entry.asm init/grub_entry.asm,$(wildcard mm/*.asm init/*.asm))
 CPPFLAGS+=-Iinclude -Iliballoc
 kernel_LIBS=kernel/libkernel.a libc/libc.a liballoc/liballoc.a
