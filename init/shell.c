@@ -32,14 +32,15 @@ begin:
 		goto begin;
 	}
 	if(!strcmp(input_buf,"help")){
-		puts("time:     Get the current time from CMOS\n");
-		puts("uname:    Print system information\n");
-		puts("hello:    print \"Hello world!\"\n");
-		puts("bsod:     Enter blue screen\n");
-		puts("delay:    Wait 5 seconds\n");
-		puts("shutdown: Shutdown the machine\n");
-		puts("clear:    Clear screen\n");
-		puts("info:     Print CPU information\n");
+		printf("time:     Get the current time from CMOS\n");
+		printf("uname:    Print system information\n");
+		printf("hello:    print \"Hello world!\"\n");
+		printf("bsod:     Enter blue screen\n");
+		printf("delay:    Wait 5 seconds\n");
+		printf("shutdown: Shutdown the machine\n");
+		printf("clear:    Clear screen\n");
+		printf("info:     Print CPU information\n");
+		printf("malloc:   Test of kernel memory management\n");
 		goto begin;
 	}
 	if(!strcmp(input_buf,"time")){
@@ -48,11 +49,11 @@ begin:
 		goto begin;
 	}
 	if(!strcmp(input_buf,"uname")){
-		puts("TravorOS TRAVOR " VERSION "i386 i386 i386 TravorOS\n");
+		printf("TravorOS TRAVOR " VERSION "i386 i386 i386 TravorOS\n");
 		goto begin;
 	}
 	if(!strcmp(input_buf,"hello")){
-		puts("Hello world!\n");
+		printf("Hello world!\n");
 		goto begin;
 	}
 	if(!strcmp(input_buf,"bsod")){
@@ -62,12 +63,12 @@ begin:
 	}
 	if(!strcmp(input_buf,"delay")){
 		delay(5000);
-		puts("5 seconds passed\n");
+		printf("5 seconds passed\n");
 		goto begin;
 	}
 	if(!strcmp(input_buf,"shutdown")){
 		outb(0xF4,0x00);	// Shutdown QEMU
-		puts("Failed to shutdown\n");
+		printf("Failed to shutdown\n");
 		goto begin;
 	}
 	if(!strcmp(input_buf,"clear")){
@@ -77,7 +78,7 @@ begin:
 	if(!strcmp(input_buf,"info")){
 		size_t where[4]={0,0,0,0};
 		char tmp[5]={0,0,0,0,0};
-		puts("Vendor String: ");
+		printf("Vendor String: ");
 		cpuid_string(CPUID_VENDORSTRING,where);
 		/*
 		* The following code print the vendor string in
@@ -85,22 +86,22 @@ begin:
 		* EBX EDX ECX
 		*/
 		memcpy(tmp,&where[1],4);	// EBX
-		puts(tmp);
+		printf(tmp);
 		memcpy(tmp,&where[3],4);	// EDX
-		puts(tmp);
+		printf(tmp);
 		memcpy(tmp,&where[2],4);	// EBX
-		puts(tmp);
+		printf(tmp);
 		putchar('\n');
 		/* Make sure it does not print the value of tmp */
 		memset(tmp,0,5);
 		/* Print the brand string */
-		puts("Brand: ");
+		printf("Brand: ");
 		cpuid_string(CPUID_INTELBRANDSTRING,where);
-		puts(where);
+		printf(where);
 		cpuid_string(CPUID_INTELBRANDSTRINGMORE,where);
-		puts(where);
+		printf(where);
 		cpuid_string(CPUID_INTELBRANDSTRINGEND,where);
-		puts(where);
+		printf(where);
 		putchar('\n');
 		goto begin;
 	}
