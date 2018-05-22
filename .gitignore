@@ -9,3 +9,4 @@
 *.dsasm
 bochs.log
 include/config.h
+tools/make_initrd
