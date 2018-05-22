@@ -130,6 +130,7 @@ void *alloc_pages(int n)
 			if(found){
 				for(i=0;i<n;i++){
 					set_page(addr+i*FRAME_SIZE);
+					alloc_frame(get_page(addr,1,NULL),0,1);
 				}
 				return addr;
 			}
