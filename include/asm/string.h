@@ -22,7 +22,7 @@ extern inline char *strcpy(char *dest,const char *src)
 	__asm__("cld\n\t"
 		"1:\tlodsb\n\t"
 		"stosb\n\t"
-		"testb	%%al,%%al\n\t"
+		"cmpb	$0,%%al\n\t"
 		"jne	1b"
 		::"S"(src),"D"(dest):"esi","edi","eax");
 	return  dest;
