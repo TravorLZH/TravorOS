@@ -1,6 +1,6 @@
 #include <config.h>
 #include <kernel/utils.h>
-#include <asm/string.h>
+#include <string.h>
 #include <asm/ioports.h>
 #include <cpu/timer.h>
 #include <cpu/cpuid.h>
