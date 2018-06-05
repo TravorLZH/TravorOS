@@ -18,11 +18,6 @@
 #include <stdio.h>
 #endif
 
-/* Override the internal memcpy and memset */
-#include <asm/string.h>
-#define	liballoc_memcpy	memcpy
-#define	liballoc_memset	memset
-
 struct boundary_tag* l_freePages[MAXEXP];		//< Allowing for 2^MAXEXP blocks
 int 				 l_completePages[MAXEXP];	//< Allowing for 2^MAXEXP blocks
 
@@ -69,9 +64,7 @@ static inline int getexp( unsigned int size )
 
 	return shift - 1;	
 }
-
-/* I comment those because there is a faster way in <asm/string.h> */
-/*
+ 
 static void* 	liballoc_memset(void* s, int c, size_t n)
 {
 	int i;
@@ -105,7 +98,6 @@ static void* 	liballoc_memcpy(void* s1, const void* s2, size_t n)
   
   return s1;
 }
-*/
 
 
 #ifdef DEBUG
