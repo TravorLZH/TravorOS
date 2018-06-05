@@ -17,19 +17,11 @@ dep:
 	cp Makefile_temp Makefile
 	rm -f Makefile_temp
 
+clean-dep:
+	sed '/\#\#\# Dependencies/q' < Makefile > Makefile_temp
+	cp Makefile_temp Makefile
+	$(RM) -f Makefile_temp
+
 clean:
 	rm -rf *.a *.o
 ### Dependencies
-bitset32.o: bitset32.c ../include/string.h ../include/def.h \
- ../include/sys/types.h ../include/errno.h ../include/bitset32.h
-bsod.o: bsod.c ../include/kernel/bsod.h ../include/def.h \
- ../include/sys/types.h ../include/errno.h ../include/cpu/isr.h \
- ../include/kernel/utils.h ../include/kernel/dbg.h \
- ../include/drivers/screen.h
-dbg.o: dbg.c ../include/kernel/dbg.h ../include/kernel/utils.h \
- ../include/stdio.h ../include/def.h ../include/sys/types.h \
- ../include/errno.h /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h
-utils.o: utils.c /usr/lib/gcc/x86_64-linux-gnu/4.8/include/stdarg.h \
- ../include/def.h ../include/sys/types.h ../include/errno.h \
- ../include/kernel/utils.h ../include/kernel/dbg.h \
- ../include/drivers/screen.h
