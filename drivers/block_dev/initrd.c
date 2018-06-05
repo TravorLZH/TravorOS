@@ -1,5 +1,5 @@
 #include <drivers/initrd.h>
-#include <asm/string.h>
+#include <string.h>
 #include <liballoc.h>
 
 initrd_header_t *initrd_header;
