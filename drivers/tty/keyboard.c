@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <asm/string.h>
+#include <string.h>
 #include <asm/ioports.h>
 #include <cpu/isr.h>
 #include <drivers/keyboard.h>
