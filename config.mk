@@ -1,6 +1,6 @@
 AS=yasm
-CC=gcc
-LD=ld
+CC=i386-elf-gcc
+LD=i386-elf-ld
 drivers_TARGETS=cpu.elf time.elf tty.elf block_dev.elf
 CPPFLAGS=-ffreestanding -nostdlib
 CFLAGS=-Wno-implicit-function-declaration -Wno-packed-bitfield-compat -g -m32
