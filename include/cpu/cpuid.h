@@ -21,7 +21,8 @@ static inline void cpuid(int code,size_t *a,size_t *d)
 	asm volatile("cpuid":"=a"(*a),"=d"(*d):"a"(code):"ecx","ebx");
 }
 /* Issue a complete request, storing general registers output as a string */
-static inline int cpuid_string(int code,size_t where[4]){
+static inline int cpuid_string(int code,size_t where[4])
+{
 	int ret;
 	asm volatile("cpuid":"=a"(where[0]),"=b"(where[1]),"=c"(where[2]),"=d"(where[3]):"a"(code));
 	return ret;
