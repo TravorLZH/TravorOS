@@ -3,6 +3,8 @@
 
 # --------- FLAGS AND VARIABLES --------------------
 
+CC=i386-elf-gcc
+AR=i386-elf-ar
 CFLAGS=-m32 -O2 -nostdlib -nodefaultlibs -fno-builtin -Wall -Wno-packed-bitfield-compat
 HEADERPATH=-I./ -I../include
 
@@ -34,9 +36,9 @@ clean:
 	rm -f ./*.so
 
 compile:
-	gcc $(HEADERPATH) $(CFLAGS) -static -c liballoc.c
-	ar -rcv liballoc.a  *.o
-	gcc $(HEADERPATH) $(CFLAGS) -shared liballoc.c -o liballoc.so
+	$(CC) $(HEADERPATH) $(CFLAGS) -static -c liballoc.c
+	$(AR) -rcv liballoc.a  *.o
+	$(CC) $(HEADERPATH) $(CFLAGS) -shared liballoc.c -o liballoc.so
 
 
 linux:
@@ -50,5 +52,5 @@ linux_debug:
 	ar -rcv liballoc.a  *.o
 	gcc -DDEBUG $(HEADERPATH) $(CFLAGS) -shared liballoc.c linux.c -o liballoc.so
 liballoc.a:
-	gcc $(HEADERPATH) -I../include $(CFLAGS) -static -c liballoc.c travoros.c
-	ar -rcv $@ liballoc.o travoros.o
+	$(CC) $(HEADERPATH) -I../include $(CFLAGS) -static -c liballoc.c travoros.c
+	$(AR) -rcv $@ liballoc.o travoros.o

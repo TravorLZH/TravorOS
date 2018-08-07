@@ -35,8 +35,8 @@ iso/boot/kernel.img:	init/grub_entry.o $(OBJ) $(drivers_STUFF) $(kernel_LIBS)
 iso/boot/initrd.img:	tools/make_initrd
 	tools/make_initrd test.txt test.txt
 
-tools/make_initrd:	tools/make_initrd.c
-	$(CC) -o $@ $^
+tools/make_initrd:	tools/make_initrd.c	# This won't need cross-compiler
+	gcc -o $@ $^
 
 floppy.img: boot/boot.img kernel.bin
 	$(call green,"GEN $@")
