@@ -7,6 +7,7 @@
 *.swp
 *.elf
 *.dsasm
+*.exe
 bochs.log
 include/config.h
 tools/make_initrd
